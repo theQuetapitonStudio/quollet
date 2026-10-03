@@ -1,6 +1,410 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #070912;
+    --bg2: #0d1120;
+    --card: rgba(18, 24, 42, 0.82);
+
+    --blue: #4d7cff;
+    --blue-light: #7d9dff;
+    --cyan: #4deaff;
+    --purple: #8b5cf6;
+
+    --text: #f5f7ff;
+    --muted: #8e98b5;
+
+    --border: rgba(255, 255, 255, 0.08);
+    --shadow: rgba(0, 0, 0, 0.45);
+}
+
 body {
-    text-align: center;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    background-color: black;
+    margin: 0;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px;
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    color: var(--text);
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(77, 124, 255, 0.18),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(139, 92, 246, 0.16),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            var(--bg),
+            var(--bg2)
+        );
+}
+
+
+/* =========================
+   WALLET
+   ========================= */
+
+.wallet {
+    width: 100%;
+    max-width: 460px;
+
+    padding: 28px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+    border-radius: 24px;
+
+    box-shadow:
+        0 25px 70px var(--shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    backdrop-filter: blur(18px);
+}
+
+
+/* =========================
+   LOGO
+   ========================= */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 28px;
+}
+
+.logo-icon {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    font-size: 22px;
+    font-weight: 900;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            var(--purple)
+        );
+
+    box-shadow:
+        0 8px 25px rgba(77, 124, 255, 0.35);
+}
+
+.logo-text {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.logo-text span {
+    color: var(--blue-light);
+}
+
+
+/* =========================
+   SALDO
+   ========================= */
+
+.balance {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(77, 124, 255, 0.20),
+            rgba(139, 92, 246, 0.12)
+        );
+
+    border: 1px solid rgba(125, 157, 255, 0.18);
+}
+
+.balance::after {
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+    height: 150px;
+
+    right: -60px;
+    top: -60px;
+
+    border-radius: 50%;
+
+    background: rgba(77, 234, 255, 0.10);
+
+    filter: blur(5px);
+}
+
+.balance-label {
+    color: var(--muted);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.balance-value {
+    margin-top: 8px;
+
+    font-size: 38px;
+    font-weight: 800;
+
+    letter-spacing: -1.5px;
+}
+
+.balance-currency {
+    color: var(--cyan);
+
+    font-size: 15px;
+    font-weight: 700;
+
+    margin-left: 6px;
+}
+
+
+/* =========================
+   INPUTS
+   ========================= */
+
+input {
+    width: 100%;
+
+    padding: 13px 15px;
+
+    margin-bottom: 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    outline: none;
+
+    background: rgba(5, 8, 17, 0.65);
+
+    color: var(--text);
+
+    font-family: inherit;
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s,
+        background 0.2s;
+}
+
+input::placeholder {
+    color: #66708b;
+}
+
+input:focus {
+    border-color: rgba(77, 124, 255, 0.75);
+
+    background: rgba(8, 12, 24, 0.9);
+
+    box-shadow:
+        0 0 0 3px rgba(77, 124, 255, 0.12);
+}
+
+
+/* =========================
+   BOTÕES
+   ========================= */
+
+button {
+    width: 100%;
+
+    padding: 13px 18px;
+
+    border: 0;
+    border-radius: 12px;
+
+    cursor: pointer;
+
     color: white;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 750;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            #657cff
+        );
+
+    box-shadow:
+        0 8px 22px rgba(77, 124, 255, 0.25);
+
+    transition:
+        transform 0.15s,
+        box-shadow 0.15s,
+        filter 0.15s;
+}
+
+button:hover {
+    filter: brightness(1.1);
+
+    box-shadow:
+        0 10px 28px rgba(77, 124, 255, 0.35);
+
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(1px);
+
+    box-shadow:
+        0 4px 12px rgba(77, 124, 255, 0.2);
+}
+
+
+/* =========================
+   BOTÃO SECUNDÁRIO
+   ========================= */
+
+button.secondary {
+    background: rgba(255, 255, 255, 0.05);
+
+    border: 1px solid var(--border);
+
+    box-shadow: none;
+}
+
+button.secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================
+   CARDS
+   ========================= */
+
+.card {
+    padding: 18px;
+
+    margin-top: 14px;
+
+    border-radius: 16px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    border: 1px solid var(--border);
+}
+
+.card-title {
+    margin-bottom: 8px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+
+/* =========================
+   STATUS
+   ========================= */
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-top: 18px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #43e68b;
+
+    box-shadow:
+        0 0 10px rgba(67, 230, 139, 0.8);
+}
+
+
+/* =========================
+   LINKS
+   ========================= */
+
+a {
+    color: var(--blue-light);
+
+    text-decoration: none;
+
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--cyan);
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 520px) {
+
+    body {
+        padding: 15px;
+    }
+
+    .wallet {
+        padding: 20px;
+
+        border-radius: 20px;
+    }
+
+    .balance-value {
+        font-size: 32px;
+    }
 }

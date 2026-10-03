@@ -1,6 +1,7 @@
+import { comprar } from "./compras/produtos.js"
+
 const API =
     "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1"
-
 
 // =========================
 // CONTA SALVA
@@ -9,6 +10,9 @@ const API =
 let conta = JSON.parse(
     localStorage.getItem("qct_conta")
 ) || null
+
+
+const mesc = document.getElementById("msc")
 
 
 // =========================
@@ -44,6 +48,43 @@ const signupbtn =
 
 const loginbtn =
     document.getElementById("loginbtn")
+
+
+// =========================
+// ATUALIZAR TELA
+// =========================
+
+function atualizarTela() {
+
+    if (conta) {
+
+        // Tem conta:
+        // esconde login/signup
+        // mostra msc
+
+        LS.root.style.display = "none"
+        SUP.root.style.display = "none"
+
+        if (mesc) {
+            mesc.style.display = "block"
+        }
+
+    } else {
+
+        // Não tem conta:
+        // mostra login
+        // esconde signup e msc
+
+        LS.root.style.display = "block"
+        SUP.root.style.display = "none"
+
+        if (mesc) {
+            mesc.style.display = "none"
+        }
+
+    }
+
+}
 
 
 // =========================
@@ -83,6 +124,7 @@ SUP.cbtn.addEventListener("click", async () => {
 
         const password =
             SUP.sei.value
+
 
         if (!discord_id || !password) {
             alert("Preencha tudo.")
@@ -135,11 +177,9 @@ SUP.cbtn.addEventListener("click", async () => {
         alert("Wallet criada!")
 
 
-        SUP.root.style.display = "none"
-        LS.root.style.display = "block"
-
-
+        atualizarTela()
         atualizarSaldo()
+
 
     } catch (erro) {
 
@@ -223,7 +263,11 @@ LS.cbtn.addEventListener("click", async () => {
         )
 
 
+        // Mostra a área da conta
+        atualizarTela()
+
         atualizarSaldo()
+
 
     } catch (erro) {
 
@@ -236,7 +280,6 @@ LS.cbtn.addEventListener("click", async () => {
     }
 
 })
-
 
 // =========================
 // PEGAR INFORMAÇÕES
@@ -265,19 +308,20 @@ async function atualizarSaldo() {
 
 
     try {
-
+        const welcometxt = document.getElementById("wmsg")
         const info =
             await pegarSaldo(conta.discord_id)
 
 
         if (!info.success) {
+
             console.error(info.error)
+
             return
         }
 
 
         conta = info.usuario
-
 
         localStorage.setItem(
             "qct_conta",
@@ -291,9 +335,14 @@ async function atualizarSaldo() {
 
         if (stxt) {
 
-            stxt.textContent =
-                `Seu saldo: ${conta.saldo} QCT-BASE`
+            stxt.innerHTML =
+                `Seu saldo: ${conta.saldo} QUENOKY-BASE<br>${conta.saldo_unayky} QUENOKY_UNAUKY`
 
+        }
+
+        if (welcometxt) {
+            welcometxt.innerHTML = `
+            Olá <span style="color: red">${conta.username}</span>! Seja bem vindo a sua Wallet <i>Quollet</i>`
         }
 
     } catch (erro) {
@@ -322,10 +371,8 @@ setInterval(
 // INICIALIZA
 // =========================
 
+atualizarTela()
+
 if (conta) {
-
-    LS.root.style.display = "none"
-
     atualizarSaldo()
-
 }

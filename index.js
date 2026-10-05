@@ -1,6 +1,5 @@
 const API =
     "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1"
-
 // =========================
 // CONTA SALVA
 // =========================
@@ -11,7 +10,6 @@ let conta = JSON.parse(
 
 
 const mesc = document.getElementById("msc")
-
 
 // =========================
 // LOGIN
@@ -52,6 +50,11 @@ const loginbtn =
 // ATUALIZAR TELA
 // =========================
 
+if (conta) {
+	mesc.style.display = "block"
+} else {
+	mesc.style.display = "none"
+}
 function atualizarTela() {
 
     if (conta) {

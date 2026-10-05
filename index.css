@@ -408,3 +408,56 @@ a:hover {
         font-size: 32px;
     }
 }
+
+.wallet {
+    position: relative;
+}
+
+.textLS {
+    margin: 0 0 22px;
+
+    font-size: 28px;
+    font-weight: 800;
+
+    letter-spacing: -0.8px;
+}
+
+.textLS::after {
+    content: "";
+
+    display: block;
+
+    width: 38px;
+    height: 3px;
+
+    margin-top: 8px;
+
+    border-radius: 999px;
+
+    background: linear-gradient(
+        90deg,
+        var(--blue),
+        var(--purple)
+    );
+}
+
+#signupbtn,
+#loginbtn {
+    margin-bottom: 10px;
+
+    font-size: 12px;
+}
+
+.status {
+    justify-content: center;
+}
+
+.wallet > a {
+    display: block;
+
+    margin-top: 18px;
+
+    text-align: center;
+
+    font-size: 13px;
+}

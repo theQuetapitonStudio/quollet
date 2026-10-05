@@ -1,5 +1,3 @@
-import { comprar } from "./compras/produtos.js"
-
 const API =
     "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1"
 

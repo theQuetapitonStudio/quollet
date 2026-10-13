@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quollet - QMW Edition 1</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at top left, #202060 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #321052 0%, transparent 35%),
+                #080810;
+            color: #f5f5ff;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: min(100%, 1000px);
+            margin: auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .logo {
+            display: inline-block;
+            padding: 8px 16px;
+            border: 1px solid #5d5df5;
+            border-radius: 999px;
+            color: #9c9cff;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+        }
+
+        header h1 {
+            font-size: clamp(38px, 8vw, 72px);
+            line-height: 1;
+            background: linear-gradient(90deg, #ffffff, #8585ff, #d47cff);
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+        }
+
+        header p {
+            color: #aaaac0;
+            font-size: 17px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 22px;
+        }
+
+        .card {
+            background: rgba(20, 20, 35, 0.88);
+            border: 1px solid #292945;
+            border-radius: 22px;
+            padding: 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .card h2 {
+            font-size: 25px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 span {
+            color: #8585ff;
+        }
+
+        .card p {
+            color: #bdbdca;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .date {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .date-box {
+            background: #11111e;
+            border: 1px solid #292945;
+            border-radius: 14px;
+            padding: 17px;
+        }
+
+        .date-box small {
+            display: block;
+            color: #77778e;
+            margin-bottom: 6px;
+        }
+
+        .date-box strong {
+            color: white;
+            font-size: 17px;
+        }
+
+        .rules {
+            margin-top: 20px;
+            padding: 17px;
+            border-radius: 14px;
+            background: rgba(255, 70, 100, 0.06);
+            border: 1px solid rgba(255, 70, 100, 0.2);
+        }
+
+        .rules strong {
+            color: #ff7188;
+        }
+
+        .prizes {
+            display: grid;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .prize {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 17px;
+            background: #11111e;
+            border: 1px solid #292945;
+            border-radius: 13px;
+        }
+
+        .prize span {
+            color: #9d9db0;
+        }
+
+        .prize strong {
+            color: #d6d6ff;
+        }
+
+        .top1 {
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 15px;
+            background: linear-gradient(
+                135deg,
+                rgba(130, 100, 255, 0.12),
+                rgba(220, 100, 255, 0.06)
+            );
+            border: 1px solid #51417d;
+        }
+
+        .top1 strong {
+            color: #b59cff;
+        }
+
+        .signup {
+            position: sticky;
+            top: 20px;
+        }
+
+        .signup h2 {
+            font-size: 30px;
+        }
+
+        .signup .subtitle {
+            color: #89899d;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #d5d5e0;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 16px;
+            border-radius: 12px;
+            border: 1px solid #34344f;
+            background: #0d0d17;
+            color: white;
+            outline: none;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #7777ff;
+            box-shadow: 0 0 0 3px rgba(100, 100, 255, 0.12);
+        }
+
+        .warning {
+            margin: 17px 0;
+            color: #8f8fa3;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        button {
+            width: 100%;
+            border: 0;
+            padding: 16px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #6868ff, #a65cff);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.12);
+            box-shadow: 0 10px 30px rgba(110, 90, 255, 0.25);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        footer {
+            text-align: center;
+            color: #55556a;
+            font-size: 13px;
+            margin-top: 35px;
+        }
+
+        @media (max-width: 750px) {
+            body {
+                padding: 25px 14px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .signup {
+                position: static;
+            }
+
+            .date {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <div class="logo">QUOLLET MATH WORLD</div>
+
+        <h1>QMW — Edition 1</h1>
+
+        <p>
+            Uma competição feita para transformar matemática em desafio.
+        </p>
+    </header>
+
+    <div class="grid">
+
+        <main>
+
+            <section class="card">
+
+                <h2>🧮 Como & quando <span>vai ocorrer?</span></h2>
+
+                <p>
+                    O <strong>QMW (Quollet Math World)</strong> é uma competição
+                    que incentiva a matemática através das 4 operações e da
+                    raiz quadrada.
+                </p>
+
+                <div class="date">
+
+                    <div class="date-box">
+                        <small>INSCRIÇÕES</small>
+                        <strong>20 de outubro de 2026</strong>
+                    </div>
+
+                    <div class="date-box">
+                        <small>COMPETIÇÃO</small>
+                        <strong>15 → 17 de novembro</strong>
+                    </div>
+
+                </div>
+
+                <div class="rules">
+                    <strong>⚠️ Regras durante a competição</strong>
+
+                    <p style="margin-top: 8px;">
+                        Não é permitido usar calculadora, pedir ajuda ou
+                        utilizar qualquer outro recurso externo.
+                    </p>
+
+                    <p style="margin-bottom: 0;">
+                        Para confirmar a realização da prova, os participantes
+                        deverão enviar fotos dos seus rascunhos em papel.
+                    </p>
+                </div>
+
+            </section>
+
+            <section class="card" style="margin-top: 22px;">
+
+                <h2>🏆 Premiação</h2>
+
+                <p>
+                    Os participantes que ficarem entre os melhores colocados
+                    receberão recompensas em QNK.
+                </p>
+
+                <div class="prizes">
+
+                    <div class="prize">
+                        <span>QNK-BASE</span>
+                        <strong>5.000</strong>
+                    </div>
+
+                    <div class="prize">
+                        <span>QNK-UNAYKY</span>
+                        <strong>500</strong>
+                    </div>
+
+                    <div class="prize">
+                        <span>QNK-BOWK</span>
+                        <strong>10.000</strong>
+                    </div>
+
+                </div>
+
+                <div class="top1">
+                    <strong>🥇 E o Top 1?</strong>
+
+                    <p style="margin-top: 9px; margin-bottom: 0;">
+                        Após o campeonato, nossa equipe entrará em contato
+                        com o primeiro colocado para ajudar no desenvolvimento
+                        matemático e, possivelmente, indicá-lo para outros
+                        campeonatos e oportunidades.
+                    </p>
+                </div>
+
+            </section>
+
+        </main>
+
+        <aside>
+
+            <section class="card signup">
+
+                <h2>🚀 Participar</h2>
+
+                <p class="subtitle">
+                    Faça sua inscrição para o QMW Edition 1.
+                </p>
+
+                <label for="EINP">
+                    E-mail para inscrição
+                </label>
+
+                <input
+                    id="EINP"
+                    type="email"
+                    placeholder="seu@email.com"
+                    autocomplete="email"
+                >
+
+                <p class="warning">
+                    📌 Pedimos que você coloque seu e-mail para receber avisos
+                    importantes sobre a competição.
+                </p>
+
+                <p class="warning">
+                    Caso você não participe no período da competição,
+                    sua inscrição será cancelada.
+                </p>
+
+                <button id="cobtn">
+                    Entrar no QMW →
+                </button>
+
+            </section>
+
+        </aside>
+
+    </div>
+
+    <footer>
+        Quollet • QMW Edition 1 • 2026
+    </footer>
+
+</div>
+
+<script src="./index.js"></script>
+
+</body>
+</html>

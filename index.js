@@ -1,7 +1,7 @@
 const API =
     "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1"
 // =========================
-// CONTA SALVA
+// SAVED ACCOUNT
 // =========================
 
 let conta = JSON.parse(
@@ -36,7 +36,7 @@ const SUP = {
 
 
 // =========================
-// BOTÕES
+// BUTTONS
 // =========================
 
 const signupbtn =
@@ -47,7 +47,7 @@ const loginbtn =
 
 
 // =========================
-// ATUALIZAR TELA
+// UPDATE SCREEN
 // =========================
 
 if (conta) {
@@ -59,9 +59,9 @@ function atualizarTela() {
 
     if (conta) {
 
-        // Tem conta:
-        // esconde login/signup
-        // mostra msc
+        // Has account:
+        // hide login/signup
+        // show msc
 
         LS.root.style.display = "none"
         SUP.root.style.display = "none"
@@ -72,9 +72,9 @@ function atualizarTela() {
 
     } else {
 
-        // Não tem conta:
-        // mostra login
-        // esconde signup e msc
+        // No account:
+        // show login
+        // hide signup and msc
 
         LS.root.style.display = "block"
         SUP.root.style.display = "none"
@@ -89,7 +89,7 @@ function atualizarTela() {
 
 
 // =========================
-// IR PARA SIGNUP
+// GO TO SIGNUP
 // =========================
 
 signupbtn.addEventListener("click", () => {
@@ -101,7 +101,7 @@ signupbtn.addEventListener("click", () => {
 
 
 // =========================
-// VOLTAR PARA LOGIN
+// GO BACK TO LOGIN
 // =========================
 
 loginbtn.addEventListener("click", () => {
@@ -128,7 +128,7 @@ SUP.cbtn.addEventListener("click", async () => {
 
 
         if (!discord_id || !password) {
-            alert("Preencha tudo.")
+            alert("Please fill in all fields.")
             return
         }
 
@@ -158,8 +158,8 @@ SUP.cbtn.addEventListener("click", async () => {
         if (!data.success) {
 
             alert(
-                "ERRO: " +
-                (data.error || "Erro desconhecido")
+                "ERROR: " +
+                (data.error || "Unknown error")
             )
 
             return
@@ -175,7 +175,7 @@ SUP.cbtn.addEventListener("click", async () => {
         )
 
 
-        alert("Wallet criada!")
+        alert("Wallet created!")
 
 
         atualizarTela()
@@ -187,7 +187,7 @@ SUP.cbtn.addEventListener("click", async () => {
         console.error(erro)
 
         alert(
-            "Erro ao conectar com o servidor."
+            "Error connecting to the server."
         )
 
     }
@@ -211,7 +211,7 @@ LS.cbtn.addEventListener("click", async () => {
 
 
         if (!discord_id || !password) {
-            alert("Preencha tudo.")
+            alert("Please fill in all fields.")
             return
         }
 
@@ -241,8 +241,8 @@ LS.cbtn.addEventListener("click", async () => {
         if (!data.success) {
 
             alert(
-                "ERRO: " +
-                (data.error || "Login inválido")
+                "ERROR: " +
+                (data.error || "Invalid login")
             )
 
             return
@@ -256,15 +256,16 @@ LS.cbtn.addEventListener("click", async () => {
             "qct_conta",
             JSON.stringify(conta)
         )
+		localStorage.setItem("pwrd", password)
 
 
         alert(
-            "Login realizado como " +
+            "Logged in as " +
             conta.username
         )
 
 
-        // Mostra a área da conta
+        // Show account area
         atualizarTela()
 
         atualizarSaldo()
@@ -275,7 +276,7 @@ LS.cbtn.addEventListener("click", async () => {
         console.error(erro)
 
         alert(
-            "Erro ao conectar com o servidor."
+            "Error connecting to the server."
         )
 
     }
@@ -283,7 +284,7 @@ LS.cbtn.addEventListener("click", async () => {
 })
 
 // =========================
-// PEGAR INFORMAÇÕES
+// FETCH INFORMATION
 // =========================
 
 async function pegarSaldo(discord_id) {
@@ -298,7 +299,7 @@ async function pegarSaldo(discord_id) {
 
 
 // =========================
-// ATUALIZAR SALDO
+// UPDATE BALANCE
 // =========================
 
 async function atualizarSaldo() {
@@ -328,8 +329,6 @@ async function atualizarSaldo() {
             "qct_conta",
             JSON.stringify(conta)
         )
-
-
         const stxt =
             document.getElementById("stxt")
 
@@ -337,19 +336,19 @@ async function atualizarSaldo() {
         if (stxt) {
 
             stxt.innerHTML =
-                `Seu saldo: ${conta.saldo} QUENOKY-BASE<br>${conta.saldo_unayky} QUENOKY_UNAUKY`
+                `Your balance: ${conta.saldo} QNK-BASE<br>${conta.saldo_unayky} QNK-UNAYKY<br>${conta.saldo_bowk} QNK-BOWK`
 
         }
 
         if (welcometxt) {
             welcometxt.innerHTML = `
-            Olá <span style="color: red">${conta.username}</span>! Seja bem vindo a sua Wallet <i>Quollet</i>`
+            Hello <span style="color: red">${conta.username}</span>! Welcome to your Quollet Wallet`
         }
 
     } catch (erro) {
 
         console.error(
-            "Erro ao atualizar saldo:",
+            "Error updating balance:",
             erro
         )
 
@@ -359,7 +358,7 @@ async function atualizarSaldo() {
 
 
 // =========================
-// ATUALIZA A CADA 5 SEGUNDOS
+// UPDATE EVERY 5 SECONDS
 // =========================
 
 setInterval(
@@ -369,7 +368,7 @@ setInterval(
 
 
 // =========================
-// INICIALIZA
+// INITIALIZE
 // =========================
 
 atualizarTela()

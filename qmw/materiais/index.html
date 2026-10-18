@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QMW — Materiais de Estudo | Quollet Math World</title>
+<style>
+  :root{
+    --bg:#080a12; --card:#111522; --card2:#171c2c; --text:#f4f6ff;
+    --muted:#aab2ca; --blue:#4d8dff; --pink:#ff4da6; --green:#49e6a2;
+    --red:#ff5d70; --line:#28304a; --yellow:#ffd166;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    color:var(--text);background:
+      radial-gradient(circle at 10% 0%,#16244c 0,transparent 28%),
+      radial-gradient(circle at 90% 10%,#3a1230 0,transparent 24%),var(--bg);
+    line-height:1.6;
+  }
+  header{max-width:1050px;margin:auto;padding:72px 22px 42px}
+  .tag{display:inline-block;padding:7px 12px;border:1px solid #3b4668;border-radius:999px;color:#cdd6f4;font-size:13px}
+  h1{font-size:clamp(42px,8vw,82px);line-height:.95;margin:20px 0 14px;letter-spacing:-4px}
+  h1 span{background:linear-gradient(90deg,var(--blue),var(--pink));-webkit-background-clip:text;color:transparent}
+  .lead{font-size:18px;color:var(--muted);max-width:700px}
+  nav{position:sticky;top:0;z-index:5;background:#080a12e8;backdrop-filter:blur(12px);border-block:1px solid #20263a}
+  nav div{max-width:1050px;margin:auto;padding:10px 22px;display:flex;gap:8px;overflow:auto}
+  nav a{color:#c8d0e8;text-decoration:none;white-space:nowrap;padding:7px 11px;border-radius:8px;font-size:14px}
+  nav a:hover{background:#1a2031;color:white}
+  main{max-width:1050px;margin:auto;padding:30px 22px 80px}
+  section{margin:52px 0}
+  h2{font-size:31px;margin-bottom:7px}
+  h3{margin-top:0}
+  .subtitle{color:var(--muted);margin-top:0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:15px}
+  .card,.example,.quiz{
+    background:linear-gradient(145deg,#121725,#0e121d);border:1px solid var(--line);
+    border-radius:18px;padding:20px;box-shadow:0 12px 35px #0004
+  }
+  .math{
+    font-family:"Cascadia Code",Consolas,monospace;background:#090c14;border:1px solid #29314a;
+    padding:15px;border-radius:12px;font-size:18px;overflow:auto;margin:13px 0
+  }
+  .step{padding:10px 13px;border-left:3px solid var(--blue);background:#101624;margin:8px 0;border-radius:0 8px 8px 0}
+  .tip{border-left-color:var(--pink)}
+  .warning{border-left-color:var(--yellow)}
+  code{color:#b9d0ff}
+  .order{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .order b{background:#1b2234;border:1px solid #303a57;padding:8px 11px;border-radius:9px}
+  button{
+    width:100%;text-align:left;border:1px solid #303954;background:#151b2a;color:white;
+    padding:12px 14px;border-radius:10px;margin:6px 0;cursor:pointer;font-size:15px
+  }
+  button:hover{border-color:#648cff;background:#1a2235}
+  button.correct{border-color:var(--green);background:#123126}
+  button.wrong{border-color:var(--red);background:#351820}
+  .result{min-height:28px;font-weight:700;margin-top:8px}
+  .score{font-size:20px;padding:15px;border-radius:13px;background:#121827;border:1px solid var(--line)}
+  footer{text-align:center;color:#7f899f;padding:35px 15px;border-top:1px solid #20263a}
+  @media(max-width:600px){h1{letter-spacing:-2px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <span class="tag">Material oficial de estudo</span>
+  <h1><span>QMW</span><br>Quollet Math World</h1>
+  <p class="lead">Treino prático para cálculos de múltipla escolha envolvendo as quatro operações, raiz quadrada, potências simples, números negativos e muitos parênteses.</p>
+</header>
+
+<nav><div>
+  <a href="#regras">Regras</a><a href="#operacoes">4 operações</a><a href="#raiz">Raiz</a>
+  <a href="#parenteses">Parênteses</a><a href="#negativos">Negativos</a><a href="#misturados">Misturados</a><a href="#simulado">Simulado</a>
+</div></nav>
+
+<main>
+<section id="regras">
+  <h2>1. A ideia principal</h2>
+  <p class="subtitle">Uma expressão grande fica pequena quando você resolve uma parte de cada vez.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Ordem de resolução</h3>
+      <div class="order"><b>1. ( )</b><b>2. potências / √</b><b>3. × e ÷</b><b>4. + e −</b></div>
+      <p>Quando duas operações têm a mesma prioridade, resolva da esquerda para a direita.</p>
+    </div>
+    <div class="card">
+      <h3>Não tente fazer tudo mentalmente</h3>
+      <p>Quebre a expressão. Cada linha deve transformar uma parte complicada em algo mais simples.</p>
+      <div class="math">((8 + 4) ÷ 3) × 2<br>→ (12 ÷ 3) × 2<br>→ 4 × 2<br>→ 8</div>
+    </div>
+  </div>
+</section>
+
+<section id="operacoes">
+  <h2>2. As quatro operações</h2>
+  <p class="subtitle">Adição, subtração, multiplicação e divisão aparecem misturadas.</p>
+  <div class="example">
+    <h3>Exemplo</h3>
+    <div class="math">12 - 3 × 2 + 8 ÷ 4</div>
+    <div class="step">Primeiro multiplicação e divisão: <b>3 × 2 = 6</b> e <b>8 ÷ 4 = 2</b>.</div>
+    <div class="step">A expressão vira <b>12 - 6 + 2</b>.</div>
+    <div class="step">Da esquerda para a direita: <b>6 + 2 = 8</b>.</div>
+  </div>
+</section>
+
+<section id="raiz">
+  <h2>3. Raiz quadrada e potência</h2>
+  <p class="subtitle">√x pergunta: “qual número multiplicado por ele mesmo resulta em x?”</p>
+  <div class="grid">
+    <div class="card"><div class="math">√9 = 3</div><p>Porque <b>3 × 3 = 9</b>.</p></div>
+    <div class="card"><div class="math">√(4²) = √16 = 4</div><p>Primeiro <b>4² = 16</b>. Depois tiramos a raiz.</p></div>
+    <div class="card"><div class="math">√(3²) = 3</div><p>No tipo de exercício do QMW, isso pode simplificar rapidamente uma expressão maior.</p></div>
+  </div>
+</section>
+
+<section id="parenteses">
+  <h2>4. Parênteses. Muitos parênteses.</h2>
+  <p class="subtitle">Comece pelos grupos mais internos.</p>
+  <div class="example">
+    <div class="math">((7 - 3) × (2 + 4)) ÷ (3 × 2)</div>
+    <div class="step"><b>(7 - 3) = 4</b> e <b>(2 + 4) = 6</b>.</div>
+    <div class="step">Também: <b>(3 × 2) = 6</b>.</div>
+    <div class="step">Agora temos <b>(4 × 6) ÷ 6 = 24 ÷ 6 = 4</b>.</div>
+    <div class="step tip"><b>Dica:</b> trate cada parêntese como uma “mini-conta”.</div>
+  </div>
+</section>
+
+<section id="negativos">
+  <h2>5. Cuidado com números negativos</h2>
+  <div class="grid">
+    <div class="card"><div class="math">3 × (-1) = -3</div><p>Positivo × negativo = negativo.</p></div>
+    <div class="card"><div class="math">-3 × (-2) = 6</div><p>Negativo × negativo = positivo.</p></div>
+    <div class="card"><div class="math">5 - (-3) = 8</div><p>Subtrair um número negativo equivale a adicionar o positivo.</p></div>
+  </div>
+</section>
+
+<section id="misturados">
+  <h2>6. Exemplo no estilo QMW</h2>
+  <div class="example">
+    <div class="math">√(3²) - (3 × -1)</div>
+    <div class="step">Calcule a potência: <b>3² = 9</b>.</div>
+    <div class="step">Calcule a raiz: <b>√9 = 3</b>.</div>
+    <div class="step">Resolva o outro parêntese: <b>3 × -1 = -3</b>.</div>
+    <div class="step">Agora: <b>3 - (-3)</b>.</div>
+    <div class="step">Subtrair negativo vira soma: <b>3 + 3 = 6</b>.</div>
+    <div class="step tip"><b>Resposta: 6.</b></div>
+  </div>
+
+  <div class="example" style="margin-top:15px">
+    <h3>Um pouco mais caótico</h3>
+    <div class="math">((√(5²) + 3) × (8 ÷ (2 + 2))) - (4 × -2)</div>
+    <div class="step">√(5²) = √25 = <b>5</b>.</div>
+    <div class="step">(2 + 2) = <b>4</b>, então 8 ÷ 4 = <b>2</b>.</div>
+    <div class="step">(5 + 3) × 2 = 8 × 2 = <b>16</b>.</div>
+    <div class="step">(4 × -2) = <b>-8</b>.</div>
+    <div class="step">16 - (-8) = <b>24</b>.</div>
+  </div>
+</section>
+
+<section id="simulado">
+  <h2>7. Mini simulado</h2>
+  <p class="subtitle">Escolha uma alternativa. O resultado aparece na hora.</p>
+  <div id="quiz"></div>
+  <div class="score" id="score">Pontuação: 0 / 5</div>
+</section>
+</main>
+
+<footer>QMW — Quollet Math World • Material de estudo</footer>
+
+<script>
+const questions = [
+  {q:"√(3²) - (3 × -1)", a:["0","3","6","9"], correct:2, exp:"√9 = 3; 3×(-1) = -3; então 3 - (-3) = 6."},
+  {q:"((6 + 2) ÷ 4) × 3", a:["4","6","8","12"], correct:1, exp:"6+2=8; 8÷4=2; 2×3=6."},
+  {q:"√(4²) + (2 × 3) - 5", a:["3","5","7","9"], correct:1, exp:"√16=4; 2×3=6; 4+6-5=5."},
+  {q:"((9 - 5) × (3 + 1)) ÷ 2", a:["4","6","8","16"], correct:2, exp:"9-5=4; 3+1=4; 4×4=16; 16÷2=8."},
+  {q:"(√(6²) - (2 × -2)) ÷ 2", a:["2","3","5","10"], correct:2, exp:"√36=6; 2×(-2)=-4; 6-(-4)=10; 10÷2=5."}
+];
+
+let points=0, answered=Array(questions.length).fill(false);
+const root=document.getElementById("quiz");
+
+questions.forEach((x,i)=>{
+  const box=document.createElement("div");
+  box.className="quiz";
+  box.style.marginBottom="14px";
+  box.innerHTML=`<h3>Questão ${i+1}</h3><div class="math">${x.q}</div><div class="answers"></div><div class="result"></div>`;
+  const answers=box.querySelector(".answers");
+  x.a.forEach((choice,j)=>{
+    const b=document.createElement("button");
+    b.textContent=`${"ABCD"[j]}) ${choice}`;
+    b.onclick=()=>{
+      if(answered[i]) return;
+      answered[i]=true;
+      const buttons=[...answers.children];
+      buttons[x.correct].classList.add("correct");
+      if(j===x.correct){
+        points++;
+        box.querySelector(".result").textContent="✓ Correto! "+x.exp;
+        box.querySelector(".result").style.color="var(--green)";
+      } else {
+        b.classList.add("wrong");
+        box.querySelector(".result").textContent="✗ Não. "+x.exp;
+        box.querySelector(".result").style.color="var(--red)";
+      }
+      document.getElementById("score").textContent=`Pontuação: ${points} / 5`;
+    };
+    answers.appendChild(b);
+  });
+  root.appendChild(box);
+});
+</script>
+</body>
+</html>

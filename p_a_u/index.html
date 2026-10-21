@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quollet — Pay User</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                radial-gradient(circle at top left, #24244a 0%, transparent 40%),
+                radial-gradient(circle at bottom right, #172c50 0%, transparent 40%),
+                #090914;
+
+            color: #fff;
+        }
+
+        .container {
+            width: min(430px, 92%);
+            padding: 32px;
+
+            background: rgba(18, 18, 35, 0.88);
+            border: 1px solid rgba(120, 120, 255, 0.25);
+            border-radius: 22px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.45),
+                0 0 35px rgba(80, 80, 255, 0.08);
+
+            backdrop-filter: blur(14px);
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #8f8fff;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            margin: 9px 0 28px;
+            color: #9999ad;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #b7b7c9;
+            margin-bottom: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 17px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 15px;
+
+            border: 1px solid #292943;
+            border-radius: 12px;
+
+            outline: none;
+
+            background: #111121;
+            color: #fff;
+
+            font-size: 15px;
+
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s,
+                background 0.2s;
+        }
+
+        input::placeholder {
+            color: #626276;
+        }
+
+        input:focus {
+            border-color: #7777ff;
+            background: #14142a;
+
+            box-shadow: 0 0 0 3px rgba(119, 119, 255, 0.12);
+        }
+
+        .currency {
+            position: relative;
+        }
+
+        .currency input {
+            padding-right: 105px;
+        }
+
+        .currency-label {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+
+            padding: 6px 9px;
+            border-radius: 7px;
+
+            background: #202044;
+            color: #a6a6ff;
+
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+
+            pointer-events: none;
+        }
+
+        .payment-info {
+            margin: 5px 0 22px;
+            padding: 13px 14px;
+
+            border-radius: 11px;
+
+            background: rgba(100, 100, 255, 0.07);
+            border: 1px solid rgba(100, 100, 255, 0.12);
+
+            color: #9e9eb5;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .payment-info strong {
+            color: #aaaaff;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+
+            border: none;
+            border-radius: 12px;
+
+            background: linear-gradient(135deg, #6666ff, #8d65ff);
+            color: white;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow: 0 8px 25px rgba(102, 102, 255, 0.2);
+
+            transition:
+                transform 0.15s,
+                filter 0.15s,
+                box-shadow 0.15s;
+        }
+
+        button:hover {
+            filter: brightness(1.12);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 30px rgba(102, 102, 255, 0.3);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+
+            color: #505066;
+            font-size: 11px;
+        }
+
+        .footer span {
+            color: #7777a0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+
+        <div class="logo">QUOLLET</div>
+
+        <h1>Pay a user</h1>
+
+        <p class="subtitle">
+            Envie QNK diretamente para outro usuário da Quollet.
+        </p>
+
+        <div class="section-title">USUÁRIO</div>
+
+        <div class="input-group">
+            <input
+                id="userid"
+                type="text"
+                placeholder="User ID"
+                autocomplete="off"
+            >
+        </div>
+
+        <div class="section-title">VALOR DO PAGAMENTO</div>
+
+        <div class="input-group currency">
+            <input
+                id="valueinp"
+                type="number"
+                placeholder="Digite o valor"
+                min="0"
+                step="any"
+            >
+
+            <div class="currency-label">
+                QNK-BASE
+            </div>
+        </div>
+
+        <div class="payment-info">
+            <strong>Pagamento em QNK-BASE</strong><br>
+            O valor informado será enviado exclusivamente na unidade
+            <strong>BASE</strong> da QNK.
+        </div>
+
+        <div class="section-title">SENHA</div>
+
+        <div class="input-group">
+            <input
+                id="senhainp"
+                type="password"
+                placeholder="Sua senha"
+                autocomplete="current-password"
+            >
+        </div>
+
+        <button id="confirmbtn">
+            Confirmar pagamento
+        </button>
+
+        <div class="footer">
+            Quollet Wallet · <span>QNK-BASE</span>
+        </div>
+
+    </main>
+
+    <script src="./index.js"></script>
+
+</body>
+</html>

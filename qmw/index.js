@@ -4,7 +4,7 @@ let senha = localStorage.getItem("pwrd");
 const SEAPI =
     "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/set-cenyk";
 
-if (!conta) {
+if (conta === null) {
 
     alert("Você precisa criar uma conta em quollet.vercel.app");
 

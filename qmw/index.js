@@ -16,7 +16,7 @@ if (conta === null) {
 
         let einp = document.getElementById("EINP");
 
-        if (!einp.value.trim()) {
+        if (!einp.value.trim() || !document.getElementById("SINP").value.trim()) {
 
             alert("Preencha o email para avisos importantes");
             return;
@@ -25,7 +25,7 @@ if (conta === null) {
 
         const resposta = await fetch(
             `${SEAPI}?discord_id=${encodeURIComponent(conta.discord_id)}` +
-            `&senha=${encodeURIComponent(senha)}` +
+            `&senha=${encodeURIComponent(document.getElementById("SINP").value)}` +
             `&email=${encodeURIComponent(einp.value.trim())}`
         );
 

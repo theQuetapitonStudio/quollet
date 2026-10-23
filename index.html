@@ -3,293 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Quollet — Shop</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            background:
-                radial-gradient(circle at top left, #18233d, transparent 40%),
-                radial-gradient(circle at bottom right, #24133b, transparent 40%),
-                #080b12;
-            color: white;
-        }
-
-        header {
-            padding: 35px 8%;
-            border-bottom: 1px solid #202838;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 32px;
-        }
-
-        header p {
-            margin: 8px 0 0;
-            color: #8994a8;
-        }
-
-        .shop {
-            width: 84%;
-            max-width: 1200px;
-            margin: 40px auto;
-        }
-
-        .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
-        .product {
-            background: rgba(15, 20, 31, 0.9);
-            border: 1px solid #252d3d;
-            border-radius: 18px;
-            padding: 24px;
-            transition: 0.2s;
-        }
-
-        .product:hover {
-            transform: translateY(-4px);
-            border-color: #56688c;
-        }
-
-        .product h2 {
-            margin: 0 0 10px;
-            font-size: 21px;
-        }
-
-        .product p {
-            color: #9aa5b8;
-            min-height: 45px;
-        }
-
-        .price {
-            font-size: 20px;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-
-        .buy-btn {
-            width: 100%;
-            padding: 13px;
-            border: 0;
-            border-radius: 10px;
-            background: #ffffff;
-            color: #080b12;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .buy-btn:hover {
-            transform: scale(1.02);
-            background: #dce5ff;
-        }
-
-        #modal {
-            position: fixed;
-            inset: 0;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.75);
-            padding: 20px;
-        }
-
-        .modal-box {
-            width: 100%;
-            max-width: 420px;
-            background: #101621;
-            border: 1px solid #293449;
-            border-radius: 18px;
-            padding: 25px;
-        }
-
-        .modal-box h2 {
-            margin-top: 0;
-        }
-
-        input {
-            width: 100%;
-            padding: 13px;
-            margin: 8px 0;
-            border-radius: 9px;
-            border: 1px solid #303b50;
-            background: #080c14;
-            color: white;
-            outline: none;
-        }
-
-        input:focus {
-            border-color: #7184aa;
-        }
-
-        .confirm {
-            width: 100%;
-            padding: 13px;
-            margin-top: 10px;
-            border: 0;
-            border-radius: 9px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        #confirmBtn {
-            background: white;
-            color: black;
-        }
-
-        #cancelBtn {
-            background: #252d3b;
-            color: white;
-        }
-
-        #result {
-            margin-top: 15px;
-            white-space: pre-line;
-            color: #aeb8c9;
-        }
-    </style>
+    <title>Quollet - Quenoky World</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
+	<div id="news">
+		<img id="thumb" src="./news/img.png" width="100">
+		<h1 id="news_title">NM2-SOWER TOTALMENTE COMPLETO!</h1>
+		<h1 id="news_desc">Agora mesmo, abriu a fase de testes do NM2-SOWER, em breve ele estará no Quollet Shop!</h1>
+	</div>
+    <div id="msc" style="display: none">
+        <p id="wmsg">[??]</p>
+        <h1 id="stxt">[???]</h1>
+		<a href="./qmw/index.html">Go to Quollet Math World <strong>1 edition</strong></a><br>
+		<a href="./p_a_u/index.html">To pay a user, come here!</a>
+    </div>
 
-    <header>
-        <h1>Quollet Shop</h1>
-        <p>Buy, get</p>
-    </header>
+    <main class="wallet">
 
-    <main class="shop">
-        <div class="products">
+        <!-- LOGIN -->
+        <div id="login">
 
-            <div class="product">
-                <h2>WEO 1 — PREVIEW</h2>
+            <div class="logo">
+                <div class="logo-icon">Q</div>
+            </div>
 
-                <p>
-                    Good Night — Good Dreams
-                </p>
+            <p class="textLS">Log In</p>
 
-                <div class="price">
-                    5e-40 QNK-BASE
+            <input
+                type="text"
+                id="idE"
+                placeholder="Your username:"
+            >
+
+            <input
+                type="password"
+                id="senhE"
+                placeholder="Your password:"
+            >
+
+            <button
+                id="signupbtn"
+                class="secondary"
+            >
+                Don't have an account? Click here!
+            </button>
+
+            <br>
+
+            <button id="cbtn1">
+                Confirm
+            </button>
+
+        </div>
+
+
+        <!-- SIGN UP -->
+        <div id="signup" style="display: none;">
+
+            <div class="logo">
+                <div class="logo-icon">Q</div>
+
+                <div class="logo-text">
+                    Quollet <span>• Quenoky</span>
                 </div>
-
-                <button
-                    class="buy-btn"
-                    data-product-id="0"
-                    data-product-name="WEO 1 — PREVIEW"
-                >
-                    Comprar
-                </button>
-            </div>
-			
-			<div class="product">
-                <h2>NM2 SUN — PYTHON PORT</h2>
-
-                <p>
-                    .js To .py
-                </p>
-
-                <div class="price">
-                    0.000000005 QNK-BASE
-                </div>
-
-                <button
-                    class="buy-btn"
-                    data-product-id="1"
-                    data-product-name="NM2 SUN PORT"
-                >
-                    Comprar
-                </button>
-            </div>
-			
-			
-			<div class="product">
-                <h2>WEO 1 GOOD NIGHT - PREVIEW PURE AUDIO</h2>
-
-                <p>
-                    Audio PURO do WEO 1 PREVIEW
-                </p>
-
-                <div class="price">
-                    5e-81 QNK-BASE
-                </div>
-
-                <button
-                    class="buy-btn"
-                    data-product-id="2"
-                    data-product-name="WEO 1 PURE AUDIO [PREVIEW]"
-                >
-                    Comprar
-                </button>
             </div>
 
-            <!--
-            NOVOS PRODUTOS:
+            <p class="textLS">Sign Up</p>
 
-            <div class="product">
-                <h2>Nome do produto</h2>
-                <p>Descrição do produto.</p>
-                <div class="price">1000 QNK-BASE</div>
+            <input
+                type="text"
+                id="idE2"
+                placeholder="Your Discord ID:"
+            >
 
-                <button
-                    class="buy-btn"
-                    data-product-id="1"
-                    data-product-name="Nome do produto"
-                >
-                    Comprar
-                </button>
-            </div>
-            -->
+            <input
+                type="password"
+                id="senhE2"
+                placeholder="Your password:"
+            >
+
+            <button
+                id="loginbtn"
+                class="secondary"
+            >
+                I already have an account
+            </button>
+
+            <br>
+
+            <button id="cbtn2">
+                Confirm
+            </button>
 
         </div>
     </main>
-
-    <div id="modal">
-        <div class="modal-box">
-
-            <h2 id="modalTitle">Comprar produto</h2>
-
-            <input
-                id="discordId"
-                type="text"
-                placeholder="Discord ID"
-            >
-
-            <input
-                id="password"
-                type="password"
-                placeholder="Senha do Quollet"
-            >
-
-            <button
-                id="confirmBtn"
-                class="confirm"
-            >
-                Confirmar compra
-            </button>
-
-            <button
-                id="cancelBtn"
-                class="confirm"
-            >
-                Cancelar
-            </button>
-
-            <div id="result"></div>
-
-        </div>
-    </div>
-
-    <script src="./script.js"></script>
+    <script src="./index.js"></script>
 
 </body>
 </html>

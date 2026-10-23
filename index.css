@@ -1,6 +1,356 @@
+```css
+* {
+	box-sizing: border-box;
+}
+
 body {
+	margin: 0;
+	min-height: 100vh;
+
+	font-family: Arial, Helvetica, sans-serif;
+
+	background:
+		radial-gradient(circle at top, #182020 0%, transparent 40%),
+		linear-gradient(135deg, #000 0%, #090d0d 50%, #101818 100%);
+
+	color: #fff;
 	text-align: center;
-	font-family: sans-serif;
-	background: linear-gradient(to right, #000,#231);
+}
+
+/* =========================
+   NEWS
+========================= */
+
+#news {
+	width: min(900px, 92%);
+	margin: 35px auto 30px;
+
+	background: linear-gradient(
+		145deg,
+		#111818,
+		#080b0b
+	);
+
+	border: 1px solid #293333;
+	border-radius: 18px;
+
+	overflow: hidden;
+
+	box-shadow:
+		0 15px 50px rgba(0, 0, 0, 0.65),
+		0 0 35px rgba(0, 255, 200, 0.05);
+
+	text-align: left;
+
+	transition: 0.25s ease;
+}
+
+#news:hover {
+	transform: translateY(-3px);
+
+	border-color: #3d5555;
+
+	box-shadow:
+		0 20px 60px rgba(0, 0, 0, 0.8),
+		0 0 45px rgba(0, 255, 200, 0.08);
+}
+
+/* Faixa superior */
+
+#news::before {
+	content: "NENEMY NEWS  •  QUOLLET";
+
+	display: block;
+
+	padding: 10px 18px;
+
+	background: #101717;
+
+	border-bottom: 1px solid #293333;
+
+	color: #7fffd4;
+
+	font-size: 12px;
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+
+/* Thumbnail */
+
+#thumb {
+	display: block;
+
+	width: 100%;
+	max-height: 430px;
+
+	object-fit: cover;
+
+	background: #050707;
+
+	border-bottom: 1px solid #293333;
+}
+
+/* Título */
+
+#news_title {
+	margin: 22px 25px 10px;
+
+	font-size: clamp(24px, 4vw, 42px);
+	line-height: 1.05;
+
+	font-weight: 900;
+
+	color: #fff;
+
+	text-transform: uppercase;
+
+	letter-spacing: -1px;
+}
+
+/* Descrição */
+
+#news_desc {
+	margin: 0 25px 25px;
+
+	font-size: 15px;
+	line-height: 1.6;
+
+	font-weight: normal;
+
+	color: #aebaba;
+}
+
+/* =========================
+   LOGIN / WALLET
+========================= */
+
+.wallet {
+	width: min(430px, 90%);
+	margin: 40px auto 70px;
+}
+
+/* Caixa de login */
+
+#login,
+#signup {
+	padding: 30px;
+
+	background: rgba(10, 15, 15, 0.92);
+
+	border: 1px solid #273333;
+	border-radius: 20px;
+
+	box-shadow:
+		0 20px 60px rgba(0, 0, 0, 0.6);
+
+	backdrop-filter: blur(10px);
+}
+
+/* Logo */
+
+.logo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+
+	margin-bottom: 20px;
+}
+
+.logo-icon {
+	width: 55px;
+	height: 55px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	border-radius: 15px;
+
+	background: linear-gradient(135deg, #ffffff, #777);
+
+	color: #050505;
+
+	font-size: 28px;
+	font-weight: 900;
+
+	box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
+}
+
+.logo-text {
+	font-size: 22px;
+	font-weight: bold;
+}
+
+.logo-text span {
+	color: #777;
+	font-size: 13px;
+}
+
+/* Login title */
+
+.textLS {
+	font-size: 25px;
+	font-weight: bold;
+
+	margin: 10px 0 22px;
+
 	color: #fff;
 }
+
+/* Inputs */
+
+input {
+	width: 100%;
+
+	padding: 14px 15px;
+	margin: 7px 0;
+
+	border: 1px solid #303c3c;
+	border-radius: 10px;
+
+	background: #070a0a;
+
+	color: #fff;
+
+	font-size: 14px;
+
+	outline: none;
+
+	transition: 0.2s ease;
+}
+
+input::placeholder {
+	color: #657070;
+}
+
+input:focus {
+	border-color: #7fffd4;
+
+	box-shadow: 0 0 0 3px rgba(127, 255, 212, 0.08);
+}
+
+/* Botões */
+
+button {
+	width: 100%;
+
+	padding: 13px 15px;
+
+	margin-top: 10px;
+
+	border: none;
+	border-radius: 10px;
+
+	background: #fff;
+
+	color: #000;
+
+	font-weight: bold;
+	font-size: 14px;
+
+	cursor: pointer;
+
+	transition: 0.2s ease;
+}
+
+button:hover {
+	transform: translateY(-2px);
+
+	box-shadow: 0 8px 25px rgba(255, 255, 255, 0.12);
+}
+
+button:active {
+	transform: translateY(0);
+}
+
+/* Botão secundário */
+
+button.secondary {
+	background: transparent;
+
+	border: 1px solid #303c3c;
+
+	color: #9daaaa;
+
+	font-size: 12px;
+}
+
+button.secondary:hover {
+	border-color: #657777;
+	color: #fff;
+}
+
+/* =========================
+   LINKS
+========================= */
+
+#msc {
+	width: min(800px, 90%);
+	margin: 30px auto;
+}
+
+#msc a {
+	display: inline-block;
+
+	margin: 6px;
+
+	padding: 10px 15px;
+
+	border-radius: 9px;
+
+	border: 1px solid #293333;
+
+	background: #0d1212;
+
+	color: #9fffe0;
+
+	text-decoration: none;
+
+	transition: 0.2s ease;
+}
+
+#msc a:hover {
+	background: #172020;
+
+	border-color: #4d6666;
+
+	transform: translateY(-2px);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+	#news {
+		margin-top: 18px;
+		border-radius: 14px;
+	}
+
+	#news_title {
+		font-size: 26px;
+		margin: 18px;
+	}
+
+	#news_desc {
+		margin: 0 18px 20px;
+		font-size: 14px;
+	}
+
+	#news::before {
+		font-size: 10px;
+	}
+
+	.wallet {
+		margin-top: 25px;
+	}
+
+	#login,
+	#signup {
+		padding: 22px;
+	}
+
+}
+```

@@ -4,8 +4,7 @@ async function staking(discord_id) {
         {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 discord_id
@@ -22,7 +21,11 @@ const inp = document.getElementById("DIINP")
 btn.addEventListener("click", async () => {
     if (!inp.value) return
 
-    await staking(inp.value)
+    const resultado = await staking(inp.value)
 
-    alert("Done! QUANYK 3434 collected!")
+    if (resultado.sucesso) {
+        alert("Done! QUANYK 3434 collected!")
+    } else {
+        alert(resultado.erro)
+    }
 })

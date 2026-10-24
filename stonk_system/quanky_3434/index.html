@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quollet - QuaNyk 3434</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            color: #fff;
+
+            background:
+                radial-gradient(circle at top, #18204a 0%, transparent 45%),
+                radial-gradient(circle at bottom right, #351344 0%, transparent 40%),
+                #070812;
+        }
+
+        .container {
+            width: min(92%, 620px);
+            padding: 45px 35px;
+
+            text-align: center;
+
+            background: rgba(14, 16, 31, 0.88);
+
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.55),
+                inset 0 1px rgba(255, 255, 255, 0.05);
+
+            backdrop-filter: blur(15px);
+        }
+
+        .logo {
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: #8c8cff;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0;
+
+            font-size: clamp(30px, 6vw, 52px);
+            line-height: 1.05;
+
+            background: linear-gradient(
+                90deg,
+                #fff,
+                #9c9cff,
+                #ff8de7
+            );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            margin: 22px 0 8px;
+
+            font-size: 18px;
+            color: #c7c9df;
+        }
+
+        .limit {
+            display: inline-block;
+
+            margin: 12px 0 30px;
+            padding: 8px 15px;
+
+            border-radius: 999px;
+
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+
+            color: #9effc4;
+            background: rgba(80, 255, 150, 0.08);
+            border: 1px solid rgba(80, 255, 150, 0.18);
+        }
+
+        .form {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+
+            min-width: 0;
+
+            padding: 15px 17px;
+
+            color: white;
+            background: #0a0c18;
+
+            border: 1px solid #292d4a;
+            border-radius: 12px;
+
+            outline: none;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+        input::placeholder {
+            color: #666b89;
+        }
+
+        input:focus {
+            border-color: #777cff;
+            box-shadow: 0 0 0 3px rgba(119, 124, 255, 0.12);
+        }
+
+        button {
+            padding: 0 22px;
+
+            border: 0;
+            border-radius: 12px;
+
+            color: white;
+            background: linear-gradient(
+                135deg,
+                #646cff,
+                #a34dff
+            );
+
+            font-weight: bold;
+            font-size: 15px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 25px rgba(110, 90, 255, 0.35);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .info {
+            margin-top: 25px;
+
+            font-size: 12px;
+            line-height: 1.6;
+
+            color: #777b98;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 35px 22px;
+            }
+
+            .form {
+                flex-direction: column;
+            }
+
+            button {
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+
+        <div class="logo">QUOLLET</div>
+
+        <h1>Agora você consegue ganhar QNK</h1>
+
+        <p class="subtitle">
+            Ative seu staking e receba QNK automaticamente.
+        </p>
+
+        <div class="limit">
+            SEM LIMITE DE TEMPO
+        </div>
+
+        <div class="form">
+            <input
+                id="DIINP"
+                placeholder="Seu ID do Quollet"
+                autocomplete="off"
+            >
+
+            <button id="addbtn">
+                Adicionar
+            </button>
+        </div>
+
+        <p class="info">
+            Informe seu ID do Quollet para começar.
+        </p>
+
+    </main>
+
+    <script src="./index.js"></script>
+
+</body>
+</html>

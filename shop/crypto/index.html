@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Quollet Crypto Shop</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                Arial,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #18202d 0%,
+                    #090b0f 45%,
+                    #050608 100%
+                );
+
+            color: #f5f7fa;
+        }
+
+        header {
+            width: 100%;
+            padding: 22px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            border-bottom:
+                1px solid #20252d;
+
+            background:
+                rgba(5, 6, 8, 0.75);
+
+            backdrop-filter:
+                blur(12px);
+
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #f7931a;
+        }
+
+        .network {
+            font-size: 13px;
+            color: #858d99;
+        }
+
+        main {
+            width: min(920px, 92%);
+            margin: 0 auto;
+            padding: 80px 0;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .hero h1 {
+            margin: 0;
+
+            font-size:
+                clamp(40px, 7vw, 72px);
+
+            letter-spacing: -3px;
+        }
+
+        .hero h1 span {
+            color: #f7931a;
+        }
+
+        .hero p {
+            margin:
+                18px auto 0;
+
+            max-width: 580px;
+
+            color: #9299a5;
+
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .rate {
+            display: inline-block;
+
+            margin-top: 25px;
+            padding: 10px 16px;
+
+            border:
+                1px solid #303640;
+
+            border-radius: 999px;
+
+            color: #cbd1d9;
+
+            background:
+                rgba(255,255,255,0.03);
+
+            font-size: 14px;
+        }
+
+        .products {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(260px, 1fr)
+                );
+
+            gap: 20px;
+        }
+
+        .product {
+            padding: 26px;
+
+            border:
+                1px solid #242a33;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.055),
+                    rgba(255,255,255,0.015)
+                );
+
+            box-shadow:
+                0 20px 60px
+                rgba(0,0,0,0.25);
+        }
+
+        .coin-icon {
+            width: 58px;
+            height: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #f7931a;
+            color: #fff;
+
+            font-size: 29px;
+            font-weight: 900;
+
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 0 35px
+                rgba(247,147,26,0.22);
+        }
+
+        .product h2 {
+            margin: 0 0 8px;
+            font-size: 25px;
+        }
+
+        .product p {
+            margin: 0;
+
+            color: #858d99;
+
+            line-height: 1.5;
+        }
+
+        .product-rate {
+            margin-top: 22px;
+
+            font-size: 14px;
+            color: #c6ccd5;
+        }
+
+        .product-rate strong {
+            color: #f7931a;
+        }
+
+        .buy-btn {
+            width: 100%;
+
+            margin-top: 22px;
+            padding: 14px 18px;
+
+            border: 0;
+            border-radius: 12px;
+
+            background: #f7931a;
+            color: white;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                transform .15s,
+                filter .15s,
+                opacity .15s;
+        }
+
+        .buy-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+        }
+
+        .buy-btn:disabled {
+            cursor: not-allowed;
+            opacity: .55;
+            transform: none;
+        }
+
+        .buy-box {
+            display: none;
+
+            margin-top: 35px;
+            padding: 30px;
+
+            border:
+                1px solid #292f38;
+
+            border-radius: 20px;
+
+            background:
+                rgba(12, 15, 20, 0.9);
+
+            box-shadow:
+                0 25px 80px
+                rgba(0,0,0,0.35);
+        }
+
+        .buy-box.active {
+            display: block;
+            animation:
+                appear .2s ease;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .buy-title {
+            margin-bottom: 25px;
+        }
+
+        .buy-title h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .buy-title p {
+            margin:
+                7px 0 0;
+
+            color: #858d99;
+        }
+
+        .input-group {
+            margin-bottom: 17px;
+        }
+
+        .input-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 13px;
+            color: #aeb5bf;
+        }
+
+        .input-group input {
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border:
+                1px solid #303640;
+
+            border-radius: 11px;
+
+            outline: none;
+
+            background: #090b0f;
+            color: #fff;
+
+            font-size: 15px;
+
+            transition:
+                border-color .15s,
+                box-shadow .15s;
+        }
+
+        .input-group input:focus {
+            border-color: #f7931a;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(247,147,26,0.08);
+        }
+
+        .preview {
+            margin:
+                20px 0;
+
+            padding: 18px;
+
+            border:
+                1px solid #292f38;
+
+            border-radius: 13px;
+
+            background:
+                rgba(255,255,255,0.025);
+        }
+
+        .preview-label {
+            color: #7f8792;
+            font-size: 13px;
+        }
+
+        .preview-amount {
+            margin-top: 6px;
+
+            font-size: 25px;
+            font-weight: 800;
+
+            color: #f7931a;
+        }
+
+        .status {
+            min-height: 22px;
+
+            margin-top: 17px;
+
+            font-size: 14px;
+            line-height: 1.5;
+
+            color: #9ca4af;
+        }
+
+        footer {
+            padding:
+                25px 7% 40px;
+
+            text-align: center;
+
+            color: #555d68;
+
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding:
+                    18px 5%;
+            }
+
+            main {
+                padding:
+                    55px 0;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .buy-box {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        Quollet <span>Crypto Shop</span>
+    </div>
+
+    <div class="network">
+        BTC
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+
+        <h1>
+            Buy crypto with
+            <span>QNK.</span>
+        </h1>
+
+        <p>
+            Convert your Quollet balance into
+            cryptocurrency and receive it directly
+            through FaucetPay.
+        </p>
+
+        <div class="rate">
+            5,000 QNK-BASE = 1 satoshi
+        </div>
+
+    </section>
+
+
+    <section class="products">
+
+        <div class="product">
+
+            <div class="coin-icon">
+                ₿
+            </div>
+
+            <h2>
+                Bitcoin
+            </h2>
+
+            <p>
+                Receive BTC directly to your
+                FaucetPay account.
+            </p>
+
+            <div class="product-rate">
+                <strong>
+                    5,000 QNK
+                </strong>
+                = 1 satoshi
+            </div>
+
+            <button
+                class="buy-btn"
+                onclick="openBuy('BTC', 5000)"
+            >
+                Buy BTC
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <section
+        id="buyBox"
+        class="buy-box"
+    >
+
+        <div class="buy-title">
+
+            <h2>
+                Buy <span id="selectedCoin">
+                    BTC
+                </span>
+            </h2>
+
+            <p>
+                Enter your Quollet credentials
+                and FaucetPay username.
+            </p>
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>
+                Quollet ID
+            </label>
+
+            <input
+                id="id"
+                type="text"
+                inputmode="numeric"
+                autocomplete="username"
+                placeholder="Your Quollet ID"
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>
+                Quollet Password
+            </label>
+
+            <input
+                id="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Your Quollet password"
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>
+                QNK-BASE Amount
+            </label>
+
+            <input
+                id="qnkAmount"
+                type="number"
+                min="5000"
+                step="5000"
+                placeholder="5000"
+                oninput="updatePreview()"
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>
+                FaucetPay Username
+            </label>
+
+            <input
+                id="faucetpayUsername"
+                type="text"
+                autocomplete="off"
+                placeholder="Your FaucetPay username"
+            >
+
+        </div>
+
+
+        <div class="preview">
+
+            <div class="preview-label">
+                You will receive
+            </div>
+
+            <div
+                id="receiveAmount"
+                class="preview-amount"
+            >
+                0 satoshis
+            </div>
+
+        </div>
+
+
+        <button
+            id="confirmButton"
+            class="buy-btn"
+            onclick="buyCrypto()"
+        >
+            Confirm Purchase
+        </button>
+
+
+        <div
+            id="status"
+            class="status"
+        ></div>
+
+    </section>
+
+</main>
+
+
+<footer>
+    Quollet Crypto Shop · BTC payments powered by FaucetPay
+</footer>
+
+
+<script src="./index.js"></script>
+
+</body>
+</html>

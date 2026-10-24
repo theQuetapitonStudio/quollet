@@ -1,106 +1,282 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quollet - Quenoky World</title>
-    <link rel="stylesheet" href="index.css">
+
+    <meta
+        name="description"
+        content="Quollet — Quenoky World, economia digital, matemática e serviços."
+    >
+
+    <title>Quollet — Quenoky World</title>
+
+    <link rel="stylesheet" href="./index.css">
 </head>
 
 <body>
-	<div id="news">
-		<img id="thumb" src="./news/img.png" width="100">
-		<h1 id="news_title">Novos produtos na loja!</h1>
-		<h1 id="news_desc">Novos produtos interresantes foram lançados no Quollet Shop!</h1>
-	</div>
-    <div id="msc" style="display: none">
-        <p id="wmsg">[??]</p>
-        <h1 id="stxt">[???]</h1>
-		<a href="./qmw/index.html">Go to Quollet Math World <strong>1 edition</strong></a><br>
-		<a href="./p_a_u/index.html">To pay a user, come here!</a><br>
-		<a href="./shop/index.html">Go to Quollet <strong>Shop</strong></a><br>
-		<a href="./stonk_system/quanyk_3434/index.html">Go to <strong>Claim QNK</strong></a>
-    </div>
 
-    <main class="wallet">
+    <!-- =========================
+         NEWS
+    ========================== -->
+    <section id="news" aria-label="Notícia">
+        <div class="news-image">
+            <img
+                id="thumb"
+                src="./news/img.png"
+                alt="Imagem da notícia"
+            >
+        </div>
+
+        <div class="news-content">
+            <span class="news-label">NENEMY NEWS</span>
+
+            <h1 id="news_title">
+                Novos produtos na loja!
+            </h1>
+
+            <p id="news_desc">
+                Novos produtos interessantes foram lançados no Quollet Shop!
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================
+         MAIN NAVIGATION
+    ========================== -->
+    <main id="msc" aria-label="Quollet">
+
+        <header class="welcome">
+            <p id="wmsg">[??]</p>
+            <h1 id="stxt">[???]</h1>
+        </header>
+
+        <nav class="quollet-links" aria-label="Serviços Quollet">
+            <a href="./p_a_u/index.html">
+                <span>↗</span>
+                <div>
+                    <strong>Pay A User</strong>
+                    <small>Send QNK to another user</small>
+                </div>
+            </a>
+
+            <a href="./shop/index.html">
+                <span>◇</span>
+                <div>
+                    <strong>Quollet Shop</strong>
+                    <small>Browse digital products</small>
+                </div>
+            </a>
+
+            <a href="./shop/crypto/index.html">
+                <span>₿</span>
+                <div>
+                    <strong>Quollet Crypto Shop</strong>
+                    <small>Buy crypto with QNK</small>
+                </div>
+            </a>
+
+            <a href="./stonk_system/quanyk_3434/index.html">
+                <span>↯</span>
+                <div>
+                    <strong>Claim QNK</strong>
+                    <small>Quollet currency system</small>
+                </div>
+            </a>
+
+        </nav>
+
+    </main>
+
+
+    <!-- =========================
+         WALLET / AUTH
+    ========================== -->
+    <section class="wallet" aria-label="Quollet Account">
 
         <!-- LOGIN -->
         <div id="login">
 
             <div class="logo">
-                <div class="logo-icon">Q</div>
+                <div class="logo-icon" aria-hidden="true">Q</div>
+
+                <div class="logo-text">
+                    Quollet
+                    <span>• Quenoky</span>
+                </div>
             </div>
 
-            <p class="textLS">Log In</p>
+            <div class="auth-heading">
+                <span class="auth-tag">ACCOUNT</span>
 
-            <input
-                type="text"
-                id="idE"
-                placeholder="Your username:"
+                <h2 class="textLS">
+                    Log In
+                </h2>
+
+                <p>
+                    Enter your Quollet account to continue.
+                </p>
+            </div>
+
+
+            <form
+                id="loginForm"
+                onsubmit="return false;"
+                autocomplete="on"
             >
 
-            <input
-                type="password"
-                id="senhE"
-                placeholder="Your password:"
-            >
+                <div class="input-group">
+                    <label for="idE">
+                        Quollet ID
+                    </label>
 
-            <button
-                id="signupbtn"
-                class="secondary"
-            >
-                Don't have an account? Click here!
-            </button>
+                    <input
+                        type="text"
+                        id="idE"
+                        name="username"
+                        placeholder="Your Quollet ID"
+                        autocomplete="username"
+                    >
+                </div>
 
-            <br>
 
-            <button id="cbtn1">
-                Confirm
-            </button>
+                <div class="input-group">
+                    <label for="senhE">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="senhE"
+                        name="password"
+                        placeholder="Your password"
+                        autocomplete="current-password"
+                    >
+                </div>
+
+
+                <button
+                    type="button"
+                    id="cbtn1"
+                >
+                    Confirm
+                </button>
+
+            </form>
+
+
+            <div class="auth-switch">
+                <span>Don't have an account?</span>
+
+                <button
+                    type="button"
+                    id="signupbtn"
+                    class="secondary"
+                >
+                    Create one
+                </button>
+            </div>
 
         </div>
 
 
         <!-- SIGN UP -->
-        <div id="signup" style="display: none;">
+        <div id="signup" hidden>
 
             <div class="logo">
-                <div class="logo-icon">Q</div>
+                <div class="logo-icon" aria-hidden="true">Quollet</div>
 
                 <div class="logo-text">
-                    Quollet <span>• Quenoky</span>
+                    Quollet
+                    <span>• Quenoky</span>
                 </div>
             </div>
 
-            <p class="textLS">Sign Up</p>
 
-            <input
-                type="text"
-                id="idE2"
-                placeholder="Your Discord ID:"
+            <div class="auth-heading">
+                <span class="auth-tag">NEW ACCOUNT</span>
+
+                <h2 class="textLS">
+                    Sign Up
+                </h2>
+
+                <p>
+                    Create your Quollet account.
+                </p>
+            </div>
+
+
+            <form
+                id="signupForm"
+                onsubmit="return false;"
+                autocomplete="on"
             >
 
-            <input
-                type="password"
-                id="senhE2"
-                placeholder="Your password:"
-            >
+                <div class="input-group">
+                    <label for="idE2">
+                        Quollet ID
+                    </label>
 
-            <button
-                id="loginbtn"
-                class="secondary"
-            >
-                I already have an account
-            </button>
+                    <input
+                        type="text"
+                        id="idE2"
+                        name="new-username"
+                        placeholder="Choose your Quollet ID"
+                        autocomplete="username"
+                    >
+                </div>
 
-            <br>
 
-            <button id="cbtn2">
-                Confirm
-            </button>
+                <div class="input-group">
+                    <label for="senhE2">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="senhE2"
+                        name="new-password"
+                        placeholder="Create a password"
+                        autocomplete="new-password"
+                    >
+                </div>
+
+
+                <button
+                    type="button"
+                    id="cbtn2"
+                >
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <div class="auth-switch">
+                <span>Already have an account?</span>
+
+                <button
+                    type="button"
+                    id="loginbtn"
+                    class="secondary"
+                >
+                    Log in
+                </button>
+            </div>
 
         </div>
-    </main>
+
+    </section>
+
+
+    <footer>
+        <span>QUOLLET</span>
+        <span>•</span>
+        <span>QUENOKY WORLD</span>
+    </footer>
+
+
     <script src="./index.js"></script>
 
 </body>

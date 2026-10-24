@@ -1,20 +1,71 @@
-```css
 * {
 	box-sizing: border-box;
+}
+
+:root {
+	--bg: #050707;
+	--bg-2: #080d0d;
+	--panel: rgba(11, 17, 17, 0.86);
+
+	--border: #1d2929;
+	--border-hover: #304141;
+
+	--text: #f4f7f6;
+	--muted: #899695;
+	--muted-2: #5f6c6b;
+
+	--accent: #7fffd4;
+	--accent-soft: rgba(127, 255, 212, 0.08);
+
+	--white-soft: rgba(255, 255, 255, 0.05);
+}
+
+html {
+	scroll-behavior: smooth;
 }
 
 body {
 	margin: 0;
 	min-height: 100vh;
 
-	font-family: Arial, Helvetica, sans-serif;
+	font-family:
+		Arial,
+		Helvetica,
+		sans-serif;
 
 	background:
-		radial-gradient(circle at top, #182020 0%, transparent 40%),
-		linear-gradient(135deg, #000 0%, #090d0d 50%, #101818 100%);
+		radial-gradient(
+			circle at 50% -10%,
+			rgba(127, 255, 212, 0.09),
+			transparent 32%
+		),
+		radial-gradient(
+			circle at 0% 40%,
+			rgba(255, 255, 255, 0.025),
+			transparent 25%
+		),
+		linear-gradient(
+			145deg,
+			#020303 0%,
+			#070b0b 45%,
+			#0b1111 100%
+		);
 
-	color: #fff;
+	background-attachment: fixed;
+
+	color: var(--text);
 	text-align: center;
+
+	-webkit-font-smoothing: antialiased;
+}
+
+/* =========================
+   SELECTION
+========================= */
+
+::selection {
+	background: rgba(127, 255, 212, 0.25);
+	color: #fff;
 }
 
 /* =========================
@@ -22,81 +73,142 @@ body {
 ========================= */
 
 #news {
-	width: min(900px, 92%);
-	margin: 35px auto 30px;
+	position: relative;
 
-	background: linear-gradient(
-		145deg,
-		#111818,
-		#080b0b
-	);
+	width: min(940px, 92%);
 
-	border: 1px solid #293333;
-	border-radius: 18px;
+	margin: 55px auto 35px;
+
+	background:
+		linear-gradient(
+			145deg,
+			rgba(17, 25, 25, 0.96),
+			rgba(6, 9, 9, 0.96)
+		);
+
+	border: 1px solid var(--border);
+
+	border-radius: 22px;
 
 	overflow: hidden;
 
 	box-shadow:
-		0 15px 50px rgba(0, 0, 0, 0.65),
-		0 0 35px rgba(0, 255, 200, 0.05);
+		0 30px 90px rgba(0, 0, 0, 0.7),
+		0 0 80px rgba(127, 255, 212, 0.025);
 
 	text-align: left;
 
-	transition: 0.25s ease;
+	transition:
+		transform 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.25s ease;
 }
 
 #news:hover {
-	transform: translateY(-3px);
+	transform: translateY(-4px);
 
-	border-color: #3d5555;
+	border-color: var(--border-hover);
 
 	box-shadow:
-		0 20px 60px rgba(0, 0, 0, 0.8),
-		0 0 45px rgba(0, 255, 200, 0.08);
+		0 35px 100px rgba(0, 0, 0, 0.8),
+		0 0 90px rgba(127, 255, 212, 0.055);
 }
 
-/* Faixa superior */
+/* =========================
+   NEWS HEADER
+========================= */
 
 #news::before {
-	content: "NENEMY NEWS  •  QUOLLET";
+	content: "NENEMY NEWS  /  QUOLLET";
 
 	display: block;
 
-	padding: 10px 18px;
+	padding: 12px 20px;
 
-	background: #101717;
+	background:
+		linear-gradient(
+			90deg,
+			#0b1111,
+			#101919,
+			#0b1111
+		);
 
-	border-bottom: 1px solid #293333;
+	border-bottom: 1px solid var(--border);
 
-	color: #7fffd4;
+	color: var(--accent);
 
-	font-size: 12px;
-	font-weight: bold;
-	letter-spacing: 2px;
+	font-size: 10px;
+	font-weight: 800;
+
+	letter-spacing: 2.5px;
+
+	text-transform: uppercase;
 }
 
-/* Thumbnail */
+/* Pequena linha decorativa */
+
+#news::after {
+	content: "";
+
+	position: absolute;
+
+	top: 0;
+	left: 0;
+
+	width: 90px;
+	height: 1px;
+
+	background: var(--accent);
+
+	opacity: 0.65;
+}
+
+/* =========================
+   THUMBNAIL
+========================= */
 
 #thumb {
 	display: block;
 
-	width: 25%;
-	max-height: 430px;
+	width: 100%;
+	height: 280px;
 
 	object-fit: cover;
 
-	background: #050707;
+	background: #030505;
 
-	border-bottom: 1px solid #293333;
+	border-bottom: 1px solid var(--border);
+
+	filter:
+		brightness(0.8)
+		saturate(0.85);
+
+	transition:
+		filter 0.3s ease,
+		transform 0.3s ease;
 }
 
-/* Título */
+#news:hover #thumb {
+	filter:
+		brightness(0.92)
+		saturate(1);
+
+	transform: scale(1.01);
+}
+
+/* =========================
+   NEWS CONTENT
+========================= */
 
 #news_title {
-	margin: 22px 25px 10px;
+	margin: 27px 28px 11px;
 
-	font-size: clamp(24px, 4vw, 42px);
-	line-height: 1.05;
+	max-width: 800px;
+
+	font-size:
+		clamp(25px, 4vw, 43px);
+
+	line-height: 1.02;
 
 	font-weight: 900;
 
@@ -104,112 +216,204 @@ body {
 
 	text-transform: uppercase;
 
-	letter-spacing: -1px;
+	letter-spacing: -1.8px;
 }
 
-/* Descrição */
-
 #news_desc {
-	margin: 0 25px 25px;
+	margin: 0 28px 28px;
+
+	max-width: 760px;
 
 	font-size: 15px;
-	line-height: 1.6;
+
+	line-height: 1.65;
+
+	color: var(--muted);
 
 	font-weight: normal;
-
-	color: #aebaba;
 }
 
 /* =========================
-   LOGIN / WALLET
+   WALLET
 ========================= */
 
 .wallet {
-	width: min(430px, 90%);
-	margin: 40px auto 70px;
+	width: min(440px, 90%);
+
+	margin:
+		45px auto 75px;
+
+	position: relative;
 }
 
-/* Caixa de login */
+/* =========================
+   LOGIN / SIGNUP
+========================= */
 
 #login,
 #signup {
-	padding: 30px;
+	position: relative;
 
-	background: rgba(10, 15, 15, 0.92);
+	padding: 32px;
 
-	border: 1px solid #273333;
-	border-radius: 20px;
+	background:
+		linear-gradient(
+			145deg,
+			rgba(13, 20, 20, 0.95),
+			rgba(7, 10, 10, 0.95)
+		);
+
+	border:
+		1px solid var(--border);
+
+	border-radius: 22px;
 
 	box-shadow:
-		0 20px 60px rgba(0, 0, 0, 0.6);
+		0 30px 80px rgba(0, 0, 0, 0.65);
 
-	backdrop-filter: blur(10px);
+	backdrop-filter:
+		blur(18px);
+
+	-webkit-backdrop-filter:
+		blur(18px);
 }
 
-/* Logo */
+/* brilho discreto */
+
+#login::before,
+#signup::before {
+	content: "";
+
+	position: absolute;
+
+	top: 0;
+	left: 15%;
+
+	width: 70%;
+	height: 1px;
+
+	background:
+		linear-gradient(
+			90deg,
+			transparent,
+			rgba(127, 255, 212, 0.35),
+			transparent
+		);
+}
+
+/* =========================
+   LOGO
+========================= */
 
 .logo {
 	display: flex;
+
 	align-items: center;
 	justify-content: center;
-	gap: 12px;
 
-	margin-bottom: 20px;
+	gap: 13px;
+
+	margin-bottom: 24px;
 }
 
 .logo-icon {
-	width: 55px;
-	height: 55px;
+	width: 58px;
+	height: 58px;
 
 	display: flex;
+
 	align-items: center;
 	justify-content: center;
 
-	border-radius: 15px;
+	border-radius: 16px;
 
-	background: linear-gradient(135deg, #ffffff, #777);
+	background:
+		linear-gradient(
+			145deg,
+			#ffffff,
+			#9ca5a5
+		);
 
-	color: #050505;
+	color: #050606;
 
 	font-size: 28px;
+
 	font-weight: 900;
 
-	box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
+	box-shadow:
+		0 0 35px rgba(255, 255, 255, 0.08);
+
+	transition:
+		transform 0.2s ease;
+}
+
+.logo:hover .logo-icon {
+	transform:
+		rotate(-4deg)
+		scale(1.03);
 }
 
 .logo-text {
-	font-size: 22px;
-	font-weight: bold;
+	font-size: 23px;
+
+	font-weight: 900;
+
+	letter-spacing: -0.7px;
 }
 
 .logo-text span {
-	color: #777;
-	font-size: 13px;
+	display: block;
+
+	margin-top: 2px;
+
+	color: var(--muted-2);
+
+	font-size: 11px;
+
+	font-weight: 700;
+
+	letter-spacing: 2px;
+
+	text-transform: uppercase;
 }
 
-/* Login title */
+/* =========================
+   LOGIN TITLE
+========================= */
 
 .textLS {
-	font-size: 25px;
-	font-weight: bold;
+	margin:
+		10px 0 23px;
 
-	margin: 10px 0 22px;
+	font-size: 26px;
+
+	font-weight: 900;
+
+	letter-spacing: -0.8px;
 
 	color: #fff;
 }
 
-/* Inputs */
+/* =========================
+   INPUTS
+========================= */
 
 input {
 	width: 100%;
 
-	padding: 14px 15px;
-	margin: 7px 0;
+	padding:
+		15px 16px;
 
-	border: 1px solid #303c3c;
-	border-radius: 10px;
+	margin:
+		6px 0;
 
-	background: #070a0a;
+	border:
+		1px solid #263333;
+
+	border-radius: 11px;
+
+	background:
+		rgba(3, 6, 6, 0.9);
 
 	color: #fff;
 
@@ -217,68 +421,123 @@ input {
 
 	outline: none;
 
-	transition: 0.2s ease;
+	transition:
+		border-color 0.2s ease,
+		box-shadow 0.2s ease,
+		background 0.2s ease;
+}
+
+input:hover {
+	border-color: #334343;
 }
 
 input::placeholder {
-	color: #657070;
+	color: #586565;
 }
 
 input:focus {
-	border-color: #7fffd4;
+	background: #070b0b;
 
-	box-shadow: 0 0 0 3px rgba(127, 255, 212, 0.08);
+	border-color: var(--accent);
+
+	box-shadow:
+		0 0 0 3px var(--accent-soft),
+		0 0 25px rgba(127, 255, 212, 0.035);
 }
 
-/* Botões */
+/* =========================
+   BUTTONS
+========================= */
 
 button {
 	width: 100%;
 
-	padding: 13px 15px;
+	padding:
+		14px 16px;
 
-	margin-top: 10px;
+	margin-top: 11px;
 
-	border: none;
-	border-radius: 10px;
+	border:
+		1px solid transparent;
 
-	background: #fff;
+	border-radius: 11px;
 
-	color: #000;
+	background:
+		linear-gradient(
+			135deg,
+			#ffffff,
+			#d9dddd
+		);
 
-	font-weight: bold;
+	color: #050606;
+
+	font-weight: 800;
+
 	font-size: 14px;
 
 	cursor: pointer;
 
-	transition: 0.2s ease;
+	transition:
+		transform 0.18s ease,
+		box-shadow 0.18s ease,
+		filter 0.18s ease,
+		background 0.18s ease;
 }
 
 button:hover {
-	transform: translateY(-2px);
+	transform:
+		translateY(-2px);
 
-	box-shadow: 0 8px 25px rgba(255, 255, 255, 0.12);
+	box-shadow:
+		0 12px 30px
+		rgba(255, 255, 255, 0.11);
+
+	filter: brightness(1.04);
 }
 
 button:active {
-	transform: translateY(0);
+	transform:
+		translateY(0);
 }
 
-/* Botão secundário */
+button:disabled {
+	opacity: 0.5;
+
+	cursor: not-allowed;
+
+	transform: none;
+
+	box-shadow: none;
+}
+
+/* =========================
+   SECONDARY BUTTON
+========================= */
 
 button.secondary {
-	background: transparent;
+	background:
+		rgba(255, 255, 255, 0.015);
 
-	border: 1px solid #303c3c;
+	border:
+		1px solid #293636;
 
-	color: #9daaaa;
+	color: #8f9b9a;
 
 	font-size: 12px;
 }
 
 button.secondary:hover {
-	border-color: #657777;
+	background:
+		rgba(255, 255, 255, 0.035);
+
+	border-color:
+		#465757;
+
 	color: #fff;
+
+	box-shadow:
+		0 8px 25px
+		rgba(0, 0, 0, 0.25);
 }
 
 /* =========================
@@ -286,36 +545,79 @@ button.secondary:hover {
 ========================= */
 
 #msc {
-	width: min(800px, 90%);
-	margin: 30px auto;
+	width: min(850px, 90%);
+
+	margin:
+		35px auto 55px;
 }
 
 #msc a {
-	display: inline-block;
+	display: inline-flex;
 
-	margin: 6px;
+	align-items: center;
+	justify-content: center;
 
-	padding: 10px 15px;
+	margin: 5px;
+
+	padding:
+		10px 15px;
+
+	border:
+		1px solid #253232;
 
 	border-radius: 9px;
 
-	border: 1px solid #293333;
+	background:
+		rgba(10, 16, 16, 0.8);
 
-	background: #0d1212;
-
-	color: #9fffe0;
+	color:
+		#8fe6cf;
 
 	text-decoration: none;
 
-	transition: 0.2s ease;
+	font-size: 13px;
+
+	transition:
+		transform 0.18s ease,
+		border-color 0.18s ease,
+		background 0.18s ease,
+		color 0.18s ease;
 }
 
 #msc a:hover {
-	background: #172020;
+	background:
+		rgba(127, 255, 212, 0.055);
 
-	border-color: #4d6666;
+	border-color:
+		#42605a;
 
-	transform: translateY(-2px);
+	color:
+		#baffeb;
+
+	transform:
+		translateY(-2px);
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar {
+	width: 9px;
+}
+
+::-webkit-scrollbar-track {
+	background: #030505;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #1d2929;
+
+	border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #304141;
 }
 
 /* =========================
@@ -325,32 +627,106 @@ button.secondary:hover {
 @media (max-width: 600px) {
 
 	#news {
+		width: 94%;
+
 		margin-top: 18px;
-		border-radius: 14px;
-	}
 
-	#news_title {
-		font-size: 26px;
-		margin: 18px;
-	}
-
-	#news_desc {
-		margin: 0 18px 20px;
-		font-size: 14px;
+		border-radius: 17px;
 	}
 
 	#news::before {
-		font-size: 10px;
+		padding: 10px 14px;
+
+		font-size: 9px;
+
+		letter-spacing: 1.8px;
+	}
+
+	#thumb {
+		height: 210px;
+	}
+
+	#news_title {
+		margin:
+			20px 18px 10px;
+
+		font-size: 27px;
+
+		letter-spacing: -1px;
+	}
+
+	#news_desc {
+		margin:
+			0 18px 21px;
+
+		font-size: 14px;
+
+		line-height: 1.55;
 	}
 
 	.wallet {
-		margin-top: 25px;
+		width: 92%;
+
+		margin-top: 28px;
 	}
 
 	#login,
 	#signup {
-		padding: 22px;
+		padding: 23px 20px;
+
+		border-radius: 18px;
 	}
 
+	.logo-icon {
+		width: 52px;
+		height: 52px;
+
+		font-size: 25px;
+	}
+
+	.logo-text {
+		font-size: 21px;
+	}
+
+	.textLS {
+		font-size: 23px;
+	}
+
+	input {
+		padding: 14px;
+	}
+
+	button {
+		padding: 14px;
+	}
+
+	#msc {
+		width: 94%;
+
+		margin-bottom: 35px;
+	}
+
+	#msc a {
+		font-size: 12px;
+
+		padding:
+			9px 12px;
+	}
 }
-```
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+	* {
+		scroll-behavior: auto !important;
+
+		transition-duration:
+			0.01ms !important;
+
+		animation-duration:
+			0.01ms !important;
+	}
+}

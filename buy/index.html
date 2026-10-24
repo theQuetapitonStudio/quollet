@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Buy QUENOKY-BASE — Quewkyo Wallet</title>
+
+<meta
+    name="description"
+    content="Buy QUENOKY-BASE through Quewkyo Wallet, the digital economy hub of Quenoky World."
+>
+
+<meta
+    name="keywords"
+    content="Quewkyo Wallet, QUENOKY, QUENOKY-BASE, Quenoky World, digital currency, cryptocurrency"
+>
+
+<meta
+    name="author"
+    content="Quewkyo Wallet"
+>
+
+<link
+    rel="canonical"
+    href="https://quenoky.vercel.app/"
+>
+
+<meta
+    property="og:title"
+    content="Buy QUENOKY-BASE — Quewkyo Wallet"
+>
+
+<meta
+    property="og:description"
+    content="Purchase QUENOKY-BASE through the Quenoky World economy."
+>
+
+<meta
+    property="og:url"
+    content="https://quenoky.vercel.app/"
+>
+
+<meta
+    property="og:site_name"
+    content="Quewkyo Wallet"
+>
+
+<meta
+    property="og:type"
+    content="website"
+>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        min-height: 100vh;
+        font-family: Inter, Arial, sans-serif;
+        background:
+            radial-gradient(circle at 15% 10%, rgba(100, 70, 255, .18), transparent 30%),
+            radial-gradient(circle at 85% 90%, rgba(0, 200, 255, .12), transparent 30%),
+            #07080d;
+        color: #f5f7ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 25px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1050px;
+        display: grid;
+        grid-template-columns: 1fr 390px;
+        gap: 25px;
+    }
+
+    .panel {
+        background: rgba(15, 17, 27, .88);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 24px;
+        box-shadow: 0 25px 80px rgba(0,0,0,.45);
+        backdrop-filter: blur(18px);
+    }
+
+    .main {
+        padding: 35px;
+    }
+
+    .side {
+        padding: 30px;
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 35px;
+    }
+
+    .logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 15px;
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+        font-size: 19px;
+        background: linear-gradient(135deg, #7657ff, #20d9ff);
+        box-shadow: 0 0 35px rgba(80,120,255,.3);
+    }
+
+    .brand h1 {
+        font-size: 21px;
+    }
+
+    .brand span {
+        color: #8d91a5;
+        font-size: 13px;
+    }
+
+    .headline {
+        font-size: 42px;
+        line-height: 1.05;
+        margin-bottom: 13px;
+        letter-spacing: -1.5px;
+    }
+
+    .headline span {
+        background: linear-gradient(90deg, #8d6cff, #30d8ff);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .description {
+        color: #989caf;
+        line-height: 1.6;
+        max-width: 620px;
+        margin-bottom: 30px;
+    }
+
+    label {
+        display: block;
+        font-size: 13px;
+        color: #9fa4b8;
+        margin-bottom: 9px;
+    }
+
+    .input-box {
+        display: flex;
+        align-items: center;
+        background: #0b0d14;
+        border: 1px solid #25293a;
+        border-radius: 15px;
+        padding: 0 16px;
+        transition: .2s;
+    }
+
+    .input-box:focus-within {
+        border-color: #7561ff;
+        box-shadow: 0 0 0 3px rgba(117,97,255,.1);
+    }
+
+    .input-box span {
+        color: #70758a;
+        font-size: 14px;
+        margin-right: 8px;
+    }
+
+    input,
+    select {
+        width: 100%;
+        height: 54px;
+        border: none;
+        outline: none;
+        background: transparent;
+        color: white;
+        font-size: 16px;
+    }
+
+    select {
+        appearance: none;
+        cursor: pointer;
+    }
+
+    option {
+        background: #10121b;
+    }
+
+    .field {
+        margin-bottom: 20px;
+    }
+
+    .currency-select {
+        position: relative;
+    }
+
+    .currency-select::after {
+        content: "⌄";
+        position: absolute;
+        right: 18px;
+        top: 16px;
+        color: #7f8499;
+        pointer-events: none;
+    }
+
+    .quick {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+
+    .quick button {
+        border: 1px solid #292d40;
+        background: #0c0e16;
+        color: #999fb4;
+        padding: 7px 11px;
+        border-radius: 9px;
+        cursor: pointer;
+        transition: .2s;
+    }
+
+    .quick button:hover {
+        border-color: #7160ff;
+        color: white;
+    }
+
+    .preview {
+        margin-top: 28px;
+        background: linear-gradient(145deg, #10121c, #0b0d14);
+        border: 1px solid #24283a;
+        border-radius: 19px;
+        padding: 22px;
+    }
+
+    .preview-title {
+        font-size: 12px;
+        color: #777d93;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 18px;
+    }
+
+    .conversion {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .conversion strong {
+        font-size: 22px;
+    }
+
+    .arrow {
+        color: #6f62ff;
+        font-size: 22px;
+    }
+
+    .muted {
+        color: #777d93;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .buy {
+        width: 100%;
+        margin-top: 25px;
+        height: 58px;
+        border: none;
+        border-radius: 16px;
+        color: white;
+        font-size: 16px;
+        font-weight: 800;
+        cursor: pointer;
+        background: linear-gradient(100deg, #6e55ff, #16c9ff);
+        box-shadow: 0 12px 35px rgba(67,100,255,.25);
+        transition: .2s;
+    }
+
+    .buy:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 45px rgba(67,100,255,.35);
+    }
+
+    .buy:active {
+        transform: translateY(0);
+    }
+
+    .notice {
+        margin-top: 14px;
+        color: #70758a;
+        text-align: center;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    .side-title {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .rate-card {
+        padding: 18px;
+        border-radius: 17px;
+        background: #0b0d14;
+        border: 1px solid #222638;
+        margin-bottom: 12px;
+    }
+
+    .rate-card .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 9px;
+    }
+
+    .coin {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-weight: 700;
+    }
+
+    .coin-icon {
+        width: 28px;
+        height: 28px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: #191d2b;
+        font-size: 10px;
+        font-weight: 800;
+    }
+
+    .live {
+        font-size: 10px;
+        color: #53e6a2;
+        background: rgba(83,230,162,.08);
+        border: 1px solid rgba(83,230,162,.15);
+        padding: 4px 7px;
+        border-radius: 20px;
+    }
+
+    .rate-card p {
+        color: #777d93;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .steps {
+        margin-top: 25px;
+    }
+
+    .step {
+        display: flex;
+        gap: 13px;
+        margin-bottom: 18px;
+    }
+
+    .number {
+        min-width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #151827;
+        border: 1px solid #2a2e42;
+        display: grid;
+        place-items: center;
+        font-size: 11px;
+        color: #8b7cff;
+    }
+
+    .step strong {
+        display: block;
+        font-size: 13px;
+        margin-bottom: 3px;
+    }
+
+    .step p {
+        color: #747a8e;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    .footer {
+        margin-top: 25px;
+        padding-top: 18px;
+        border-top: 1px solid #202333;
+        color: #5f6477;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 850px) {
+        .container {
+            grid-template-columns: 1fr;
+        }
+
+        .headline {
+            font-size: 34px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        body {
+            padding: 12px;
+        }
+
+        .main,
+        .side {
+            padding: 22px;
+        }
+
+        .conversion strong {
+            font-size: 17px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <section class="panel main">
+
+        <div class="brand">
+
+            <div class="logo">
+                Q
+            </div>
+
+            <div>
+                <h1>Quewkyo Wallet</h1>
+                <span>Quenoky World Economy</span>
+            </div>
+
+        </div>
+
+
+        <h2 class="headline">
+            Buy <span>QUENOKY-BASE</span>
+        </h2>
+
+
+        <p class="description">
+            Purchase QUENOKY-BASE using cryptocurrency through FaucetPay.
+            Your payment is processed through FaucetPay's hosted checkout
+            and credited to your Quewkyo Wallet account after verification.
+        </p>
+
+
+        <form
+            id="paymentForm"
+            action="https://faucetpay.io/merchant/webscr"
+            method="POST"
+        >
+
+            <div class="field">
+
+                <label for="discord">
+                    Quewkyo Wallet ID
+                </label>
+
+                <div class="input-box">
+
+                    <span>#</span>
+
+                    <input
+                        id="discord"
+                        type="text"
+                        placeholder="Enter your Discord ID"
+                        autocomplete="off"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="quenkoyAmount">
+                    Amount of QUENOKY-BASE
+                </label>
+
+                <div class="input-box">
+
+                    <span>QB</span>
+
+                    <input
+                        id="quenkoyAmount"
+                        type="number"
+                        min="5000"
+                        step="5000"
+                        value="50000"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="quick">
+
+                    <button
+                        type="button"
+                        onclick="setAmount(5000)"
+                    >
+                        5K
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="setAmount(50000)"
+                    >
+                        50K
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="setAmount(500000)"
+                    >
+                        500K
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="setAmount(1000000)"
+                    >
+                        1M
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="setAmount(5000000)"
+                    >
+                        5M
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="currency">
+                    Payment currency
+                </label>
+
+                <div class="input-box currency-select">
+
+                    <select id="currency">
+
+                        <option value="BTC">
+                            Bitcoin (BTC)
+                        </option>
+
+                        <option value="LTC">
+                            Litecoin (LTC)
+                        </option>
+
+                        <option value="DOGE">
+                            Dogecoin (DOGE)
+                        </option>
+
+                        <option value="ETH">
+                            Ethereum (ETH)
+                        </option>
+
+                        <option value="USDT">
+                            Tether (USDT)
+                        </option>
+
+                        <option value="USDC">
+                            USD Coin (USDC)
+                        </option>
+
+                        <option value="BCH">
+                            Bitcoin Cash (BCH)
+                        </option>
+
+                        <option value="DASH">
+                            Dash (DASH)
+                        </option>
+
+                        <option value="DGB">
+                            DigiByte (DGB)
+                        </option>
+
+                        <option value="TRX">
+                            TRON (TRX)
+                        </option>
+
+                        <option value="ZEC">
+                            Zcash (ZEC)
+                        </option>
+
+                        <option value="SOL">
+                            Solana (SOL)
+                        </option>
+
+                        <option value="BNB">
+                            BNB (BNB)
+                        </option>
+
+                        <option value="FEY">
+                            Feyorra (FEY)
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="preview">
+
+                <div class="preview-title">
+                    Purchase preview
+                </div>
+
+
+                <div class="conversion">
+
+                    <div>
+
+                        <strong id="amountPreview">
+                            50,000
+                        </strong>
+
+                        <div class="muted">
+                            QUENOKY-BASE
+                        </div>
+
+                    </div>
+
+
+                    <div class="arrow">
+                        →
+                    </div>
+
+
+                    <div style="text-align:right">
+
+                        <strong id="cryptoPreview">
+                            10 sats
+                        </strong>
+
+                        <div
+                            class="muted"
+                            id="currencyPreview"
+                        >
+                            BTC
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <input
+                type="hidden"
+                name="merchant_username"
+                id="merchant_username"
+                value="quettapiton"
+            >
+
+
+            <input
+                type="hidden"
+                name="item_description"
+                id="item_description"
+            >
+
+
+            <input
+                type="hidden"
+                name="amount1"
+                id="amount1"
+            >
+
+
+            <input
+                type="hidden"
+                name="currency1"
+                id="currency1"
+            >
+
+
+            <input
+                type="hidden"
+                name="currency2"
+                id="currency2"
+            >
+
+
+            <input
+                type="hidden"
+                name="custom"
+                id="custom"
+            >
+
+
+            <input
+                type="hidden"
+                name="callback_url"
+                value="https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/buyqnk"
+            >
+
+
+            <input
+                type="hidden"
+                name="success_url"
+                value="https://quenoky.vercel.app/payment-confirmed.html"
+            >
+
+
+            <input
+                type="hidden"
+                name="cancel_url"
+                value="https://quenoky.vercel.app/payment-cancelled.html"
+            >
+
+
+            <button
+                class="buy"
+                type="submit"
+            >
+                Continue to FaucetPay →
+            </button>
+
+        </form>
+
+
+        <div class="notice">
+            Payments are processed by FaucetPay.
+            QUENOKY-BASE is credited only after the payment
+            has been successfully verified.
+        </div>
+
+    </section>
+
+
+
+    <aside class="panel side">
+
+        <h3 class="side-title">
+            QUENOKY Exchange
+        </h3>
+
+
+        <div class="rate-card">
+
+            <div class="top">
+
+                <div class="coin">
+
+                    <div class="coin-icon">
+                        ₿
+                    </div>
+
+                    BTC
+
+                </div>
+
+
+                <div class="live">
+                    FIXED
+                </div>
+
+            </div>
+
+
+            <p>
+                5,000 QUENOKY-BASE =
+                <strong style="color:white">
+                    1 satoshi
+                </strong>
+            </p>
+
+        </div>
+
+
+
+        <div class="rate-card">
+
+            <div class="top">
+
+                <div class="coin">
+
+                    <div class="coin-icon">
+                        Q
+                    </div>
+
+                    QUENOKY
+
+                </div>
+
+
+                <div class="live">
+                    FIXED
+                </div>
+
+            </div>
+
+
+            <p>
+                QUENOKY-BASE is the base unit used
+                within the Quewkyo Wallet economy.
+            </p>
+
+        </div>
+
+
+
+        <div class="steps">
+
+            <div class="step">
+
+                <div class="number">
+                    1
+                </div>
+
+                <div>
+
+                    <strong>
+                        Enter your ID
+                    </strong>
+
+                    <p>
+                        Provide the Discord ID associated
+                        with your Quewkyo Wallet account.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="step">
+
+                <div class="number">
+                    2
+                </div>
+
+                <div>
+
+                    <strong>
+                        Choose your amount
+                    </strong>
+
+                    <p>
+                        Select how much QUENOKY-BASE
+                        you want to purchase.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="step">
+
+                <div class="number">
+                    3
+                </div>
+
+                <div>
+
+                    <strong>
+                        Choose a cryptocurrency
+                    </strong>
+
+                    <p>
+                        Select the cryptocurrency you
+                        want to use through FaucetPay.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="step">
+
+                <div class="number">
+                    4
+                </div>
+
+                <div>
+
+                    <strong>
+                        Pay
+                    </strong>
+
+                    <p>
+                        FaucetPay will open its secure
+                        hosted checkout.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="footer">
+
+            Quewkyo Wallet · Quenoky World<br>
+
+            QUENOKY-BASE is a digital currency
+            used within the Quenoky World economy.
+
+        </div>
+
+    </aside>
+
+</div>
+
+
+
+<script>
+
+const QUENOKY_PER_SATOSHI = 5000;
+
+const form =
+    document.getElementById("paymentForm");
+
+const amountInput =
+    document.getElementById("quenkoyAmount");
+
+const discordInput =
+    document.getElementById("discord");
+
+const currencyInput =
+    document.getElementById("currency");
+
+const amountPreview =
+    document.getElementById("amountPreview");
+
+const cryptoPreview =
+    document.getElementById("cryptoPreview");
+
+const currencyPreview =
+    document.getElementById("currencyPreview");
+
+const itemDescription =
+    document.getElementById("item_description");
+
+const amount1 =
+    document.getElementById("amount1");
+
+const currency1 =
+    document.getElementById("currency1");
+
+const currency2 =
+    document.getElementById("currency2");
+
+const custom =
+    document.getElementById("custom");
+
+
+function setAmount(value) {
+
+    amountInput.value = value;
+
+    updatePreview();
+
+}
+
+
+function formatNumber(value) {
+
+    return Number(value)
+        .toLocaleString("en-US");
+
+}
+
+
+function quenokyToBTC(amount) {
+
+    const satoshis =
+        amount / QUENOKY_PER_SATOSHI;
+
+    return satoshis * 0.00000001;
+
+}
+
+
+function updatePreview() {
+
+    const amount =
+        Number(amountInput.value) || 0;
+
+    const currency =
+        currencyInput.value;
+
+    amountPreview.textContent =
+        formatNumber(amount);
+
+    currencyPreview.textContent =
+        currency;
+
+
+    if (currency === "BTC") {
+
+        const sats =
+            amount / QUENOKY_PER_SATOSHI;
+
+
+        if (sats < 1) {
+
+            cryptoPreview.textContent =
+                quenokyToBTC(amount)
+                .toFixed(12) + " BTC";
+
+        } else {
+
+            cryptoPreview.textContent =
+                formatNumber(sats) + " sats";
+
+        }
+
+        return;
+
+    }
+
+
+    cryptoPreview.textContent =
+        "Live rate";
+
+}
+
+
+amountInput.addEventListener(
+    "input",
+    updatePreview
+);
+
+
+currencyInput.addEventListener(
+    "change",
+    updatePreview
+);
+
+
+form.addEventListener(
+    "submit",
+    function(event) {
+
+        const discord =
+            discordInput.value.trim();
+
+        const amount =
+            Number(amountInput.value);
+
+        const currency =
+            currencyInput.value;
+
+
+        if (!discord) {
+
+            event.preventDefault();
+
+            alert(
+                "Please enter your Discord ID."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            !Number.isFinite(amount) ||
+            amount < QUENOKY_PER_SATOSHI
+        ) {
+
+            event.preventDefault();
+
+            alert(
+                "The minimum purchase is 5,000 QUENOKY-BASE."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            amount %
+            QUENOKY_PER_SATOSHI !== 0
+        ) {
+
+            event.preventDefault();
+
+            alert(
+                "QUENOKY-BASE purchases must be multiples of 5,000."
+            );
+
+            return;
+
+        }
+
+
+        const btcAmount =
+            quenokyToBTC(amount);
+
+
+        if (currency === "BTC") {
+
+            amount1.value =
+                btcAmount.toFixed(12);
+
+            currency1.value =
+                "BTC";
+
+            currency2.value =
+                "BTC";
+
+        } else {
+
+            event.preventDefault();
+
+            alert(
+                "Live cryptocurrency conversion is handled by the Quewkyo payment backend."
+            );
+
+            return;
+
+        }
+
+
+        itemDescription.value =
+            `${formatNumber(amount)} QUENOKY-BASE`;
+
+
+        custom.value =
+            `quenoky:${discord}:${amount}:${Date.now()}`;
+
+    }
+);
+
+
+updatePreview();
+
+</script>
+
+</body>
+</html>

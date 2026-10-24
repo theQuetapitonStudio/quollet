@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Quollet — Shop</title>
+    <title>Quewkyo Wallet — Shop</title>
+
+    <meta
+        name="description"
+        content="Quewkyo Wallet Shop — produtos e conteúdos do ecossistema Quenoky World."
+    >
 
     <style>
         * {
@@ -15,10 +20,12 @@
             margin: 0;
             min-height: 100vh;
             font-family: Arial, sans-serif;
+
             background:
                 radial-gradient(circle at top left, #18233d, transparent 40%),
                 radial-gradient(circle at bottom right, #24133b, transparent 40%),
                 #080b12;
+
             color: white;
         }
 
@@ -83,8 +90,10 @@
             padding: 13px;
             border: 0;
             border-radius: 10px;
+
             background: #ffffff;
             color: #080b12;
+
             font-weight: bold;
             cursor: pointer;
             transition: 0.2s;
@@ -98,9 +107,11 @@
         #modal {
             position: fixed;
             inset: 0;
+
             display: none;
             align-items: center;
             justify-content: center;
+
             background: rgba(0, 0, 0, 0.75);
             padding: 20px;
         }
@@ -108,6 +119,7 @@
         .modal-box {
             width: 100%;
             max-width: 420px;
+
             background: #101621;
             border: 1px solid #293449;
             border-radius: 18px;
@@ -122,10 +134,13 @@
             width: 100%;
             padding: 13px;
             margin: 8px 0;
+
             border-radius: 9px;
             border: 1px solid #303b50;
+
             background: #080c14;
             color: white;
+
             outline: none;
         }
 
@@ -137,8 +152,10 @@
             width: 100%;
             padding: 13px;
             margin-top: 10px;
+
             border: 0;
             border-radius: 9px;
+
             cursor: pointer;
             font-weight: bold;
         }
@@ -164,11 +181,15 @@
 <body>
 
     <header>
-        <h1>Quollet Shop</h1>
-        <p>Buy, get</p>
+        <h1>Quewkyo Wallet Shop</h1>
+
+        <p>
+            Buy, get — products from Quenoky World
+        </p>
     </header>
 
     <main class="shop">
+
         <div class="products">
 
             <div class="product">
@@ -179,7 +200,7 @@
                 </p>
 
                 <div class="price">
-                    50 QNK-BASE
+                    50 QUENOKY-BASE
                 </div>
 
                 <button
@@ -190,8 +211,9 @@
                     Comprar
                 </button>
             </div>
-			
-			<div class="product">
+
+
+            <div class="product">
                 <h2>NM2 SUN — PYTHON PORT</h2>
 
                 <p>
@@ -199,7 +221,7 @@
                 </p>
 
                 <div class="price">
-                    45 QNK-BASE
+                    45 QUENOKY-BASE
                 </div>
 
                 <button
@@ -210,17 +232,17 @@
                     Comprar
                 </button>
             </div>
-			
-			
-			<div class="product">
-                <h2>WEO 1 GOOD NIGHT - PREVIEW PURE AUDIO</h2>
+
+
+            <div class="product">
+                <h2>WEO 1 GOOD NIGHT — PREVIEW PURE AUDIO</h2>
 
                 <p>
-                    Pure audio of Weo 1
+                    Pure audio of WEO 1
                 </p>
 
                 <div class="price">
-                    25 QNK-BASE
+                    25 QUENOKY-BASE
                 </div>
 
                 <button
@@ -231,16 +253,17 @@
                     Comprar
                 </button>
             </div>
-			
-			<div class="product">
-                <h2>NM2-SUN .c PORT!</h2>
+
+
+            <div class="product">
+                <h2>NM2-SUN .C PORT!</h2>
 
                 <p>
-                    NM2-SUN .c Full Port
+                    NM2-SUN .C Full Port
                 </p>
 
                 <div class="price">
-                    35 QNK-BASE
+                    35 QUENOKY-BASE
                 </div>
 
                 <button
@@ -252,37 +275,45 @@
                 </button>
             </div>
 
-			<div class="product">
-                <h2>Weo 1 Preview - Wake up</h2>
+
+            <div class="product">
+                <h2>WEO 1 PREVIEW — WAKE UP</h2>
 
                 <p>
-					Wake-Up sound 
+                    Wake-Up sound
                 </p>
 
                 <div class="price">
-                    5 QNK-BASE
+                    5 QUENOKY-BASE
                 </div>
 
                 <button
                     class="buy-btn"
                     data-product-id="4"
-                    data-product-name="Weo 1 Preview - Wake up"
+                    data-product-name="WEO 1 Preview - Wake up"
                 >
                     Comprar
                 </button>
             </div>
 
+
             <!--
             NOVOS PRODUTOS:
-			5e-42
+
             <div class="product">
                 <h2>Nome do produto</h2>
-                <p>Descrição do produto.</p>
-                <div class="price">1000 QNK-BASE</div>
+
+                <p>
+                    Descrição do produto.
+                </p>
+
+                <div class="price">
+                    1000 QUENOKY-BASE
+                </div>
 
                 <button
                     class="buy-btn"
-                    data-product-id="1"
+                    data-product-id="5"
                     data-product-name="Nome do produto"
                 >
                     Comprar
@@ -291,23 +322,30 @@
             -->
 
         </div>
+
     </main>
 
+
     <div id="modal">
+
         <div class="modal-box">
 
-            <h2 id="modalTitle">Comprar produto</h2>
+            <h2 id="modalTitle">
+                Comprar produto
+            </h2>
 
             <input
                 id="discordId"
                 type="text"
-                placeholder="Discord ID"
+                placeholder="Quewkyo ID"
+                autocomplete="off"
             >
 
             <input
                 id="password"
                 type="password"
-                placeholder="Senha do Quollet"
+                placeholder="Senha da Quewkyo Wallet"
+                autocomplete="current-password"
             >
 
             <button
@@ -327,7 +365,9 @@
             <div id="result"></div>
 
         </div>
+
     </div>
+
 
     <script src="./script.js"></script>
 

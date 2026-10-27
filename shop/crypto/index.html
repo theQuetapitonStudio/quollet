@@ -1,627 +1,931 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Quewkyo Wallet Crypto Shop</title>
-
-    <meta
-        name="description"
-        content="Quewkyo Wallet Crypto Shop — buy cryptocurrency using QUENOKY-BASE from the Quenoky World ecosystem."
-    >
-
-    <meta
-        name="robots"
-        content="index, follow"
-    >
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-
-            font-family:
-                Inter,
-                Arial,
-                sans-serif;
-
-            background:
-                radial-gradient(
-                    circle at top,
-                    #18202d 0%,
-                    #090b0f 45%,
-                    #050608 100%
-                );
-
-            color: #f5f7fa;
-        }
-
-        header {
-            width: 100%;
-            padding: 22px 7%;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            border-bottom:
-                1px solid #20252d;
-
-            background:
-                rgba(5, 6, 8, 0.75);
-
-            backdrop-filter:
-                blur(12px);
-
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .logo {
-            font-size: 21px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .logo span {
-            color: #f7931a;
-        }
-
-        .network {
-            font-size: 13px;
-            color: #858d99;
-        }
-
-        main {
-            width: min(920px, 92%);
-            margin: 0 auto;
-            padding: 80px 0;
-        }
-
-        .hero {
-            text-align: center;
-            margin-bottom: 55px;
-        }
-
-        .hero h1 {
-            margin: 0;
-
-            font-size:
-                clamp(40px, 7vw, 72px);
-
-            letter-spacing: -3px;
-        }
-
-        .hero h1 span {
-            color: #f7931a;
-        }
-
-        .hero p {
-            margin:
-                18px auto 0;
-
-            max-width: 580px;
-
-            color: #9299a5;
-
-            font-size: 17px;
-            line-height: 1.6;
-        }
-
-        .rate {
-            display: inline-block;
-
-            margin-top: 25px;
-            padding: 10px 16px;
-
-            border:
-                1px solid #303640;
-
-            border-radius: 999px;
-
-            color: #cbd1d9;
-
-            background:
-                rgba(255,255,255,0.03);
-
-            font-size: 14px;
-        }
-
-        .products {
-            display: grid;
-
-            grid-template-columns:
-                repeat(
-                    auto-fit,
-                    minmax(260px, 1fr)
-                );
-
-            gap: 20px;
-        }
-
-        .product {
-            padding: 26px;
-
-            border:
-                1px solid #242a33;
-
-            border-radius: 20px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,0.055),
-                    rgba(255,255,255,0.015)
-                );
-
-            box-shadow:
-                0 20px 60px
-                rgba(0,0,0,0.25);
-        }
-
-        .coin-icon {
-            width: 58px;
-            height: 58px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 50%;
-
-            background: #f7931a;
-            color: #fff;
-
-            font-size: 29px;
-            font-weight: 900;
-
-            margin-bottom: 22px;
-
-            box-shadow:
-                0 0 35px
-                rgba(247,147,26,0.22);
-        }
-
-        .product h2 {
-            margin: 0 0 8px;
-            font-size: 25px;
-        }
-
-        .product p {
-            margin: 0;
-
-            color: #858d99;
-
-            line-height: 1.5;
-        }
-
-        .product-rate {
-            margin-top: 22px;
-
-            font-size: 14px;
-            color: #c6ccd5;
-        }
-
-        .product-rate strong {
-            color: #f7931a;
-        }
-
-        .buy-btn {
-            width: 100%;
-
-            margin-top: 22px;
-            padding: 14px 18px;
-
-            border: 0;
-            border-radius: 12px;
-
-            background: #f7931a;
-            color: white;
-
-            font-size: 15px;
-            font-weight: 800;
-
-            cursor: pointer;
-
-            transition:
-                transform .15s,
-                filter .15s,
-                opacity .15s;
-        }
-
-        .buy-btn:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.08);
-        }
-
-        .buy-btn:disabled {
-            cursor: not-allowed;
-            opacity: .55;
-            transform: none;
-        }
-
-        .buy-box {
-            display: none;
-
-            margin-top: 35px;
-            padding: 30px;
-
-            border:
-                1px solid #292f38;
-
-            border-radius: 20px;
-
-            background:
-                rgba(12, 15, 20, 0.9);
-
-            box-shadow:
-                0 25px 80px
-                rgba(0,0,0,0.35);
-        }
-
-        .buy-box.active {
-            display: block;
-
-            animation:
-                appear .2s ease;
-        }
-
-        @keyframes appear {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .buy-title {
-            margin-bottom: 25px;
-        }
-
-        .buy-title h2 {
-            margin: 0;
-            font-size: 24px;
-        }
-
-        .buy-title p {
-            margin:
-                7px 0 0;
-
-            color: #858d99;
-        }
-
-        .input-group {
-            margin-bottom: 17px;
-        }
-
-        .input-group label {
-            display: block;
-
-            margin-bottom: 7px;
-
-            font-size: 13px;
-            color: #aeb5bf;
-        }
-
-        .input-group input {
-            width: 100%;
-
-            padding: 14px 15px;
-
-            border:
-                1px solid #303640;
-
-            border-radius: 11px;
-
-            outline: none;
-
-            background: #090b0f;
-            color: #fff;
-
-            font-size: 15px;
-
-            transition:
-                border-color .15s,
-                box-shadow .15s;
-        }
-
-        .input-group input:focus {
-            border-color: #f7931a;
-
-            box-shadow:
-                0 0 0 3px
-                rgba(247,147,26,0.08);
-        }
-
-        .preview {
-            margin:
-                20px 0;
-
-            padding: 18px;
-
-            border:
-                1px solid #292f38;
-
-            border-radius: 13px;
-
-            background:
-                rgba(255,255,255,0.025);
-        }
-
-        .preview-label {
-            color: #7f8792;
-            font-size: 13px;
-        }
-
-        .preview-amount {
-            margin-top: 6px;
-
-            font-size: 25px;
-            font-weight: 800;
-
-            color: #f7931a;
-        }
-
-        .status {
-            min-height: 22px;
-
-            margin-top: 17px;
-
-            font-size: 14px;
-            line-height: 1.5;
-
-            color: #9ca4af;
-        }
-
-        footer {
-            padding:
-                25px 7% 40px;
-
-            text-align: center;
-
-            color: #555d68;
-
-            font-size: 13px;
-        }
-
-        @media (max-width: 600px) {
-            header {
-                padding:
-                    18px 5%;
-            }
-
-            main {
-                padding:
-                    55px 0;
-            }
-
-            .hero h1 {
-                letter-spacing: -2px;
-            }
-
-            .buy-box {
-                padding: 22px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Quewkyo Wallet Crypto Shop</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(80,60,255,.14), transparent 35%),
+        radial-gradient(circle at 80% 20%, rgba(0,180,255,.10), transparent 35%),
+        #050509;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      width: 100%;
+      padding: 24px 7%;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      background: rgba(5,5,9,.85);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      background: linear-gradient(90deg,#6f5cff,#00c8ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: auto;
+      padding: 90px 20px 55px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border: 1px solid rgba(120,100,255,.35);
+      background: rgba(100,80,255,.08);
+      border-radius: 999px;
+      color: #a99fff;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px,8vw,82px);
+      line-height: .95;
+      letter-spacing: -5px;
+      font-weight: 950;
+      margin-bottom: 25px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg,#fff,#8e7cff,#00c8ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: auto;
+      color: #999;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .rates {
+      max-width: 850px;
+      margin: 35px auto 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .rate {
+      padding: 10px 16px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07);
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    .rate strong {
+      color: #fff;
+    }
+
+    .products {
+      max-width: 1000px;
+      margin: 20px auto 70px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 20px;
+    }
+
+    .product {
+      position: relative;
+      overflow: hidden;
+      padding: 35px;
+      border-radius: 24px;
+      background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.055),
+        rgba(255,255,255,.015)
+      );
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 25px 80px rgba(0,0,0,.35);
+      transition: .25s;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      border-color: rgba(130,110,255,.35);
+    }
+
+    .coin-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      font-weight: 900;
+      margin-bottom: 25px;
+      background: #f7931a;
+      box-shadow: 0 0 35px rgba(247,147,26,.25);
+    }
+
+    .coin-icon.sol {
+      background: #9945ff;
+      box-shadow: 0 0 35px rgba(153,69,255,.30);
+    }
+
+    .product h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .product p {
+      color: #999;
+      line-height: 1.6;
+      font-size: 14px;
+      min-height: 46px;
+    }
+
+    .product-rate {
+      margin: 25px 0;
+      padding: 14px;
+      background: rgba(255,255,255,.035);
+      border-radius: 12px;
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    .product-rate strong {
+      color: #fff;
+    }
+
+    .buy-btn,
+    #confirmButton {
+      width: 100%;
+      border: 0;
+      padding: 15px;
+      border-radius: 12px;
+      color: #fff;
+      background: linear-gradient(90deg,#6252ff,#347fff);
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .buy-btn:hover,
+    #confirmButton:hover {
+      opacity: .9;
+      transform: translateY(-1px);
+    }
+
+    .buy-box {
+      display: none;
+      max-width: 620px;
+      margin: 0 auto 90px;
+      padding: 35px;
+      border-radius: 24px;
+      background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.055),
+        rgba(255,255,255,.015)
+      );
+      border: 1px solid rgba(255,255,255,.09);
+      box-shadow: 0 30px 100px rgba(0,0,0,.4);
+    }
+
+    .buy-box h2 {
+      font-size: 30px;
+      margin-bottom: 7px;
+    }
+
+    .selected {
+      color: #8f84ff;
+      font-weight: 800;
+      margin-bottom: 28px;
+      font-size: 13px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      color: #aaa;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 14px 15px;
+      border-radius: 11px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.35);
+      color: #fff;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .field input:focus {
+      border-color: #7164ff;
+      box-shadow: 0 0 0 3px rgba(113,100,255,.10);
+    }
+
+    .preview {
+      margin: 22px 0;
+      padding: 18px;
+      border-radius: 13px;
+      background: rgba(80,70,255,.07);
+      border: 1px solid rgba(110,95,255,.15);
+    }
+
+    .preview-title {
+      color: #888;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 7px;
+    }
+
+    #receiveAmount {
+      font-size: 20px;
+      font-weight: 900;
+      word-break: break-word;
+    }
+
+    #status {
+      min-height: 22px;
+      margin-top: 17px;
+      text-align: center;
+      color: #999;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .info {
+      max-width: 850px;
+      margin: 0 auto 80px;
+      padding: 0 20px;
+    }
+
+    .info-box {
+      padding: 25px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .info-box h3 {
+      margin-bottom: 12px;
+      font-size: 17px;
+    }
+
+    .info-box p {
+      color: #888;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding: 30px 20px;
+      text-align: center;
+      color: #555;
+      font-size: 12px;
+    }
+
+    footer strong {
+      color: #777;
+    }
+
+    @media(max-width:720px) {
+      .products {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 60px;
+      }
+
+      .hero h1 {
+        letter-spacing: -3px;
+      }
+
+      .buy-box {
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 25px;
+      }
+
+      .product {
+        padding: 28px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-
+  <div class="nav">
     <div class="logo">
-        Quewkyo <span>Crypto Shop</span>
+      <span>QUEWKYO</span> WALLET
     </div>
 
-    <div class="network">
-        BTC
-    </div>
-
+    <a href="#">
+      Crypto Shop
+    </a>
+  </div>
 </header>
-
 
 <main>
 
-    <section class="hero">
+<section class="hero">
 
-        <h1>
-            Buy crypto with
-            <span>QUENOKY.</span>
-        </h1>
+  <div class="hero-badge">
+    QUEWKYO CRYPTO SHOP
+  </div>
 
-        <p>
-            Convert your Quewkyo Wallet balance into
-            cryptocurrency and receive it directly
-            through FaucetPay.
-        </p>
+  <h1>
+    Buy crypto with
+    <span class="gradient-text">QUENOKY.</span>
+  </h1>
 
-        <div class="rate">
-            5,000 QUENOKY-BASE = 1 satoshi
-        </div>
+  <p>
+    Use your QUENOKY-BASE balance to purchase
+    supported cryptocurrencies and receive them
+    directly through FaucetPay.
+  </p>
 
-    </section>
+  <div class="rates">
 
+    <div class="rate">
+      <strong>BTC:</strong>
+      5,000 QNK-BASE = 1 satoshi
+    </div>
 
-    <section class="products">
+    <div class="rate">
+      <strong>SOL:</strong>
+      5 QNK-BASE = 1 lamport
+    </div>
 
-        <div class="product">
+  </div>
 
-            <div class="coin-icon">
-                ₿
-            </div>
+</section>
 
-            <h2>
-                Bitcoin
-            </h2>
+<section class="products">
 
-            <p>
-                Receive BTC directly to your
-                FaucetPay account.
-            </p>
+  <div class="product">
 
-            <div class="product-rate">
-                <strong>
-                    5,000 QUENOKY-BASE
-                </strong>
-                = 1 satoshi
-            </div>
+    <div class="coin-icon">₿</div>
 
-            <button
-                class="buy-btn"
-                onclick="openBuy('BTC', 5000)"
-            >
-                Buy BTC
-            </button>
+    <h2>Bitcoin</h2>
 
-        </div>
+    <p>
+      Receive BTC directly to your FaucetPay account.
+    </p>
 
-    </section>
+    <div class="product-rate">
+      <strong>5,000 QNK-BASE</strong> = 1 satoshi
+    </div>
 
+    <button
+      class="buy-btn"
+      onclick="openBuy('BTC')">
+      Buy BTC
+    </button>
 
-    <section
-        id="buyBox"
-        class="buy-box"
+  </div>
+
+  <div class="product">
+
+    <div class="coin-icon sol">◎</div>
+
+    <h2>Solana</h2>
+
+    <p>
+      Receive SOL directly to your FaucetPay account.
+    </p>
+
+    <div class="product-rate">
+      <strong>5 QNK-BASE</strong> = 1 lamport
+    </div>
+
+    <button
+      class="buy-btn"
+      onclick="openBuy('SOL')">
+      Buy SOL
+    </button>
+
+  </div>
+
+</section>
+
+<section class="buy-box" id="buyBox">
+
+  <h2>Purchase</h2>
+
+  <div class="selected">
+    Selected:
+    <span id="selectedCoin">—</span>
+  </div>
+
+  <div class="field">
+
+    <label for="username">
+      QUEWKYO USERNAME
+    </label>
+
+    <input
+      type="text"
+      id="username"
+      placeholder="Enter your Quewkyo username"
+      autocomplete="username"
     >
 
-        <div class="buy-title">
+  </div>
 
-            <h2>
-                Buy <span id="selectedCoin">
-                    BTC
-                </span>
-            </h2>
+  <div class="field">
 
-            <p>
-                Enter your Quewkyo Wallet credentials
-                and FaucetPay username.
-            </p>
+    <label for="password">
+      PASSWORD
+    </label>
 
-        </div>
+    <input
+      type="password"
+      id="password"
+      placeholder="Enter your password"
+      autocomplete="current-password"
+    >
 
+  </div>
 
-        <div class="input-group">
+  <div class="field">
 
-            <label>
-                Quewkyo ID
-            </label>
+    <label for="qnkAmount">
+      QUENOKY-BASE AMOUNT
+    </label>
 
-            <input
-                id="id"
-                type="text"
-                inputmode="numeric"
-                autocomplete="username"
-                placeholder="Your Quewkyo ID"
-            >
+    <input
+      type="text"
+      id="qnkAmount"
+      placeholder="Example: 5000"
+      inputmode="numeric"
+      autocomplete="off"
+    >
 
-        </div>
+  </div>
 
+  <div class="field">
 
-        <div class="input-group">
+    <label for="faucetpayUsername">
+      FAUCETPAY USERNAME
+    </label>
 
-            <label>
-                Quewkyo Wallet Password
-            </label>
+    <input
+      type="text"
+      id="faucetpayUsername"
+      placeholder="Enter your FaucetPay username"
+      autocomplete="off"
+    >
 
-            <input
-                id="password"
-                type="password"
-                autocomplete="current-password"
-                placeholder="Your Quewkyo Wallet password"
-            >
+  </div>
 
-        </div>
+  <div class="preview">
 
+    <div class="preview-title">
+      You will receive
+    </div>
 
-        <div class="input-group">
+    <div id="receiveAmount">
+      0
+    </div>
 
-            <label>
-                QUENOKY-BASE Amount
-            </label>
+  </div>
 
-            <input
-                id="qnkAmount"
-                type="number"
-                min="5000"
-                step="5000"
-                placeholder="5000"
-                oninput="updatePreview()"
-            >
+  <button
+    id="confirmButton"
+    onclick="buyCrypto()">
+    Confirm Purchase
+  </button>
 
-        </div>
+  <div id="status"></div>
 
+</section>
 
-        <div class="input-group">
+<section class="info">
 
-            <label>
-                FaucetPay Username
-            </label>
+  <div class="info-box">
 
-            <input
-                id="faucetpayUsername"
-                type="text"
-                autocomplete="off"
-                placeholder="Your FaucetPay username"
-            >
+    <h3>How it works</h3>
 
-        </div>
+    <p>
+      Choose a cryptocurrency, enter your Quewkyo
+      username and password, select the amount of
+      QUENOKY-BASE you want to spend and provide
+      your FaucetPay username. Your QNK balance is
+      debited and the corresponding cryptocurrency
+      is sent through FaucetPay.
+    </p>
 
+  </div>
 
-        <div class="preview">
-
-            <div class="preview-label">
-                You will receive
-            </div>
-
-            <div
-                id="receiveAmount"
-                class="preview-amount"
-            >
-                0 satoshis
-            </div>
-
-        </div>
-
-
-        <button
-            id="confirmButton"
-            class="buy-btn"
-            onclick="buyCrypto()"
-        >
-            Confirm Purchase
-        </button>
-
-
-        <div
-            id="status"
-            class="status"
-        ></div>
-
-    </section>
+</section>
 
 </main>
 
-
 <footer>
-    Quewkyo Wallet Crypto Shop · BTC payments powered by FaucetPay · Quenoky World
+
+  <strong>Quewkyo Wallet Crypto Shop</strong>
+
+  <br><br>
+
+  BTC · SOL · FaucetPay
+
+  <br><br>
+
+  QUENOKY-BASE powered.
+
 </footer>
 
+<script>
 
-<script src="./index.js"></script>
+const BTC_FUNCTION_URL =
+  "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/qnktopepe";
+
+const SOL_FUNCTION_URL =
+  "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/qnk-to-sol";
+
+const QNK_PER_SATOSHI = 5000n;
+const QNK_PER_LAMPORT = 5n;
+
+let selectedCoin = null;
+let purchasing = false;
+
+function openBuy(coin) {
+
+  selectedCoin = coin;
+
+  document.getElementById("selectedCoin").textContent = coin;
+
+  const buyBox = document.getElementById("buyBox");
+
+  buyBox.style.display = "block";
+
+  updatePreview();
+
+  buyBox.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
+
+function updatePreview() {
+
+  const input =
+    document.getElementById("qnkAmount");
+
+  const receive =
+    document.getElementById("receiveAmount");
+
+  const value =
+    input.value.trim();
+
+  if (!value || !/^\d+$/.test(value)) {
+    receive.textContent = "0";
+    return;
+  }
+
+  try {
+
+    const qnk = BigInt(value);
+
+    if (qnk <= 0n) {
+      receive.textContent = "0";
+      return;
+    }
+
+    if (selectedCoin === "BTC") {
+
+      const satoshis =
+        qnk / QNK_PER_SATOSHI;
+
+      const btc =
+        Number(satoshis) / 100000000;
+
+      receive.textContent =
+        `${satoshis} satoshis (${btc} BTC)`;
+
+      return;
+    }
+
+    if (selectedCoin === "SOL") {
+
+      const lamports =
+        qnk / QNK_PER_LAMPORT;
+
+      if (lamports <= 0n) {
+        receive.textContent =
+          "Minimum: 5 QNK-BASE";
+        return;
+      }
+
+      const sol =
+        Number(lamports) / 1000000000;
+
+      receive.textContent =
+        `${lamports} lamports (${sol} SOL)`;
+
+      return;
+    }
+
+    receive.textContent = "0";
+
+  } catch {
+
+    receive.textContent = "0";
+
+  }
+}
+
+async function buyCrypto() {
+
+  if (purchasing)
+    return;
+
+  const username =
+    document
+      .getElementById("username")
+      .value
+      .trim();
+
+  const senha =
+    document
+      .getElementById("password")
+      .value;
+
+  const qnkInput =
+    document
+      .getElementById("qnkAmount")
+      .value
+      .trim();
+
+  const faucetpayUsername =
+    document
+      .getElementById("faucetpayUsername")
+      .value
+      .trim();
+
+  const status =
+    document.getElementById("status");
+
+  if (!selectedCoin) {
+    status.textContent =
+      "Select a cryptocurrency.";
+    return;
+  }
+
+  if (!username) {
+    status.textContent =
+      "Enter your Quewkyo username.";
+    return;
+  }
+
+  if (!senha) {
+    status.textContent =
+      "Enter your password.";
+    return;
+  }
+
+  if (!/^\d+$/.test(qnkInput)) {
+    status.textContent =
+      "Enter a valid QUENOKY-BASE amount.";
+    return;
+  }
+
+  if (!faucetpayUsername) {
+    status.textContent =
+      "Enter your FaucetPay username.";
+    return;
+  }
+
+  let qnkAmount;
+
+  try {
+    qnkAmount = BigInt(qnkInput);
+  } catch {
+    status.textContent =
+      "Invalid QNK amount.";
+    return;
+  }
+
+  if (qnkAmount <= 0n) {
+    status.textContent =
+      "QNK amount must be greater than zero.";
+    return;
+  }
+
+  let functionUrl;
+  let payload;
+
+  if (selectedCoin === "BTC") {
+
+    const satoshis =
+      qnkAmount / QNK_PER_SATOSHI;
+
+    if (satoshis <= 0n) {
+      status.textContent =
+        "Minimum: 5,000 QNK-BASE.";
+      return;
+    }
+
+    const qnkUsed =
+      satoshis * QNK_PER_SATOSHI;
+
+    functionUrl = BTC_FUNCTION_URL;
+
+    payload = {
+      username: username,
+      senha: senha,
+      qnk_amount: qnkUsed.toString(),
+      faucetpay_username: faucetpayUsername
+    };
+  }
+
+  else if (selectedCoin === "SOL") {
+
+    const lamports =
+      qnkAmount / QNK_PER_LAMPORT;
+
+    if (lamports <= 0n) {
+      status.textContent =
+        "Minimum: 5 QNK-BASE.";
+      return;
+    }
+
+    const qnkUsed =
+      lamports * QNK_PER_LAMPORT;
+
+    functionUrl = SOL_FUNCTION_URL;
+
+    payload = {
+      username: username,
+      senha: senha,
+      qnk_amount: qnkUsed.toString(),
+      faucetpay_username: faucetpayUsername
+    };
+  }
+
+  else {
+    status.textContent =
+      "Unsupported cryptocurrency.";
+    return;
+  }
+
+  purchasing = true;
+
+  const button =
+    document.getElementById("confirmButton");
+
+  button.disabled = true;
+  button.textContent = "Processing...";
+
+  status.textContent =
+    "Processing your purchase...";
+
+  try {
+
+    const response =
+      await fetch(
+        functionUrl,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify(payload)
+        }
+      );
+
+    const raw =
+      await response.text();
+
+    let data;
+
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      throw new Error(
+        `Server returned invalid response (${response.status})`
+      );
+    }
+
+	console.log("QNK INPUT:", qnkInput);
+console.log("QNK AMOUNT:", qnkAmount.toString());
+console.log("PAYLOAD:", payload);
+    console.log("Shop response:", data);
+
+    if (!response.ok || data.success !== true) {
+
+      throw new Error(
+        data.error ||
+        data.message ||
+        "Purchase failed."
+      );
+    }
+
+    if (selectedCoin === "BTC") {
+
+      status.textContent =
+        `Success! ${data.satoshis} satoshis sent to FaucetPay.`;
+    }
+
+    if (selectedCoin === "SOL") {
+
+      status.textContent =
+        `Success! ${data.lamports} lamports (${data.sol} SOL) sent to FaucetPay.`;
+    }
+
+    document.getElementById("qnkAmount").value = "";
+
+    updatePreview();
+
+  } catch (error) {
+
+    console.error("Purchase error:", error);
+
+    status.textContent =
+      error.message ||
+      "Something went wrong.";
+
+  } finally {
+
+    purchasing = false;
+
+    button.disabled = false;
+    button.textContent = "Confirm Purchase";
+  }
+}
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    const qnkInput =
+      document.getElementById("qnkAmount");
+
+    qnkInput.addEventListener(
+      "input",
+      updatePreview
+    );
+
+  }
+);
+
+</script>
 
 </body>
 </html>

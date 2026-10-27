@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Buy QNK-BASE | QUEWKYO</title>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #050509;
+    --card: #0c0c13;
+    --card2: #101019;
+    --border: #222231;
+    --text: #f5f5fa;
+    --muted: #85859a;
+    --pink: #ff3ea5;
+    --blue: #5577ff;
+    --green: #39e58c;
+    --red: #ff5263;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 20% 0%, #24102c 0, transparent 35%),
+        radial-gradient(circle at 90% 100%, #101b3d 0, transparent 40%),
+        var(--bg);
+    color: var(--text);
+    font-family: Inter, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 45px 18px;
+}
+
+.container {
+    width: 100%;
+    max-width: 620px;
+}
+
+.logo {
+    font-weight: 900;
+    letter-spacing: 4px;
+    font-size: 15px;
+    margin-bottom: 35px;
+}
+
+.logo span {
+    color: var(--pink);
+}
+
+h1 {
+    font-size: clamp(35px, 8vw, 58px);
+    line-height: .95;
+    letter-spacing: -3px;
+    margin-bottom: 16px;
+}
+
+.gradient {
+    background: linear-gradient(90deg, var(--pink), #a95cff, var(--blue));
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+.network {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    background: #0a0a10;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    margin-bottom: 14px;
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green);
+}
+
+.card {
+    background: rgba(12, 12, 19, .92);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 25px 80px #0008;
+}
+
+.rate {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    padding: 17px;
+    border-radius: 13px;
+    margin-bottom: 22px;
+}
+
+.rate small {
+    display: block;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+.rate strong {
+    font-size: 19px;
+}
+
+.field {
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    color: #aaaabb;
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 11px;
+    border: 1px solid var(--border);
+    background: #08080e;
+    color: white;
+    outline: none;
+    font-size: 15px;
+    transition: .2s;
+}
+
+input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px #5577ff15;
+}
+
+.amountBox {
+    margin-top: 8px;
+    background: #08080e;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.amountTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.amountBox input {
+    border: 0;
+    background: transparent;
+    font-size: 30px;
+    font-weight: 800;
+    padding: 5px 0;
+}
+
+.token {
+    font-weight: 800;
+    color: #bbb;
+}
+
+.receive {
+    border-top: 1px solid var(--border);
+    margin-top: 13px;
+    padding-top: 13px;
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.receive strong {
+    color: var(--text);
+}
+
+.wallet {
+    margin-top: 18px;
+    padding: 13px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    color: var(--muted);
+    font-size: 12px;
+    word-break: break-all;
+}
+
+button {
+    width: 100%;
+    border: 0;
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 13px;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.connect {
+    background: #171720;
+    color: white;
+    border: 1px solid #292938;
+}
+
+.buy {
+    background: linear-gradient(90deg, var(--pink), var(--blue));
+    color: white;
+}
+
+.status {
+    display: none;
+    margin-top: 17px;
+    padding: 14px;
+    border-radius: 11px;
+    line-height: 1.5;
+    font-size: 13px;
+    word-break: break-word;
+}
+
+.status.loading {
+    display: block;
+    background: #151524;
+    border: 1px solid #30304d;
+}
+
+.status.success {
+    display: block;
+    background: #0d2118;
+    border: 1px solid #1f6846;
+    color: #83f5ba;
+}
+
+.status.error {
+    display: block;
+    background: #271014;
+    border: 1px solid #6c2831;
+    color: #ff8e9b;
+}
+
+.warning {
+    color: #666678;
+    font-size: 11px;
+    text-align: center;
+    line-height: 1.5;
+    margin-top: 18px;
+}
+
+@media(max-width: 500px) {
+    body {
+        padding-top: 25px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">QUEW<span>KYO</span></div>
+
+    <div class="network">
+        <div class="dot"></div>
+        Ethereum Sepolia
+    </div>
+
+    <h1>
+        Buy<br>
+        <span class="gradient">QNK-BASE</span>
+    </h1>
+
+    <p class="subtitle">
+        Buy QNK-BASE directly with WETH on Ethereum Sepolia.
+        Your QNK-BASE balance will be credited after the
+        blockchain transaction is verified.
+    </p>
+
+    <div class="card">
+
+        <div class="rate">
+            <small>Current rate</small>
+            <strong>1 QNK-BASE = 0.00001 WETH</strong>
+        </div>
+
+        <div class="field">
+            <label>QUEWKYO Username</label>
+            <input id="username" placeholder="Your username">
+        </div>
+
+        <div class="field">
+            <label>Password</label>
+            <input id="password" type="password" placeholder="Your password">
+        </div>
+
+        <div class="field">
+            <label>Amount to buy</label>
+
+            <div class="amountBox">
+                <div class="amountTop">
+                    <input
+                        id="qnkAmount"
+                        type="number"
+                        min="1"
+                        step="1"
+                        value="100"
+                    >
+                    <span class="token">QNK</span>
+                </div>
+
+                <div class="receive">
+                    <span>You pay</span>
+                    <strong id="wethAmount">0.001 WETH</strong>
+                </div>
+            </div>
+        </div>
+
+        <div id="walletInfo" class="wallet">
+            Wallet not connected
+        </div>
+
+        <button class="connect" id="connectBtn">
+            Connect MetaMask
+        </button>
+
+        <button class="buy" id="buyBtn" disabled>
+            Buy QNK-BASE
+        </button>
+
+        <div id="status" class="status"></div>
+
+        <div class="warning">
+            Testnet only. Payments use WETH on Ethereum Sepolia.
+            Sepolia assets do not represent real monetary value.
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const EDGE_FUNCTION_URL =
+    "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/buyqnk";
+
+const TREASURY =
+    "0xE587ca958F78467E173eEEF5559F4C253ED53a2b";
+
+const WETH =
+    "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14";
+
+const SEPOLIA_CHAIN_ID = 11155111;
+
+const WETH_ABI = [
+    "function transfer(address to, uint256 value) returns (bool)"
+];
+
+let provider = null;
+let signer = null;
+let walletAddress = null;
+
+const usernameInput =
+    document.getElementById("username");
+
+const passwordInput =
+    document.getElementById("password");
+
+const amountInput =
+    document.getElementById("qnkAmount");
+
+const wethAmountText =
+    document.getElementById("wethAmount");
+
+const connectBtn =
+    document.getElementById("connectBtn");
+
+const buyBtn =
+    document.getElementById("buyBtn");
+
+const walletInfo =
+    document.getElementById("walletInfo");
+
+const statusBox =
+    document.getElementById("status");
+
+
+// =====================================================
+// STATUS
+// =====================================================
+
+function status(message, type = "loading") {
+
+    statusBox.className =
+        "status " + type;
+
+    statusBox.textContent =
+        message;
+}
+
+
+// =====================================================
+// AMOUNT
+// =====================================================
+
+function updateAmount() {
+
+    let qnk =
+        Number(amountInput.value);
+
+    if (!Number.isInteger(qnk) || qnk < 1) {
+        wethAmountText.textContent =
+            "Invalid amount";
+        return;
+    }
+
+    const weth =
+        qnk * 0.00001;
+
+    wethAmountText.textContent =
+        weth.toFixed(5) + " WETH";
+}
+
+amountInput.addEventListener(
+    "input",
+    updateAmount
+);
+
+
+// =====================================================
+// SWITCH TO SEPOLIA
+// =====================================================
+
+async function switchToSepolia() {
+
+    const network =
+        await provider.getNetwork();
+
+    if (
+        Number(network.chainId) ===
+        SEPOLIA_CHAIN_ID
+    ) {
+        return;
+    }
+
+    try {
+
+        await window.ethereum.request({
+            method: "wallet_switchEthereumChain",
+            params: [{
+                chainId: "0xaa36a7"
+            }]
+        });
+
+    } catch (error) {
+
+        if (error.code === 4902) {
+
+            await window.ethereum.request({
+                method: "wallet_addEthereumChain",
+                params: [{
+                    chainId: "0xaa36a7",
+                    chainName: "Ethereum Sepolia",
+                    nativeCurrency: {
+                        name: "Sepolia ETH",
+                        symbol: "ETH",
+                        decimals: 18
+                    },
+                    rpcUrls: [
+                        "https://ethereum-sepolia-rpc.publicnode.com"
+                    ],
+                    blockExplorerUrls: [
+                        "https://sepolia.etherscan.io"
+                    ]
+                }]
+            });
+
+        } else {
+            throw error;
+        }
+    }
+
+    provider =
+        new ethers.BrowserProvider(
+            window.ethereum
+        );
+
+    signer =
+        await provider.getSigner();
+}
+
+
+// =====================================================
+// CONNECT
+// =====================================================
+
+async function connectWallet() {
+
+    if (!window.ethereum) {
+
+        status(
+            "MetaMask was not detected.",
+            "error"
+        );
+
+        return;
+    }
+
+    try {
+
+        provider =
+            new ethers.BrowserProvider(
+                window.ethereum
+            );
+
+        await provider.send(
+            "eth_requestAccounts",
+            []
+        );
+
+        await switchToSepolia();
+
+        signer =
+            await provider.getSigner();
+
+        walletAddress =
+            await signer.getAddress();
+
+        walletInfo.textContent =
+            "Connected: " +
+            walletAddress;
+
+        connectBtn.textContent =
+            "Wallet Connected";
+
+        buyBtn.disabled =
+            false;
+
+        status(
+            "Wallet connected successfully.",
+            "success"
+        );
+
+    } catch (error) {
+
+        status(
+            error.message ||
+            "Could not connect wallet.",
+            "error"
+        );
+    }
+}
+
+connectBtn.addEventListener(
+    "click",
+    connectWallet
+);
+
+
+// =====================================================
+// BUY
+// =====================================================
+
+async function buyQNK() {
+
+    const username =
+        usernameInput.value.trim();
+
+    const password =
+        passwordInput.value;
+
+    const qnkAmount =
+        Number(amountInput.value);
+
+
+    if (!username) {
+
+        status(
+            "Enter your QUEWKYO username.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (!password) {
+
+        status(
+            "Enter your password.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (
+        !Number.isInteger(qnkAmount) ||
+        qnkAmount < 1
+    ) {
+
+        status(
+            "QNK amount must be a positive whole number.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (!signer || !walletAddress) {
+
+        status(
+            "Connect MetaMask first.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (
+        EDGE_FUNCTION_URL.includes(
+            "PASTE_"
+        )
+    ) {
+
+        status(
+            "EDGE_FUNCTION_URL is not configured.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    buyBtn.disabled = true;
+    connectBtn.disabled = true;
+
+
+    try {
+
+        await switchToSepolia();
+
+        signer =
+            await provider.getSigner();
+
+        walletAddress =
+            await signer.getAddress();
+
+
+        // =============================================
+        // EXACT INTEGER CALCULATION
+        //
+        // 1 QNK = 10^13 WETH wei
+        // =============================================
+
+        const weiPerQNK =
+            10000000000000n;
+
+        const wethWei =
+            BigInt(qnkAmount) *
+            weiPerQNK;
+
+
+        // =============================================
+        // WETH CONTRACT
+        // =============================================
+
+        const wethContract =
+            new ethers.Contract(
+                WETH,
+                WETH_ABI,
+                signer
+            );
+
+
+        status(
+            "Confirm the WETH payment in MetaMask..."
+        );
+
+
+        // =============================================
+        // SEND WETH
+        // =============================================
+
+        const tx =
+            await wethContract.transfer(
+                TREASURY,
+                wethWei
+            );
+
+
+        status(
+            "Transaction sent. Waiting for confirmation...\n" +
+            tx.hash
+        );
+
+
+        // =============================================
+        // WAIT FOR BLOCK
+        // =============================================
+
+        await tx.wait();
+
+
+        status(
+            "Payment confirmed. Verifying with QUEWKYO..."
+        );
+
+
+        // =============================================
+        // VERIFY + CREDIT
+        // =============================================
+
+        const response =
+            await fetch(
+                EDGE_FUNCTION_URL,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        username: username,
+                        senha: password,
+                        wallet: walletAddress,
+                        tx_hash: tx.hash
+                    })
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !result.success
+        ) {
+
+            throw new Error(
+                result.error ||
+                "Payment verification failed."
+            );
+        }
+
+
+        // =============================================
+        // SUCCESS
+        // =============================================
+
+        status(
+            "Purchase complete!\n\n" +
+            result.qnk_added +
+            " QNK-BASE added to your account.\n" +
+            "New balance: " +
+            result.new_balance +
+            " QNK-BASE",
+            "success"
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        let message =
+            error.shortMessage ||
+            error.reason ||
+            error.message ||
+            "Purchase failed.";
+
+        if (
+            message.includes(
+                "user rejected"
+            )
+        ) {
+            message =
+                "Transaction cancelled.";
+        }
+
+        status(
+            message,
+            "error"
+        );
+
+    } finally {
+
+        buyBtn.disabled =
+            !walletAddress;
+
+        connectBtn.disabled =
+            false;
+    }
+}
+
+
+// =====================================================
+// EVENTS
+// =====================================================
+
+buyBtn.addEventListener(
+    "click",
+    buyQNK
+);
+
+
+if (window.ethereum) {
+
+    window.ethereum.on(
+        "accountsChanged",
+        () => {
+            walletAddress = null;
+            signer = null;
+
+            walletInfo.textContent =
+                "Wallet changed. Reconnect MetaMask.";
+
+            buyBtn.disabled =
+                true;
+
+            connectBtn.textContent =
+                "Connect MetaMask";
+        }
+    );
+
+
+    window.ethereum.on(
+        "chainChanged",
+        () => {
+            window.location.reload();
+        }
+    );
+}
+
+
+updateAmount();
+
+</script>
+
+</body>
+</html>

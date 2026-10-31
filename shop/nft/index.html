@@ -1,0 +1,1049 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b16">
+<title>Quewkyo NFT Store</title>
+
+<style>
+:root {
+    --bg: #080b16;
+    --panel: #101629;
+    --panel2: #151d34;
+    --border: #252f4d;
+    --blue: #3984ff;
+    --purple: #8957ff;
+    --text: #f2f5ff;
+    --muted: #8994b2;
+    --green: #43d99b;
+    --red: #ff5e76;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background:
+        radial-gradient(ellipse at 15% 0%, #192c55 0%, transparent 38%),
+        radial-gradient(ellipse at 90% 20%, #29174d 0%, transparent 35%),
+        var(--bg);
+    color: var(--text);
+    font-family: Inter, system-ui, Arial, sans-serif;
+    min-height: 100vh;
+}
+
+button, input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+header {
+    height: 76px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ffffff10;
+    background: #080b16c9;
+    backdrop-filter: blur(18px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.status {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.container {
+    width: min(1150px, 90%);
+    margin: auto;
+}
+
+.hero {
+    padding: 75px 0 45px;
+}
+
+.eyebrow {
+    color: #8eb5ff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.hero h1 {
+    font-size: clamp(35px, 6vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -3px;
+    max-width: 750px;
+}
+
+.gradient {
+    background: linear-gradient(90deg, #4c9aff, #a477ff);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    color: var(--muted);
+    margin-top: 18px;
+    max-width: 570px;
+    line-height: 1.7;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 25px 0 45px;
+}
+
+.stat {
+    background: #11182b;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.stat small {
+    color: var(--muted);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.stat strong {
+    font-size: 23px;
+    overflow-wrap: anywhere;
+}
+
+.section {
+    margin: 45px 0;
+}
+
+.section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.section-head h2 {
+    font-size: 23px;
+}
+
+.section-head p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
+    gap: 18px;
+}
+
+.nft-card {
+    background: linear-gradient(145deg, #151e35, #0e1425);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    overflow: hidden;
+    transition: transform .18s ease, border-color .18s ease;
+}
+
+.nft-card:hover {
+    transform: translateY(-4px);
+    border-color: #557bd2;
+}
+
+.nft-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background: #1a2541;
+    display: block;
+}
+
+.nft-content {
+    padding: 17px;
+}
+
+.nft-content h3 {
+    font-size: 17px;
+    margin-bottom: 7px;
+}
+
+.nft-description {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--muted);
+    min-height: 36px;
+}
+
+.nft-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.price {
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.currency {
+    color: #9db8ff;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.primary-btn, .secondary-btn, .danger-btn {
+    border: 0;
+    border-radius: 9px;
+    padding: 11px 15px;
+    color: white;
+    font-weight: 750;
+    font-size: 12px;
+    transition: .2s;
+}
+
+.primary-btn {
+    background: linear-gradient(100deg, #347fff, #8054ef);
+}
+
+.primary-btn:hover {
+    filter: brightness(1.15);
+}
+
+.secondary-btn {
+    background: #202c48;
+    border: 1px solid #344365;
+}
+
+.danger-btn {
+    background: #49202d;
+    border: 1px solid #793346;
+}
+
+button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+.owned-label {
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.panel {
+    background: #101629e8;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    padding: 22px;
+}
+
+.login-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 420px;
+}
+
+.input {
+    width: 100%;
+    background: #090f20;
+    border: 1px solid #2a3655;
+    color: white;
+    padding: 13px 14px;
+    border-radius: 9px;
+    outline: none;
+}
+
+.input:focus {
+    border-color: var(--blue);
+}
+
+.input::placeholder {
+    color: #697593;
+}
+
+.login-box p, .muted {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.account-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.account-info strong {
+    overflow-wrap: anywhere;
+}
+
+.collection-item {
+    padding: 13px 0;
+    border-bottom: 1px solid #ffffff12;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.collection-item:last-child {
+    border-bottom: 0;
+}
+
+.collection-item small {
+    display: block;
+    color: var(--muted);
+    margin-top: 5px;
+    font-size: 11px;
+}
+
+.hash {
+    color: #9bbaff;
+    font-family: monospace;
+    font-size: 11px;
+    overflow-wrap: anywhere;
+}
+
+.verify-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.verify-result {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #0a1020;
+    border: 1px solid var(--border);
+    overflow-wrap: anywhere;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.empty {
+    padding: 25px;
+    text-align: center;
+    color: var(--muted);
+    background: #0c1324;
+    border-radius: 12px;
+    border: 1px dashed #35415f;
+    font-size: 13px;
+}
+
+footer {
+    margin-top: 70px;
+    padding: 30px 5%;
+    text-align: center;
+    border-top: 1px solid #ffffff12;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.toast {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    max-width: min(360px, 90vw);
+    background: #182440;
+    border: 1px solid #405b8c;
+    color: white;
+    padding: 14px 18px;
+    border-radius: 11px;
+    box-shadow: 0 10px 35px #0008;
+    z-index: 30;
+    display: none;
+    font-size: 13px;
+}
+
+.toast.error {
+    border-color: #a13d55;
+}
+
+.loading {
+    color: var(--muted);
+    padding: 25px;
+    text-align: center;
+}
+
+@media(max-width: 650px) {
+    header {
+        padding: 0 5%;
+    }
+
+    .hero {
+        padding-top: 50px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .verify-row {
+        flex-direction: column;
+    }
+
+    .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">QUEWKYO <span> NFT STORE</span></div>
+
+    <div class="header-right">
+        <span class="status" id="connectionStatus">● Connecting...</span>
+        <button class="secondary-btn" onclick="scrollToLogin()">Account</button>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <div class="eyebrow">QUEWKYO DIGITAL ASSETS</div>
+
+        <h1>
+            Digital ownership.<br>
+            <span class="gradient">Made different.</span>
+        </h1>
+
+        <p>
+            Explore the Quewkyo NFT collection, acquire digital assets
+            and verify ownership through permanent issuance records.
+        </p>
+    </section>
+
+    <section class="stats">
+        <div class="stat">
+            <small>Available NFTs</small>
+            <strong id="totalNFTs">—</strong>
+        </div>
+
+        <div class="stat">
+            <small>Your balance</small>
+            <strong id="balance">—</strong>
+        </div>
+
+        <div class="stat">
+            <small>Your collection</small>
+            <strong id="ownedCount">—</strong>
+        </div>
+    </section>
+
+    <section class="section" id="accountSection">
+        <div class="section-head">
+            <div>
+                <h2>Your account</h2>
+                <p>Sign in to access your collection and purchase NFTs.</p>
+            </div>
+        </div>
+
+        <div class="panel" id="accountPanel">
+            <div class="login-box">
+                <input
+                    class="input"
+                    id="loginDiscord"
+                    type="text"
+                    placeholder="Discord ID"
+                    autocomplete="username"
+                >
+
+                <input
+                    class="input"
+                    id="loginPassword"
+                    type="password"
+                    placeholder="Password"
+                    autocomplete="current-password"
+                >
+
+                <button class="primary-btn" id="loginButton" onclick="login()">
+                    Sign in
+                </button>
+
+                <p>
+                    Your credentials are sent securely to the Quewkyo server.
+                    They are not saved in local storage.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-head">
+            <div>
+                <h2>NFT Marketplace</h2>
+                <p>Explore the available digital assets.</p>
+            </div>
+
+            <button class="secondary-btn" onclick="loadStore()">
+                Refresh
+            </button>
+        </div>
+
+        <div class="grid" id="nftGrid">
+            <div class="loading">Loading NFTs...</div>
+        </div>
+    </section>
+
+    <section class="section" id="collectionSection">
+        <div class="section-head">
+            <div>
+                <h2>My collection</h2>
+                <p>Your permanently issued NFTs.</p>
+            </div>
+        </div>
+
+        <div class="panel" id="ownedList">
+            <div class="empty">Sign in to view your collection.</div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-head">
+            <div>
+                <h2>Verify an NFT</h2>
+                <p>Check an NFT's issuance record using its unique hash.</p>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="verify-row">
+                <input
+                    class="input"
+                    id="verifyHash"
+                    type="text"
+                    placeholder="Enter NFT hash..."
+                >
+
+                <button class="primary-btn" onclick="verifyNFT()">
+                    Verify
+                </button>
+            </div>
+
+            <div id="verifyResult"></div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>QUEWKYO NFT STORE · Digital assets and permanent issuance records.</p>
+    <p style="margin-top:7px">Powered by Quewkyo.</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+const API_URL = "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/nft-store";
+const PRIVATE_ACTIONS = new Set(["account", "my_nfts", "buy"]);
+
+let accountCredentials = null;
+let account = null;
+let nfts = [];
+let collectionRecords = [];
+let collectionError = "";
+let busy = false;
+let toastTimer = null;
+
+const $ = id => document.getElementById(id);
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+    })[char]);
+}
+
+function safeURL(value) {
+    try {
+        const url = new URL(String(value));
+        return ["https:", "http:"].includes(url.protocol) ? url.href : "";
+    } catch {
+        return "";
+    }
+}
+
+function toast(message, error = false) {
+    const element = $("toast");
+    element.textContent = message;
+    element.className = `toast${error ? " error" : ""}`;
+    element.style.display = "block";
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+        element.style.display = "none";
+    }, 3500);
+}
+
+function setStatus(message) {
+    $("connectionStatus").textContent = message;
+}
+
+function formatNumber(value) {
+    const number = Number(value);
+    return Number.isFinite(number)
+        ? number.toLocaleString("en-US", { maximumFractionDigits: 8 })
+        : "0";
+}
+
+function scrollToLogin() {
+    $("accountSection").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function setButtonLoading(button, loading, label) {
+    if (!button) return;
+    button.disabled = loading;
+    button.textContent = loading ? "Please wait..." : label;
+}
+
+async function api(action, data = {}, credentials = accountCredentials) {
+    const isPrivate = PRIVATE_ACTIONS.has(action);
+
+    if (isPrivate && !credentials) {
+        throw new Error("LOGIN_REQUIRED");
+    }
+
+    const payload = {
+        action,
+        ...(isPrivate ? {
+            discord_id: credentials.discord_id,
+            password: credentials.password
+        } : {}),
+        ...data
+    };
+
+    let response;
+    try {
+        response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+    } catch {
+        throw new Error("NETWORK_ERROR");
+    }
+
+    let result;
+    try {
+        result = await response.json();
+    } catch {
+        throw new Error(`INVALID_SERVER_RESPONSE_${response.status}`);
+    }
+
+    if (!response.ok || result?.success === false) {
+        throw new Error(
+            result?.error || result?.message || `HTTP_${response.status}`
+        );
+    }
+
+    return result;
+}
+
+async function login() {
+    if (busy) return;
+
+    const discordId = $("loginDiscord").value.trim();
+    const password = $("loginPassword").value;
+
+    if (!discordId || !password) {
+        toast("Enter your Discord ID and password.", true);
+        return;
+    }
+
+    busy = true;
+    const button = $("loginButton");
+    setButtonLoading(button, true, "Sign in");
+
+    const credentials = { discord_id: discordId, password };
+
+    try {
+        const result = await api("account", {}, credentials);
+        accountCredentials = credentials;
+        account = result.account || result;
+        $("loginPassword").value = "";
+
+        updateAccountUI();
+        await refreshAccount({ fetchAccount: false });
+        toast("Successfully signed in.");
+    } catch (error) {
+        accountCredentials = null;
+        account = null;
+        collectionRecords = [];
+        collectionError = "";
+        updateAccountUI();
+        renderCollection();
+        renderNFTs();
+        toast(errorMessage(error), true);
+    } finally {
+        busy = false;
+        setButtonLoading($("loginButton"), false, "Sign in");
+    }
+}
+
+function logout() {
+    accountCredentials = null;
+    account = null;
+    collectionRecords = [];
+    collectionError = "";
+
+    $("balance").textContent = "—";
+    $("ownedCount").textContent = "—";
+
+    updateAccountUI();
+    renderCollection();
+    renderNFTs();
+    toast("You have been signed out.");
+}
+
+function updateAccountUI() {
+    const panel = $("accountPanel");
+
+    if (!accountCredentials || !account) {
+        panel.innerHTML = `
+            <div class="login-box">
+                <input class="input" id="loginDiscord" type="text"
+                    placeholder="Discord ID" autocomplete="username">
+                <input class="input" id="loginPassword" type="password"
+                    placeholder="Password" autocomplete="current-password">
+                <button class="primary-btn" id="loginButton" onclick="login()">
+                    Sign in
+                </button>
+                <p>Your credentials are not saved in local storage.</p>
+            </div>`;
+        setStatus("● Public access");
+        return;
+    }
+
+    const discordId = account.discord_id ?? accountCredentials.discord_id;
+    panel.innerHTML = `
+        <div class="account-info">
+            <div>
+                <small class="muted">SIGNED IN AS</small>
+                <strong>${escapeHTML(discordId)}</strong>
+            </div>
+            <button class="danger-btn" onclick="logout()">Sign out</button>
+        </div>`;
+    setStatus("● Account connected");
+}
+
+async function loadStore() {
+    const grid = $("nftGrid");
+    grid.innerHTML = '<div class="loading">Loading NFTs...</div>';
+
+    try {
+        const result = await api("list");
+        nfts = Array.isArray(result.nfts)
+            ? result.nfts
+            : Array.isArray(result) ? result : [];
+
+        $("totalNFTs").textContent = formatNumber(nfts.length);
+        renderNFTs();
+        setStatus(accountCredentials ? "● Account connected" : "● Store online");
+    } catch (error) {
+        grid.innerHTML = `
+            <div class="empty">
+                Could not load the marketplace.<br>
+                ${escapeHTML(errorMessage(error))}
+            </div>`;
+        setStatus("● Connection error");
+    }
+}
+
+function renderNFTs() {
+    const grid = $("nftGrid");
+
+    if (!nfts.length) {
+        grid.innerHTML = '<div class="empty">No NFTs available.</div>';
+        return;
+    }
+
+    const ownedIds = new Set(collectionRecords.map(item => String(item.nft_id)));
+
+    grid.innerHTML = nfts.map((nft, index) => {
+        const id = String(nft.id ?? "");
+        const owned = ownedIds.has(id);
+        const image = safeURL(nft.image);
+
+        return `
+            <article class="nft-card">
+                ${image ? `
+                    <img class="nft-image"
+                        src="${escapeHTML(image)}"
+                        alt="${escapeHTML(nft.name)}"
+                        loading="lazy"
+                        decoding="async">
+                ` : ""}
+                <div class="nft-content">
+                    <h3>${escapeHTML(nft.name)}</h3>
+                    <p class="nft-description">${escapeHTML(nft.description)}</p>
+                    <div class="nft-bottom">
+                        <div>
+                            <div class="price">${formatNumber(nft.price)}</div>
+                            <div class="currency">${escapeHTML(nft.currency)}</div>
+                        </div>
+                        ${owned
+                            ? '<span class="owned-label">OWNED</span>'
+                            : `<button class="primary-btn"
+                                onclick="confirmPurchase(${index})">
+                                ${accountCredentials ? "Purchase" : "Sign in"}
+                            </button>`
+                        }
+                    </div>
+                </div>
+            </article>`;
+    }).join("");
+}
+
+function confirmPurchase(index) {
+    const nft = nfts[index];
+
+    if (!nft) {
+        toast("NFT not found.", true);
+        return;
+    }
+
+    if (!accountCredentials) {
+        toast("Sign in before purchasing.", true);
+        scrollToLogin();
+        return;
+    }
+
+    if (!confirm(`Purchase ${nft.name} for ${nft.price} ${nft.currency}?`)) {
+        return;
+    }
+
+    purchaseNFT(nft.id);
+}
+
+async function purchaseNFT(nftId) {
+    if (busy) return;
+
+    if (!accountCredentials) {
+        toast("Please sign in first.", true);
+        return;
+    }
+
+    busy = true;
+    try {
+        const result = await api("buy", { nft_id: nftId });
+        await refreshAccount();
+
+        const hash = result.hash || result.issuance?.hash;
+        if (hash) {
+            alert(
+                "NFT successfully purchased!" +
+                "Permanent issuance hash:" + hash
+            );
+        } else {
+            toast("NFT successfully purchased.");
+        }
+    } catch (error) {
+        toast(errorMessage(error), true);
+    } finally {
+        busy = false;
+    }
+}
+
+async function refreshAccount({ fetchAccount = true } = {}) {
+    if (!accountCredentials) return;
+
+    if (fetchAccount) {
+        const accountResult = await api("account");
+        account = accountResult.account || accountResult;
+    }
+
+    try {
+        const collectionResult = await api("my_nfts");
+        collectionRecords = Array.isArray(collectionResult.collection)
+            ? collectionResult.collection
+            : [];
+        collectionError = "";
+    } catch (error) {
+        // Collection failure must not invalidate a valid account session.
+        collectionRecords = [];
+        collectionError = errorMessage(error);
+    }
+
+    const balance = account?.balance ?? account?.saldo ?? 0;
+    $("balance").textContent = formatNumber(balance);
+    $("ownedCount").textContent = collectionError
+        ? "—"
+        : formatNumber(collectionRecords.length);
+
+    renderCollection();
+    renderNFTs();
+    updateAccountUI();
+
+    if (collectionError) {
+        toast(`Account connected, but collection could not load: ${collectionError}`, true);
+    }
+}
+
+function renderCollection() {
+    const container = $("ownedList");
+
+    if (!accountCredentials) {
+        container.innerHTML = '<div class="empty">Sign in to view your collection.</div>';
+        return;
+    }
+
+    if (collectionError) {
+        container.innerHTML = `
+            <div class="empty">
+                Could not load your collection.<br>
+                ${escapeHTML(collectionError)}
+            </div>`;
+        return;
+    }
+
+    if (!collectionRecords.length) {
+        container.innerHTML = '<div class="empty">You do not own any NFTs yet.</div>';
+        return;
+    }
+
+    container.innerHTML = collectionRecords.map(item => {
+        const nft = item.nft || {};
+        const name = nft.name || item.nft_id || "Unknown NFT";
+        const hash = item.hash || "Unavailable";
+
+        return `
+            <div class="collection-item">
+                <div>
+                    <strong>${escapeHTML(name)}</strong>
+                    <small>NFT ID: ${escapeHTML(item.nft_id)}</small>
+                    <small class="hash">${escapeHTML(hash)}</small>
+                </div>
+                <span class="owned-label">OWNED</span>
+            </div>`;
+    }).join("");
+}
+
+async function verifyNFT() {
+    const hash = $("verifyHash").value.trim();
+    const output = $("verifyResult");
+
+    if (!hash) {
+        toast("Enter an NFT hash.", true);
+        return;
+    }
+
+    output.innerHTML = '<div class="loading">Verifying hash...</div>';
+
+    try {
+        const result = await api("verify", { hash });
+        const record = result.record || result;
+
+        if (result.verified === false || result.valid === false || result.found === false) {
+            output.innerHTML = `
+                <div class="verify-result">
+                    <strong style="color:var(--red)">Verification failed</strong>
+                    <p>This hash was not found in the issuance records.</p>
+                </div>`;
+            return;
+        }
+
+        output.innerHTML = `
+            <div class="verify-result">
+                <strong style="color:var(--green)">✓ Issuance record found</strong>
+                <p><strong>NFT:</strong>
+                    ${escapeHTML(record.nft?.name || record.nft_id || "Unknown")}</p>
+                <p><strong>Owner Discord ID:</strong>
+                    ${escapeHTML(record.owner || record.discord_id || "Unknown")}</p>
+                <p><strong>NFT ID:</strong>
+                    ${escapeHTML(record.nft_id || "Unknown")}</p>
+                <p><strong>Issued at:</strong>
+                    ${escapeHTML(record.issued_at || "Unknown")}</p>
+                <p><strong>Hash:</strong>
+                    <span class="hash">${escapeHTML(record.hash || hash)}</span></p>
+            </div>`;
+    } catch (error) {
+        output.innerHTML = `
+            <div class="verify-result">
+                <strong style="color:var(--red)">Verification failed</strong>
+                <p>${escapeHTML(errorMessage(error))}</p>
+            </div>`;
+    }
+}
+
+function errorMessage(error) {
+    const message = String(error?.message || error);
+    const errors = {
+        LOGIN_REQUIRED: "Please sign in first.",
+        INVALID_CREDENTIALS: "Incorrect Discord ID or password.",
+        INSUFFICIENT_BALANCE: "You do not have enough balance.",
+        NFT_ALREADY_OWNED: "You already own this NFT.",
+        USER_NOT_FOUND: "Account not found.",
+        NETWORK_ERROR: "Network error. Check your connection.",
+        INVALID_SERVER_RESPONSE: "The server returned an invalid response."
+    };
+    return errors[message] || message.replaceAll("_", " ");
+}
+
+function init() {
+    setStatus("● Connecting...");
+    loadStore();
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Enter" && event.target?.id === "loginPassword") {
+            login();
+        }
+        if (event.key === "Enter" && event.target?.id === "verifyHash") {
+            verifyNFT();
+        }
+    });
+}
+
+init();
+</script>
+
+</body>
+</html>

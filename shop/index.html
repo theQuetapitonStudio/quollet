@@ -1,375 +1,482 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b12">
+<title>Quewkyo Wallet — Shop</title>
+<meta name="description" content="Quewkyo Wallet Shop — explore produtos e conteúdos do ecossistema Quewkyo.">
 
-    <title>Quewkyo Wallet — Shop</title>
+<style>
+*{box-sizing:border-box}
 
-    <meta
-        name="description"
-        content="Quewkyo Wallet Shop — produtos e conteúdos do ecossistema Quenoky World."
-    >
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    background:
+    radial-gradient(circle at top left,#18233d,transparent 40%),
+    radial-gradient(circle at bottom right,#24133b,transparent 40%),
+    #080b12;
+    color:white;
+}
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+header{
+    padding:35px 8%;
+    border-bottom:1px solid #202838;
+}
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
+header h1{margin:0;font-size:32px}
+header p{margin:8px 0 0;color:#8994a8}
 
-            background:
-                radial-gradient(circle at top left, #18233d, transparent 40%),
-                radial-gradient(circle at bottom right, #24133b, transparent 40%),
-                #080b12;
+.shop{
+    width:84%;
+    max-width:1200px;
+    margin:40px auto;
+}
 
-            color: white;
-        }
+.shop-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:25px;
+}
 
-        header {
-            padding: 35px 8%;
-            border-bottom: 1px solid #202838;
-        }
+.shop-top h2{margin:0;font-size:22px}
 
-        header h1 {
-            margin: 0;
-            font-size: 32px;
-        }
+#status{
+    font-size:13px;
+    color:#8994a8;
+}
 
-        header p {
-            margin: 8px 0 0;
-            color: #8994a8;
-        }
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
+}
 
-        .shop {
-            width: 84%;
-            max-width: 1200px;
-            margin: 40px auto;
-        }
+.product{
+    background:rgba(15,20,31,.9);
+    border:1px solid #252d3d;
+    border-radius:18px;
+    overflow:hidden;
+    transition:.2s;
+}
 
-        .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-        }
+.product:hover{
+    transform:translateY(-4px);
+    border-color:#56688c;
+}
 
-        .product {
-            background: rgba(15, 20, 31, 0.9);
-            border: 1px solid #252d3d;
-            border-radius: 18px;
-            padding: 24px;
-            transition: 0.2s;
-        }
+.product img{
+    width:100%;
+    height:190px;
+    object-fit:cover;
+    display:block;
+    background:#101621;
+}
 
-        .product:hover {
-            transform: translateY(-4px);
-            border-color: #56688c;
-        }
+.content{padding:22px}
 
-        .product h2 {
-            margin: 0 0 10px;
-            font-size: 21px;
-        }
+.product h3{
+    margin:0 0 12px;
+    font-size:19px;
+}
 
-        .product p {
-            color: #9aa5b8;
-            min-height: 45px;
-        }
+.price{
+    font-size:20px;
+    font-weight:bold;
+    margin:20px 0;
+}
 
-        .price {
-            font-size: 20px;
-            font-weight: bold;
-            margin: 20px 0;
-        }
+.buy-btn{
+    width:100%;
+    padding:13px;
+    border:0;
+    border-radius:10px;
+    background:white;
+    color:#080b12;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
 
-        .buy-btn {
-            width: 100%;
-            padding: 13px;
-            border: 0;
-            border-radius: 10px;
+.buy-btn:hover{
+    background:#dce5ff;
+    transform:scale(1.02);
+}
 
-            background: #ffffff;
-            color: #080b12;
+.buy-btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+    transform:none;
+}
 
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+#empty{
+    display:none;
+    grid-column:1/-1;
+    text-align:center;
+    color:#8994a8;
+    padding:50px 10px;
+}
 
-        .buy-btn:hover {
-            transform: scale(1.02);
-            background: #dce5ff;
-        }
+#modal{
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,.8);
+    backdrop-filter:blur(8px);
+    padding:20px;
+    z-index:10;
+}
 
-        #modal {
-            position: fixed;
-            inset: 0;
+.modal-box{
+    width:100%;
+    max-width:420px;
+    background:#101621;
+    border:1px solid #293449;
+    border-radius:18px;
+    padding:25px;
+}
 
-            display: none;
-            align-items: center;
-            justify-content: center;
+.modal-box h2{margin-top:0}
 
-            background: rgba(0, 0, 0, 0.75);
-            padding: 20px;
-        }
+.modal-box p{
+    color:#8994a8;
+    font-size:13px;
+}
 
-        .modal-box {
-            width: 100%;
-            max-width: 420px;
+input{
+    width:100%;
+    padding:13px;
+    margin:8px 0;
+    border-radius:9px;
+    border:1px solid #303b50;
+    background:#080c14;
+    color:white;
+    outline:none;
+}
 
-            background: #101621;
-            border: 1px solid #293449;
-            border-radius: 18px;
-            padding: 25px;
-        }
+input:focus{border-color:#7184aa}
 
-        .modal-box h2 {
-            margin-top: 0;
-        }
+.confirm{
+    width:100%;
+    padding:13px;
+    margin-top:10px;
+    border:0;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
+}
 
-        input {
-            width: 100%;
-            padding: 13px;
-            margin: 8px 0;
+#confirmBtn{background:white;color:black}
+#cancelBtn{background:#252d3b;color:white}
 
-            border-radius: 9px;
-            border: 1px solid #303b50;
+#result{
+    margin-top:15px;
+    white-space:pre-line;
+    overflow-wrap:anywhere;
+    font-size:14px;
+    color:#aeb8c9;
+}
 
-            background: #080c14;
-            color: white;
+#result a{
+    color:#9dbbff;
+    display:inline-block;
+    margin-top:12px;
+}
 
-            outline: none;
-        }
+.success{color:#80e6ad!important}
+.error{color:#ff8585!important}
 
-        input:focus {
-            border-color: #7184aa;
-        }
-
-        .confirm {
-            width: 100%;
-            padding: 13px;
-            margin-top: 10px;
-
-            border: 0;
-            border-radius: 9px;
-
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        #confirmBtn {
-            background: white;
-            color: black;
-        }
-
-        #cancelBtn {
-            background: #252d3b;
-            color: white;
-        }
-
-        #result {
-            margin-top: 15px;
-            white-space: pre-line;
-            color: #aeb8c9;
-        }
-    </style>
+@media(max-width:600px){
+    header{padding:28px 6%}
+    .shop{width:90%}
+}
+</style>
 </head>
 
 <body>
 
-    <header>
-        <h1>Quewkyo Wallet Shop</h1>
+<header>
+    <h1>Quewkyo Wallet Shop</h1>
+    <p>Buy, get — products from Quewkyo World</p>
+</header>
 
-        <p>
-            Buy, get — products from Quenoky World
-        </p>
-    </header>
+<main class="shop">
 
-    <main class="shop">
-
-        <div class="products">
-
-            <div class="product">
-                <h2>WEO 1 — PREVIEW</h2>
-
-                <p>
-                    Good Night — Good Dreams
-                </p>
-
-                <div class="price">
-                    0.1 QUENOKY-BASE
-                </div>
-
-                <button
-                    class="buy-btn"
-                    data-product-id="0"
-                    data-product-name="WEO 1 — PREVIEW"
-                >
-                    Comprar
-                </button>
-            </div>
-
-
-            <div class="product">
-                <h2>NM2 SUN — PYTHON PORT</h2>
-
-                <p>
-                    .js To .py
-                </p>
-
-                <div class="price">
-                    0.05 QUENOKY-BASE
-                </div>
-
-                <button
-                    class="buy-btn"
-                    data-product-id="1"
-                    data-product-name="NM2 SUN PORT"
-                >
-                    Comprar
-                </button>
-            </div>
-
-
-            <div class="product">
-                <h2>WEO 1 GOOD NIGHT — PREVIEW PURE AUDIO</h2>
-
-                <p>
-                    Pure audio of WEO 1
-                </p>
-
-                <div class="price">
-                    0.0000000005 QUENOKY-BASE
-                </div>
-
-                <button
-                    class="buy-btn"
-                    data-product-id="2"
-                    data-product-name="WEO 1 PURE AUDIO [PREVIEW]"
-                >
-                    Comprar
-                </button>
-            </div>
-
-
-            <div class="product">
-                <h2>NM2-SUN .C PORT!</h2>
-
-                <p>
-                    NM2-SUN .C Full Port
-                </p>
-
-                <div class="price">
-                    0.00005 QUENOKY-BASE
-                </div>
-
-                <button
-                    class="buy-btn"
-                    data-product-id="3"
-                    data-product-name="NM2 SUN .C PORT"
-                >
-                    Comprar
-                </button>
-            </div>
-
-
-            <div class="product">
-                <h2>WEO 1 PREVIEW — WAKE UP</h2>
-
-                <p>
-                    Wake-Up sound
-                </p>
-
-                <div class="price">
-                    0.0005 QUENOKY-BASE
-                </div>
-
-                <button
-                    class="buy-btn"
-                    data-product-id="4"
-                    data-product-name="WEO 1 Preview - Wake up"
-                >
-                    Comprar
-                </button>
-            </div>
-
-
-            <!--
-            NOVOS PRODUTOS:
-
-            <div class="product">
-                <h2>Nome do produto</h2>
-
-                <p>
-                    Descrição do produto.
-                </p>
-
-                <div class="price">
-                    1000 QUENOKY-BASE
-                </div>
-
-                <button
-                    class="buy-btn"
-                    data-product-id="5"
-                    data-product-name="Nome do produto"
-                >
-                    Comprar
-                </button>
-            </div>
-            -->
-
-        </div>
-
-    </main>
-
-
-    <div id="modal">
-
-        <div class="modal-box">
-
-            <h2 id="modalTitle">
-                Comprar produto
-            </h2>
-
-            <input
-                id="discordId"
-                type="text"
-                placeholder="Quewkyo ID"
-                autocomplete="off"
-            >
-
-            <input
-                id="password"
-                type="password"
-                placeholder="Senha da Quewkyo Wallet"
-                autocomplete="current-password"
-            >
-
-            <button
-                id="confirmBtn"
-                class="confirm"
-            >
-                Confirmar compra
-            </button>
-
-            <button
-                id="cancelBtn"
-                class="confirm"
-            >
-                Cancelar
-            </button>
-
-            <div id="result"></div>
-
-        </div>
-
+    <div class="shop-top">
+        <h2>Explore</h2>
+        <span id="status">Carregando catálogo...</span>
     </div>
 
+    <div class="products" id="products">
+        <div id="empty">Carregando produtos...</div>
+    </div>
 
-    <script src="./script.js"></script>
+</main>
+
+<div id="modal">
+    <div class="modal-box">
+
+        <h2 id="modalTitle">Comprar produto</h2>
+        <p>Entre com seus dados da Quewkyo Wallet.</p>
+
+        <input
+            id="discordId"
+            type="text"
+            placeholder="Quewkyo ID"
+            autocomplete="username"
+        >
+
+        <input
+            id="password"
+            type="password"
+            placeholder="Senha da Quewkyo Wallet"
+            autocomplete="current-password"
+        >
+
+        <button id="confirmBtn" class="confirm">
+            Confirmar compra
+        </button>
+
+        <button id="cancelBtn" class="confirm">
+            Cancelar
+        </button>
+
+        <div id="result" role="status" aria-live="polite"></div>
+
+    </div>
+</div>
+
+<script>
+"use strict";
+
+/* CONFIGURAÇÃO */
+const API_URL = "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/buy-item";
+
+/* ELEMENTOS */
+const productsElement = document.getElementById("products");
+const statusElement = document.getElementById("status");
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modalTitle");
+const discordInput = document.getElementById("discordId");
+const passwordInput = document.getElementById("password");
+const resultElement = document.getElementById("result");
+const confirmButton = document.getElementById("confirmBtn");
+
+let selectedProduct = null;
+let buying = false;
+
+/* REQUISIÇÃO */
+async function api(data){
+    const response = await fetch(API_URL,{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(data)
+    });
+
+    let result;
+
+    try{
+        result = await response.json();
+    }catch{
+        throw new Error("Resposta inválida do servidor.");
+    }
+
+    if(!response.ok || result.ok === false){
+        throw new Error(result.erro || "Erro na requisição.");
+    }
+
+    return result;
+}
+
+/* CATÁLOGO AUTOMÁTICO */
+async function loadProducts(){
+    statusElement.textContent = "Carregando...";
+
+    try{
+        const data = await api({
+            acao:"listar_produtos"
+        });
+
+        if(!Array.isArray(data.produtos)){
+            throw new Error("Catálogo inválido.");
+        }
+
+        productsElement.replaceChildren();
+
+        if(data.produtos.length === 0){
+            showEmpty("Nenhum produto disponível.");
+            return;
+        }
+
+        data.produtos.forEach(product=>{
+            const card = document.createElement("article");
+            card.className = "product";
+
+            const image = document.createElement("img");
+            image.src = product.imagem || "";
+            image.alt = product.nome || "Produto";
+            image.loading = "lazy";
+
+            image.onerror = ()=>{
+                image.style.display = "none";
+            };
+
+            const content = document.createElement("div");
+            content.className = "content";
+
+            const name = document.createElement("h3");
+            name.textContent = product.nome || "Produto";
+
+            const price = document.createElement("div");
+            price.className = "price";
+            price.textContent =
+                `${Number(product.preco).toLocaleString("pt-BR")} QNK`;
+
+            const button = document.createElement("button");
+            button.className = "buy-btn";
+            button.textContent = "Comprar";
+
+            button.addEventListener("click",()=>{
+                openPurchase(product);
+            });
+
+            content.append(name,price,button);
+            card.append(image,content);
+            productsElement.append(card);
+        });
+
+        statusElement.textContent =
+            `${data.quantidade} produtos disponíveis`;
+
+    }catch(error){
+        console.error(error);
+        statusElement.textContent = "Falha ao carregar";
+
+        showEmpty(error.message);
+    }
+}
+
+function showEmpty(message){
+    productsElement.replaceChildren();
+
+    const empty = document.createElement("div");
+    empty.id = "empty";
+    empty.style.display = "block";
+    empty.textContent = message;
+
+    productsElement.append(empty);
+}
+
+/* MODAL */
+function openPurchase(product){
+    selectedProduct = product;
+
+    modalTitle.textContent = product.nome;
+    resultElement.textContent = "";
+
+    resultElement.className = "";
+    confirmButton.disabled = false;
+    confirmButton.textContent = "Confirmar compra";
+
+    modal.style.display = "flex";
+}
+
+function closeModal(){
+    if(buying)return;
+
+    modal.style.display = "none";
+    passwordInput.value = "";
+    resultElement.textContent = "";
+    selectedProduct = null;
+}
+
+document.getElementById("cancelBtn")
+.addEventListener("click",closeModal);
+
+modal.addEventListener("click",event=>{
+    if(event.target === modal)closeModal();
+});
+
+document.addEventListener("keydown",event=>{
+    if(event.key === "Escape")closeModal();
+});
+
+/* COMPRA */
+async function purchase(){
+    if(buying || !selectedProduct)return;
+
+    const discord_id = discordInput.value.trim();
+    const password = passwordInput.value;
+
+    if(!discord_id || !password){
+        resultElement.className = "error";
+        resultElement.textContent = "Preencha seu ID e sua senha.";
+        return;
+    }
+
+    buying = true;
+    confirmButton.disabled = true;
+    confirmButton.textContent = "Processando...";
+    resultElement.className = "";
+    resultElement.textContent = "Verificando conta e saldo...";
+
+    try{
+        const data = await api({
+            product_id:selectedProduct.id,
+            discord_id,
+            password
+        });
+
+        resultElement.className = "success";
+        resultElement.textContent =
+            `${data.mensagem}\n\n`+
+            `Produto: ${data.produto}\n`+
+            `Preço: ${data.preco} QNK\n`+
+            `Saldo restante: ${data.saldo_restante} QNK`;
+
+        if(data.link){
+            const link = document.createElement("a");
+            link.href = data.link;
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            link.textContent = "Acessar produto →";
+
+            resultElement.append(document.createElement("br"),link);
+        }
+
+        passwordInput.value = "";
+        confirmButton.textContent = "Compra concluída";
+
+    }catch(error){
+        resultElement.className = "error";
+        resultElement.textContent = error.message;
+
+        confirmButton.disabled = false;
+        confirmButton.textContent = "Tentar novamente";
+
+    }finally{
+        buying = false;
+    }
+}
+
+confirmButton.addEventListener("click",purchase);
+
+passwordInput.addEventListener("keydown",event=>{
+    if(event.key === "Enter")purchase();
+});
+
+/* INICIALIZAÇÃO */
+loadProducts();
+</script>
 
 </body>
 </html>

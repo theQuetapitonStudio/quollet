@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <title>WYKO Network</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: #080808;
+      background-image: radial-gradient(circle at center, #1a1a2e 0%, #080808 100%);
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    .card h1 {
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+      color: #4f46e5;
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      background: transparent;
+      border: none;
+      color: #888;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active {
+      color: #fff;
+      border-bottom-color: #4f46e5;
+    }
+
+    .form-session {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-group label {
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #4f46e5;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    button.submit-btn {
+      margin-top: 8px;
+      padding: 12px;
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.1s ease;
+    }
+
+    button.submit-btn:hover {
+      background: #4338ca;
+    }
+
+    button.submit-btn:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>WYKO Network</h1>
+
+    <div class="tab-buttons">
+      <button class="tab-btn active" id="tab_login">Entrar</button>
+      <button class="tab-btn" id="tab_signup">Criar Conta</button>
+    </div>
+
+    <!-- Login -->
+    <div id="login_session" class="form-session">
+      <div class="input-group">
+        <label for="wu_input">Usuário</label>
+        <input type="text" id="wu_input" placeholder="Seu Wyko-Username">
+      </div>
+      <div class="input-group">
+        <label for="wp_input">Senha</label>
+        <input type="password" id="wp_input" placeholder="Sua senha">
+      </div>
+      <button id="confirm_btn" class="submit-btn">Entrar</button>
+    </div>
+
+    <!-- Cadastro -->
+    <div id="signup_session" class="form-session" style="display: none;">
+      <div class="input-group">
+        <label for="wu2_input">Usuário</label>
+        <input type="text" id="wu2_input" placeholder="Escolha um Wyko-Username">
+      </div>
+      <div class="input-group">
+        <label for="wp2_input">Senha</label>
+        <input type="password" id="wp2_input" placeholder="Escolha uma senha">
+      </div>
+      <button id="confirm_btn2" class="submit-btn">Cadastrar</button>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/wyko";
+
+    async function authRequest(action, username, password) {
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            action: action,
+            user: {
+              username: username,
+              password: password
+            }
+          })
+        });
+        return await response.json();
+      } catch (err) {
+        return { success: false, error: "Erro de conexão com o servidor." };
+      }
+    }
+
+    // Alternância de Abas (Login / Cadastro)
+    const tabLogin = document.getElementById("tab_login");
+    const tabSignup = document.getElementById("tab_signup");
+    const loginSession = document.getElementById("login_session");
+    const signupSession = document.getElementById("signup_session");
+
+    tabLogin.addEventListener("click", () => {
+      tabLogin.classList.add("active");
+      tabSignup.classList.remove("active");
+      loginSession.style.display = "flex";
+      signupSession.style.display = "none";
+    });
+
+    tabSignup.addEventListener("click", () => {
+      tabSignup.classList.add("active");
+      tabLogin.classList.remove("active");
+      signupSession.style.display = "flex";
+      loginSession.style.display = "none";
+    });
+
+    // Evento de Login
+    document.getElementById("confirm_btn").addEventListener("click", async () => {
+      const username = document.getElementById("wu_input").value.trim();
+      const password = document.getElementById("wp_input").value;
+
+      if (!username || !password) {
+        alert("Preencha todos os campos para fazer login.");
+        return;
+      }
+
+      const rp = await authRequest("login", username, password);
+      
+      if (!rp.success) {
+        alert(rp.error || rp.erro || "Falha no login.");
+      } else {
+        alert(`Saldo: ${rp.balance}\nEndereço: ${rp.address}`);
+      }
+    });
+
+    // Evento de Cadastro
+    document.getElementById("confirm_btn2").addEventListener("click", async () => {
+      const username = document.getElementById("wu2_input").value.trim();
+      const password = document.getElementById("wp2_input").value;
+
+      if (!username || !password) {
+        alert("Preencha todos os campos para se cadastrar.");
+        return;
+      } 
+
+      const rp = await authRequest("signup", username, password);
+
+      if (!rp.success) {
+        alert(rp.error || rp.erro || "Falha no cadastro.");
+      } else {
+        alert("Conta criada com sucesso! Faça login para continuar.");
+        location.reload();
+      }
+    });
+  </script>
+</body>
+</html>

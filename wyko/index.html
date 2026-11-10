@@ -1390,7 +1390,18 @@
         formatBalance(result.dados.value) + " WYKO";
 
       txv.details.hidden = false;
+	  const { hash, from, to, value } = result.dados;
 
+		showMessage(
+		  $("hash-message"),
+		  `TRANSACTION FOUND!
+
+		Hash: ${hash}
+		From: ${from}
+		To: ${to}
+		Amount: ${formatBalance(value)} WYKO`,
+		  "success"
+		);
       showTXStatus(
         "✓ TRANSACTION_FOUND",
         "success"

@@ -387,6 +387,192 @@
       margin-top: 22px;
     }
 
+    /* WYKO TXHASH VERIFIER */
+
+    #txVerifier,
+    #txVerifier * {
+      box-sizing: border-box;
+    }
+
+    #txVerifier {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 340px;
+      max-width: calc(100vw - 30px);
+      z-index: 99999;
+      background: rgba(17,17,22,.97);
+      border: 1px solid rgba(118,101,255,.3);
+      border-radius: 16px;
+      padding: 17px;
+      box-shadow: 0 15px 55px rgba(0,0,0,.65);
+      backdrop-filter: blur(20px);
+      animation: appear .35s ease;
+    }
+
+    .txv-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .txv-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .txv-label {
+      color: #a99fff;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .txv-title {
+      color: white;
+      font-size: 16px;
+      font-weight: 750;
+    }
+
+    #txv-toggle {
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: white;
+      border-radius: 8px;
+      font-size: 18px;
+    }
+
+    .txv-description {
+      color: var(--muted);
+      font-size: 11px;
+      margin: 15px 0 12px;
+      line-height: 1.5;
+    }
+
+    #txv-form {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    #txv-hash {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #09090d;
+      color: white;
+      outline: none;
+      font-size: 11px;
+      min-width: 0;
+    }
+
+    #txv-hash:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(118,101,255,.1);
+    }
+
+    #txv-hash::placeholder {
+      color: #555561;
+    }
+
+    #txv-submit {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(110deg, var(--primary), var(--primary2));
+      color: white;
+      font-size: 12px;
+      font-weight: 750;
+      transition: .2s;
+    }
+
+    #txv-submit:hover {
+      filter: brightness(1.15);
+      transform: translateY(-1px);
+    }
+
+    #txv-submit:disabled {
+      opacity: .5;
+      cursor: wait;
+      transform: none;
+    }
+
+    #txv-result {
+      margin-top: 13px;
+      padding: 12px;
+      border-radius: 9px;
+      background: #09090d;
+      border: 1px solid var(--border);
+    }
+
+    #txv-result[hidden],
+    #txv-details[hidden],
+    #txv-content[hidden] {
+      display: none !important;
+    }
+
+    #txv-status {
+      font-size: 11px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    #txv-status.success {
+      color: var(--success);
+    }
+
+    #txv-status.error {
+      color: var(--danger);
+    }
+
+    #txv-status.loading {
+      color: #e5c66b;
+    }
+
+    #txv-details {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      margin-top: 15px;
+    }
+
+    .txv-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .txv-detail span {
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      color: #777;
+    }
+
+    .txv-detail strong {
+      font-size: 11px;
+      color: #dedbea;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      line-height: 1.5;
+    }
+
+    #txVerifier.minimized {
+      width: 225px;
+      padding: 13px;
+    }
+
+    #txVerifier.minimized #txv-content {
+      display: none;
+    }
+
     @media(max-width: 480px) {
       body {
         padding: 15px;
@@ -396,6 +582,12 @@
 
       .card {
         padding: 21px;
+      }
+
+      #txVerifier {
+        right: 12px;
+        bottom: 12px;
+        max-width: calc(100vw - 24px);
       }
     }
   </style>
@@ -417,8 +609,8 @@
     <section id="auth-screen">
 
       <div class="tabs">
-        <button class="tab active" id="tab-login">Login</button>
-        <button class="tab" id="tab-signup">Create account</button>
+        <button class="tab active" id="tab-login" type="button">Login</button>
+        <button class="tab" id="tab-signup" type="button">Create account</button>
       </div>
 
       <div id="auth-message" class="message"></div>
@@ -524,7 +716,7 @@
 
         <div class="address-row">
           <span class="address" id="wallet-address"></span>
-          <button class="copy-btn" id="copy-address">
+          <button class="copy-btn" id="copy-address" type="button">
             COPY
           </button>
         </div>
@@ -532,17 +724,17 @@
 
       <div class="wallet-actions">
 
-        <button class="btn" id="open-pau">
+        <button class="btn" id="open-pau" type="button">
           ↗ Pay a User
         </button>
 
-        <button class="btn btn-secondary" id="refresh-balance">
+        <button class="btn btn-secondary" id="refresh-balance" type="button">
           ↻ Refresh
         </button>
 
       </div>
 
-      <button class="logout" id="logout">
+      <button class="logout" id="logout" type="button">
         Disconnect wallet
       </button>
 
@@ -553,7 +745,7 @@
     <section id="pau-screen" class="hidden">
 
       <div class="pau-header">
-        <button class="back-btn" id="back-wallet">←</button>
+        <button class="back-btn" id="back-wallet" type="button">←</button>
 
         <div class="pau-icon">P</div>
 
@@ -623,6 +815,79 @@
   </footer>
 
 </div>
+
+
+<!-- FLOATING TXHASH VERIFIER -->
+
+<aside id="txVerifier" aria-label="WYKO Transaction Verifier">
+
+  <div class="txv-header">
+
+    <div class="txv-brand">
+      <span class="txv-label">WYKO NETWORK</span>
+      <strong class="txv-title">TXHASH Verifier</strong>
+    </div>
+
+    <button
+      id="txv-toggle"
+      type="button"
+      aria-label="Minimize transaction verifier"
+    >−</button>
+
+  </div>
+
+  <div id="txv-content">
+
+    <p class="txv-description">
+      Verify the existence of a WYKO transaction using its TXHASH.
+    </p>
+
+    <form id="txv-form">
+
+      <input
+        type="text"
+        id="txv-hash"
+        placeholder="WYKO.pau...."
+        autocomplete="off"
+        spellcheck="false"
+        required
+      >
+
+      <button type="submit" id="txv-submit">
+        Verify Transaction
+      </button>
+
+    </form>
+
+    <div id="txv-result" hidden>
+
+      <div id="txv-status"></div>
+
+      <div id="txv-details" hidden>
+
+        <div class="txv-detail">
+          <span>FROM</span>
+          <strong id="txv-from"></strong>
+        </div>
+
+        <div class="txv-detail">
+          <span>TO</span>
+          <strong id="txv-to"></strong>
+        </div>
+
+        <div class="txv-detail">
+          <span>VALUE</span>
+          <strong id="txv-value"></strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</aside>
+
 
 <script>
   const API_URL =
@@ -722,7 +987,9 @@
     });
   }
 
+
   // AUTH TABS
+
   $("tab-login").addEventListener("click", () => {
     $("tab-login").classList.add("active");
     $("tab-signup").classList.remove("active");
@@ -743,7 +1010,9 @@
     clearMessage($("auth-message"));
   });
 
+
   // LOGIN
+
   $("login-form").addEventListener("submit", async event => {
     event.preventDefault();
 
@@ -767,7 +1036,6 @@
 
     setLoading(button, false, "Access wallet");
 
-    // The backend may return success:true alongside an error.
     if (!result.success || result.erro || !result.address) {
       showMessage(
         $("auth-message"),
@@ -789,7 +1057,9 @@
     showScreen("wallet");
   });
 
+
   // SIGNUP
+
   $("signup-form").addEventListener("submit", async event => {
     event.preventDefault();
 
@@ -829,11 +1099,12 @@
 
     $("signup-form").reset();
 
-    // Switch to login
     $("tab-login").click();
   });
 
+
   // VERIFY BALANCE
+
   async function refreshBalance() {
     const button = $("refresh-balance");
 
@@ -865,7 +1136,9 @@
 
   $("refresh-balance").addEventListener("click", refreshBalance);
 
+
   // COPY ADDRESS
+
   $("copy-address").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(session.address);
@@ -884,7 +1157,9 @@
     }
   });
 
+
   // OPEN PAU
+
   $("open-pau").addEventListener("click", () => {
     $("pau-form").reset();
     clearMessage($("pau-message"));
@@ -895,7 +1170,9 @@
     showScreen("wallet");
   });
 
+
   // PAY A USER
+
   $("pau-form").addEventListener("submit", async event => {
     event.preventDefault();
 
@@ -985,10 +1262,11 @@
     );
 
     await refreshBalance();
-
   });
 
+
   // LOGOUT
+
   $("logout").addEventListener("click", () => {
     session.username = null;
     session.address = null;
@@ -1002,6 +1280,134 @@
     $("wallet-address").textContent = "";
 
     showScreen("auth");
+  });
+
+
+  // =====================================
+  // WYKO TXHASH VERIFIER
+  // =====================================
+
+  const txv = {
+    form: $("txv-form"),
+    hash: $("txv-hash"),
+    button: $("txv-submit"),
+    result: $("txv-result"),
+    status: $("txv-status"),
+    details: $("txv-details"),
+    from: $("txv-from"),
+    to: $("txv-to"),
+    value: $("txv-value"),
+    container: $("txVerifier"),
+    toggle: $("txv-toggle"),
+    content: $("txv-content")
+  };
+
+
+  // MINIMIZE / EXPAND
+
+  txv.toggle.addEventListener("click", () => {
+    const minimized = txv.container.classList.toggle("minimized");
+
+    txv.toggle.textContent = minimized ? "+" : "−";
+
+    txv.toggle.setAttribute(
+      "aria-label",
+      minimized ? "Expand transaction verifier" : "Minimize transaction verifier"
+    );
+  });
+
+
+  // RESET VERIFIER RESULT
+
+  function clearTXResult() {
+    txv.result.hidden = true;
+    txv.details.hidden = true;
+
+    txv.status.textContent = "";
+    txv.status.className = "";
+  }
+
+
+  // SHOW VERIFIER STATUS
+
+  function showTXStatus(message, type) {
+    txv.result.hidden = false;
+    txv.status.textContent = message;
+    txv.status.className = type;
+  }
+
+
+  // VERIFY TXHASH
+
+  txv.form.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const hash = txv.hash.value.trim();
+
+    if (!hash) return;
+
+    txv.button.disabled = true;
+    txv.button.textContent = "Verifying...";
+
+    clearTXResult();
+
+    showTXStatus(
+      "SEARCHING WYKO NETWORK...",
+      "loading"
+    );
+
+    try {
+      const result = await apiRequest({
+        action: "verify-hash",
+        hash: hash
+      });
+
+      if (!result.success) {
+        showTXStatus(
+          result.erro === "TRANSACTION_NOT_FOUND"
+            ? "TRANSACTION_NOT_FOUND"
+            : result.erro || "VERIFICATION_FAILED",
+          "error"
+        );
+
+        return;
+      }
+
+      if (!result.dados) {
+        showTXStatus(
+          "INVALID_SERVER_RESPONSE",
+          "error"
+        );
+
+        return;
+      }
+
+      // TRANSACTION FOUND
+
+      txv.from.textContent = result.dados.from ?? "UNKNOWN";
+      txv.to.textContent = result.dados.to ?? "UNKNOWN";
+      txv.value.textContent =
+        formatBalance(result.dados.value) + " WYKO";
+
+      txv.details.hidden = false;
+
+      showTXStatus(
+        "✓ TRANSACTION_FOUND",
+        "success"
+      );
+
+    } catch (error) {
+      console.error("TXHASH verification error:", error);
+
+      showTXStatus(
+        "CONNECTION_ERROR",
+        "error"
+      );
+
+    } finally {
+      txv.button.disabled = false;
+      txv.button.textContent = "Verify Transaction";
+    }
   });
 
 </script>

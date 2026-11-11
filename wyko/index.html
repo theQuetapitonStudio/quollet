@@ -31,9 +31,7 @@
 
     body {
       min-height: 100vh;
-      background:
-        radial-gradient(ellipse at 50% -20%, #28204c 0%, transparent 55%),
-        var(--bg);
+      background: radial-gradient(ellipse at 50% -20%, #28204c 0%, transparent 55%), var(--bg);
       color: var(--text);
       display: flex;
       justify-content: center;
@@ -41,13 +39,8 @@
       padding: 24px;
     }
 
-    button, input {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
 
     .container {
       width: 100%;
@@ -56,20 +49,11 @@
     }
 
     @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .brand {
-      text-align: center;
-      margin-bottom: 26px;
-    }
+    .brand { text-align: center; margin-bottom: 26px; }
 
     .brand h1 {
       font-size: 29px;
@@ -115,19 +99,11 @@
       padding: 11px;
       border-radius: 8px;
       font-weight: 600;
-      transition: .2s;
     }
 
-    .tab.active {
-      background: var(--surface2);
-      color: white;
-    }
+    .tab.active { background: var(--surface2); color: white; }
 
-    .section-title {
-      font-size: 19px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
+    .section-title { font-size: 19px; font-weight: 700; margin-bottom: 6px; }
 
     .section-description {
       color: var(--muted);
@@ -136,17 +112,8 @@
       line-height: 1.5;
     }
 
-    .form {
-      display: flex;
-      flex-direction: column;
-      gap: 17px;
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .form { display: flex; flex-direction: column; gap: 17px; }
+    .field { display: flex; flex-direction: column; gap: 8px; }
 
     .field label {
       color: #b8b8c5;
@@ -171,9 +138,7 @@
       box-shadow: 0 0 0 3px rgba(118,101,255,.1);
     }
 
-    input::placeholder {
-      color: #555561;
-    }
+    input::placeholder { color: #555561; }
 
     .btn {
       width: 100%;
@@ -187,22 +152,9 @@
       transition: .2s;
     }
 
-    .btn:hover {
-      filter: brightness(1.13);
-      transform: translateY(-1px);
-    }
-
-    .btn:disabled {
-      opacity: .5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .btn-secondary {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: white;
-    }
+    .btn:hover { filter: brightness(1.13); transform: translateY(-1px); }
+    .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .btn-secondary { background: var(--surface2); border: 1px solid var(--border); color: white; }
 
     .message {
       display: none;
@@ -228,11 +180,7 @@
       border: 1px solid rgba(66,214,155,.15);
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    /* WALLET */
+    .hidden { display: none !important; }
 
     .wallet-header {
       display: flex;
@@ -241,9 +189,7 @@
       margin-bottom: 23px;
     }
 
-    .wallet-header h2 {
-      font-size: 19px;
-    }
+    .wallet-header h2 { font-size: 19px; }
 
     .status {
       color: var(--success);
@@ -255,17 +201,12 @@
 
     .balance-card {
       padding: 24px;
-      background:
-        radial-gradient(circle at top right, rgba(255,255,255,.16), transparent 55%),
-        linear-gradient(135deg, #6855e9, #34257f);
+      background: radial-gradient(circle at top right, rgba(255,255,255,.16), transparent 55%), linear-gradient(135deg, #6855e9, #34257f);
       border-radius: 14px;
       margin-bottom: 20px;
     }
 
-    .balance-label {
-      font-size: 12px;
-      color: rgba(255,255,255,.75);
-    }
+    .balance-label { font-size: 12px; color: rgba(255,255,255,.75); }
 
     .balance-value {
       font-size: clamp(23px, 7vw, 32px);
@@ -275,11 +216,7 @@
       letter-spacing: -1px;
     }
 
-    .balance-unit {
-      font-size: 12px;
-      margin-top: 5px;
-      color: rgba(255,255,255,.7);
-    }
+    .balance-unit { font-size: 12px; margin-top: 5px; color: rgba(255,255,255,.7); }
 
     .address-box {
       background: #0b0b10;
@@ -296,11 +233,7 @@
       margin-bottom: 9px;
     }
 
-    .address-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .address-row { display: flex; align-items: center; gap: 8px; }
 
     .address {
       font-size: 11px;
@@ -320,16 +253,8 @@
       white-space: nowrap;
     }
 
-    .wallet-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .wallet-actions button {
-      padding: 13px 8px;
-      font-size: 12px;
-    }
+    .wallet-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .wallet-actions button { padding: 13px 8px; font-size: 12px; }
 
     .logout {
       margin-top: 12px;
@@ -342,14 +267,7 @@
       font-size: 12px;
     }
 
-    /* PAU */
-
-    .pau-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 22px;
-    }
+    .pau-header { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
 
     .back-btn {
       background: var(--surface2);
@@ -373,26 +291,38 @@
       font-weight: 800;
     }
 
-    .info {
-      color: var(--muted);
+    .info { color: var(--muted); font-size: 11px; line-height: 1.6; margin-top: 15px; }
+    .footer { text-align: center; color: #555561; font-size: 11px; margin-top: 22px; }
+
+    .pau-txhash {
+      margin-bottom: 17px;
+      padding: 14px;
+      background: #0b0b10;
+      border: 1px solid rgba(118,101,255,.3);
+      border-radius: 9px;
+    }
+
+    .pau-txhash-label {
+      display: block;
+      color: #a99fff;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+
+    #pau-txhash-value {
+      display: block;
+      color: #dedbea;
       font-size: 11px;
       line-height: 1.6;
-      margin-top: 15px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
-    .footer {
-      text-align: center;
-      color: #555561;
-      font-size: 11px;
-      margin-top: 22px;
-    }
+    #copy-pau-hash { margin-top: 10px; }
 
-    /* WYKO TXHASH VERIFIER */
-
-    #txVerifier,
-    #txVerifier * {
-      box-sizing: border-box;
-    }
+    #txVerifier, #txVerifier * { box-sizing: border-box; }
 
     #txVerifier {
       position: fixed;
@@ -410,31 +340,10 @@
       animation: appear .35s ease;
     }
 
-    .txv-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .txv-brand {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .txv-label {
-      color: #a99fff;
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 2px;
-    }
-
-    .txv-title {
-      color: white;
-      font-size: 16px;
-      font-weight: 750;
-    }
+    .txv-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .txv-brand { display: flex; flex-direction: column; gap: 5px; }
+    .txv-label { color: #a99fff; font-size: 9px; font-weight: 800; letter-spacing: 2px; }
+    .txv-title { color: white; font-size: 16px; font-weight: 750; }
 
     #txv-toggle {
       width: 30px;
@@ -447,39 +356,9 @@
       font-size: 18px;
     }
 
-    .txv-description {
-      color: var(--muted);
-      font-size: 11px;
-      margin: 15px 0 12px;
-      line-height: 1.5;
-    }
-
-    #txv-form {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-
-    #txv-hash {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: #09090d;
-      color: white;
-      outline: none;
-      font-size: 11px;
-      min-width: 0;
-    }
-
-    #txv-hash:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(118,101,255,.1);
-    }
-
-    #txv-hash::placeholder {
-      color: #555561;
-    }
+    .txv-description { color: var(--muted); font-size: 11px; margin: 15px 0 12px; line-height: 1.5; }
+    #txv-form { display: flex; flex-direction: column; gap: 9px; }
+    #txv-hash { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: #09090d; color: white; font-size: 11px; min-width: 0; }
 
     #txv-submit {
       width: 100%;
@@ -490,124 +369,41 @@
       color: white;
       font-size: 12px;
       font-weight: 750;
-      transition: .2s;
     }
 
-    #txv-submit:hover {
-      filter: brightness(1.15);
-      transform: translateY(-1px);
-    }
+    #txv-submit:disabled { opacity: .5; cursor: wait; }
 
-    #txv-submit:disabled {
-      opacity: .5;
-      cursor: wait;
-      transform: none;
-    }
+    #txv-result { margin-top: 13px; padding: 12px; border-radius: 9px; background: #09090d; border: 1px solid var(--border); }
+    #txv-result[hidden], #txv-details[hidden], #pau-txhash[hidden] { display: none !important; }
+    #txv-status { font-size: 11px; font-weight: 800; overflow-wrap: anywhere; }
+    #txv-status.success { color: var(--success); }
+    #txv-status.error { color: var(--danger); }
+    #txv-status.loading { color: #e5c66b; }
+    #txv-details { display: flex; flex-direction: column; gap: 13px; margin-top: 15px; }
+    .txv-detail { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+    .txv-detail span { font-size: 9px; letter-spacing: 1.5px; color: #777; }
+    .txv-detail strong { font-size: 11px; color: #dedbea; overflow-wrap: anywhere; word-break: break-word; line-height: 1.5; }
 
-    #txv-result {
-      margin-top: 13px;
-      padding: 12px;
-      border-radius: 9px;
-      background: #09090d;
-      border: 1px solid var(--border);
-    }
+    #txVerifier.minimized { width: 225px; padding: 13px; }
+    #txVerifier.minimized #txv-content { display: none; }
 
-    #txv-result[hidden],
-    #txv-details[hidden],
-    #txv-content[hidden] {
-      display: none !important;
-    }
-
-    #txv-status {
-      font-size: 11px;
-      font-weight: 800;
-      overflow-wrap: anywhere;
-    }
-
-    #txv-status.success {
-      color: var(--success);
-    }
-
-    #txv-status.error {
-      color: var(--danger);
-    }
-
-    #txv-status.loading {
-      color: #e5c66b;
-    }
-
-    #txv-details {
-      display: flex;
-      flex-direction: column;
-      gap: 13px;
-      margin-top: 15px;
-    }
-
-    .txv-detail {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      min-width: 0;
-    }
-
-    .txv-detail span {
-      font-size: 9px;
-      letter-spacing: 1.5px;
-      color: #777;
-    }
-
-    .txv-detail strong {
-      font-size: 11px;
-      color: #dedbea;
-      overflow-wrap: anywhere;
-      word-break: break-word;
-      line-height: 1.5;
-    }
-
-    #txVerifier.minimized {
-      width: 225px;
-      padding: 13px;
-    }
-
-    #txVerifier.minimized #txv-content {
-      display: none;
-    }
-
-    @media(max-width: 480px) {
-      body {
-        padding: 15px;
-        align-items: flex-start;
-        padding-top: 35px;
-      }
-
-      .card {
-        padding: 21px;
-      }
-
-      #txVerifier {
-        right: 12px;
-        bottom: 12px;
-        max-width: calc(100vw - 24px);
-      }
+    @media(max-width:480px) {
+      body { padding: 35px 15px 15px; align-items: flex-start; }
+      .card { padding: 21px; }
+      #txVerifier { right: 12px; bottom: 12px; max-width: calc(100vw - 24px); }
     }
   </style>
 </head>
 
 <body>
-
 <div class="container">
-
   <header class="brand">
     <h1>WYKO Network</h1>
     <p>Digital wallet infrastructure</p>
   </header>
 
   <main class="card">
-
-    <!-- AUTHENTICATION -->
-
     <section id="auth-screen">
-
       <div class="tabs">
         <button class="tab active" id="tab-login" type="button">Login</button>
         <button class="tab" id="tab-signup" type="button">Create account</button>
@@ -616,88 +412,41 @@
       <div id="auth-message" class="message"></div>
 
       <div id="login-screen">
-
         <h2 class="section-title">Welcome back.</h2>
-        <p class="section-description">
-          Access your WYKO wallet.
-        </p>
+        <p class="section-description">Access your WYKO wallet.</p>
 
         <form class="form" id="login-form">
-
           <div class="field">
             <label for="login-username">USERNAME</label>
-            <input
-              id="login-username"
-              type="text"
-              placeholder="Your username"
-              autocomplete="username"
-              required
-            >
+            <input id="login-username" type="text" placeholder="Your username" autocomplete="username" required>
           </div>
-
           <div class="field">
             <label for="login-password">PASSWORD</label>
-            <input
-              id="login-password"
-              type="password"
-              placeholder="Your password"
-              autocomplete="current-password"
-              required
-            >
+            <input id="login-password" type="password" placeholder="Your password" autocomplete="current-password" required>
           </div>
-
-          <button class="btn" id="login-btn" type="submit">
-            Access wallet
-          </button>
-
+          <button class="btn" id="login-btn" type="submit">Access wallet</button>
         </form>
       </div>
 
       <div id="signup-screen" class="hidden">
-
         <h2 class="section-title">Create your wallet.</h2>
-        <p class="section-description">
-          Join the WYKO Network ecosystem.
-        </p>
+        <p class="section-description">Join the WYKO Network ecosystem.</p>
 
         <form class="form" id="signup-form">
-
           <div class="field">
             <label for="signup-username">USERNAME</label>
-            <input
-              id="signup-username"
-              type="text"
-              placeholder="Choose a username"
-              autocomplete="username"
-              required
-              maxlength="32"
-            >
+            <input id="signup-username" type="text" placeholder="Choose a username" autocomplete="username" maxlength="32" required>
           </div>
-
           <div class="field">
             <label for="signup-password">PASSWORD</label>
-            <input
-              id="signup-password"
-              type="password"
-              placeholder="Create a password"
-              autocomplete="new-password"
-              required
-            >
+            <input id="signup-password" type="password" placeholder="Create a password" autocomplete="new-password" required>
           </div>
-
-          <button class="btn" id="signup-btn" type="submit">
-            Create wallet
-          </button>
-
+          <button class="btn" id="signup-btn" type="submit">Create wallet</button>
         </form>
       </div>
-
     </section>
 
-    <!-- WALLET -->
-
     <section id="wallet-screen" class="hidden">
-
       <div class="wallet-header">
         <h2>My Wallet</h2>
         <span class="status">● Connected</span>
@@ -713,187 +462,98 @@
 
       <div class="address-box">
         <small>YOUR WYKO ADDRESS</small>
-
         <div class="address-row">
           <span class="address" id="wallet-address"></span>
-          <button class="copy-btn" id="copy-address" type="button">
-            COPY
-          </button>
+          <button class="copy-btn" id="copy-address" type="button">COPY</button>
         </div>
       </div>
 
       <div class="wallet-actions">
-
-        <button class="btn" id="open-pau" type="button">
-          ↗ Pay a User
-        </button>
-
-        <button class="btn btn-secondary" id="refresh-balance" type="button">
-          ↻ Refresh
-        </button>
-
+        <button class="btn" id="open-pau" type="button">↗ Pay a User</button>
+        <button class="btn btn-secondary" id="refresh-balance" type="button">↻ Refresh</button>
       </div>
 
-      <button class="logout" id="logout" type="button">
-        Disconnect wallet
-      </button>
-
+      <button class="logout" id="logout" type="button">Disconnect wallet</button>
     </section>
 
-    <!-- PAU -->
-
     <section id="pau-screen" class="hidden">
-
       <div class="pau-header">
         <button class="back-btn" id="back-wallet" type="button">←</button>
-
         <div class="pau-icon">P</div>
-
         <div>
           <h2 style="font-size:17px">Pay A User</h2>
-          <p style="font-size:11px;color:var(--muted)">
-            WYKO Network Transfer
-          </p>
+          <p style="font-size:11px;color:var(--muted)">WYKO Network Transfer</p>
         </div>
       </div>
 
       <div id="pau-message" class="message"></div>
 
-      <form class="form" id="pau-form">
+      <div id="pau-txhash" class="pau-txhash" hidden>
+        <span class="pau-txhash-label">TRANSACTION HASH</span>
+        <strong id="pau-txhash-value"></strong>
+        <button class="copy-btn" id="copy-pau-hash" type="button">COPY HASH</button>
+      </div>
 
+      <form class="form" id="pau-form">
         <div class="field">
           <label for="recipient">RECIPIENT ADDRESS</label>
-          <input
-            id="recipient"
-            type="text"
-            placeholder="WYKO.xxxxxxxxx..."
-            required
-          >
+          <input id="recipient" type="text" placeholder="WYKO.xxxxxxxxx..." required>
         </div>
-
         <div class="field">
           <label for="amount">TRANSFER AMOUNT</label>
-          <input
-            id="amount"
-            type="number"
-            placeholder="0.000000"
-            min="0"
-            step="any"
-            required
-          >
+          <input id="amount" type="number" placeholder="0.000000" min="0" step="any" required>
         </div>
-
         <div class="field">
           <label for="pau-password">WALLET PASSWORD</label>
-          <input
-            id="pau-password"
-            type="password"
-            placeholder="Confirm your password"
-            autocomplete="current-password"
-            required
-          >
+          <input id="pau-password" type="password" placeholder="Confirm your password" autocomplete="current-password" required>
         </div>
-
-        <button class="btn" id="pau-submit" type="submit">
-          Confirm transfer
-        </button>
-
+        <button class="btn" id="pau-submit" type="submit">Confirm transfer</button>
       </form>
 
       <p class="info">
         Transfers are submitted to the WYKO Network backend.
-        Always verify the recipient address and amount before
-        confirming a transaction.
+        Always verify the recipient address and amount before confirming a transaction.
       </p>
-
     </section>
-
   </main>
 
-  <footer class="footer">
-    WYKO Network · Digital Infrastructure
-  </footer>
-
+  <footer class="footer">WYKO Network · Digital Infrastructure</footer>
 </div>
 
-
-<!-- FLOATING TXHASH VERIFIER -->
-
 <aside id="txVerifier" aria-label="WYKO Transaction Verifier">
-
   <div class="txv-header">
-
     <div class="txv-brand">
       <span class="txv-label">WYKO NETWORK</span>
       <strong class="txv-title">TXHASH Verifier</strong>
     </div>
-
-    <button
-      id="txv-toggle"
-      type="button"
-      aria-label="Minimize transaction verifier"
-    >−</button>
-
+    <button id="txv-toggle" type="button" aria-label="Minimize transaction verifier">−</button>
   </div>
 
   <div id="txv-content">
-
-    <p class="txv-description">
-      Verify the existence of a WYKO transaction using its TXHASH.
-    </p>
+    <p class="txv-description">Verify the existence of a WYKO transaction using its TXHASH.</p>
 
     <form id="txv-form">
-
-      <input
-        type="text"
-        id="txv-hash"
-        placeholder="WYKO.pau...."
-        autocomplete="off"
-        spellcheck="false"
-        required
-      >
-
-      <button type="submit" id="txv-submit">
-        Verify Transaction
-      </button>
-
+      <input type="text" id="txv-hash" placeholder="WYKO.pau...." autocomplete="off" spellcheck="false" required>
+      <button type="submit" id="txv-submit">Verify Transaction</button>
     </form>
 
     <div id="txv-result" hidden>
-
       <div id="txv-status"></div>
-
       <div id="txv-details" hidden>
-
-        <div class="txv-detail">
-          <span>FROM</span>
-          <strong id="txv-from"></strong>
-        </div>
-
-        <div class="txv-detail">
-          <span>TO</span>
-          <strong id="txv-to"></strong>
-        </div>
-
-        <div class="txv-detail">
-          <span>VALUE</span>
-          <strong id="txv-value"></strong>
-        </div>
-
+        <div class="txv-detail"><span>HASH</span><strong id="txv-hash-result"></strong></div>
+        <div class="txv-detail"><span>FROM</span><strong id="txv-from"></strong></div>
+        <div class="txv-detail"><span>TO</span><strong id="txv-to"></strong></div>
+        <div class="txv-detail"><span>VALUE</span><strong id="txv-value"></strong></div>
       </div>
-
     </div>
-
   </div>
-
 </aside>
 
-
 <script>
-  const API_URL =
-    "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/wyko";
+  "use strict";
 
-  // SESSION
+  const API_URL = "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/wyko";
+
   const session = {
     username: null,
     address: null,
@@ -901,7 +561,6 @@
     balance: null
   };
 
-  // ELEMENTS
   const $ = id => document.getElementById(id);
 
   const screens = {
@@ -910,14 +569,11 @@
     pau: $("pau-screen")
   };
 
-  // API REQUEST
   async function apiRequest(payload) {
     try {
       const response = await fetch(API_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
 
@@ -926,37 +582,22 @@
       try {
         data = await response.json();
       } catch {
-        return {
-          success: false,
-          erro: "Invalid server response."
-        };
+        return { success: false, erro: "Invalid server response." };
       }
 
       if (!response.ok) {
-        return {
-          ...data,
-          success: false
-        };
+        return { ...data, success: false };
       }
 
       return data;
-
     } catch (error) {
-      console.error(error);
-
-      return {
-        success: false,
-        erro: "Connection error. Check your internet connection."
-      };
+      console.error("API request error:", error);
+      return { success: false, erro: "Connection error. Check your internet connection." };
     }
   }
 
-  // UI HELPERS
   function showScreen(screen) {
-    Object.values(screens).forEach(element => {
-      element.classList.add("hidden");
-    });
-
+    Object.values(screens).forEach(element => element.classList.add("hidden"));
     screens[screen].classList.remove("hidden");
   }
 
@@ -987,32 +628,24 @@
     });
   }
 
-
   // AUTH TABS
-
   $("tab-login").addEventListener("click", () => {
     $("tab-login").classList.add("active");
     $("tab-signup").classList.remove("active");
-
     $("login-screen").classList.remove("hidden");
     $("signup-screen").classList.add("hidden");
-
     clearMessage($("auth-message"));
   });
 
   $("tab-signup").addEventListener("click", () => {
     $("tab-signup").classList.add("active");
     $("tab-login").classList.remove("active");
-
     $("signup-screen").classList.remove("hidden");
     $("login-screen").classList.add("hidden");
-
     clearMessage($("auth-message"));
   });
 
-
   // LOGIN
-
   $("login-form").addEventListener("submit", async event => {
     event.preventDefault();
 
@@ -1022,44 +655,36 @@
     if (!username || !password) return;
 
     const button = $("login-btn");
-
     setLoading(button, true, "Access wallet");
     clearMessage($("auth-message"));
 
-    const result = await apiRequest({
-      action: "login",
-      user: {
-        username,
-        password
+    try {
+      const result = await apiRequest({
+        action: "login",
+        user: { username, password }
+      });
+
+      if (!result.success || result.erro || !result.address) {
+        showMessage($("auth-message"), result.erro || "Login failed.");
+        return;
       }
-    });
 
-    setLoading(button, false, "Access wallet");
+      session.username = username;
+      session.password = password;
+      session.address = result.address;
+      session.balance = result.balance;
 
-    if (!result.success || result.erro || !result.address) {
-      showMessage(
-        $("auth-message"),
-        result.erro || "Login failed."
-      );
-      return;
+      $("balance").textContent = formatBalance(result.balance);
+      $("wallet-address").textContent = result.address;
+      $("login-password").value = "";
+
+      showScreen("wallet");
+    } finally {
+      setLoading(button, false, "Access wallet");
     }
-
-    session.username = username;
-    session.password = password;
-    session.address = result.address;
-    session.balance = result.balance;
-
-    $("balance").textContent = formatBalance(result.balance);
-    $("wallet-address").textContent = result.address;
-
-    $("login-password").value = "";
-
-    showScreen("wallet");
   });
 
-
   // SIGNUP
-
   $("signup-form").addEventListener("submit", async event => {
     event.preventDefault();
 
@@ -1069,110 +694,87 @@
     if (!username || !password) return;
 
     const button = $("signup-btn");
-
     setLoading(button, true, "Create wallet");
     clearMessage($("auth-message"));
 
-    const result = await apiRequest({
-      action: "signup",
-      user: {
-        username,
-        password
+    try {
+      const result = await apiRequest({
+        action: "signup",
+        user: { username, password }
+      });
+
+      if (!result.success || !result.address) {
+        showMessage($("auth-message"), result.erro || "Account creation failed.");
+        return;
       }
-    });
 
-    setLoading(button, false, "Create wallet");
-
-    if (!result.success || !result.address) {
       showMessage(
         $("auth-message"),
-        result.erro || "Account creation failed."
+        "Account successfully created! Your address: " + result.address,
+        "success"
       );
-      return;
+
+      $("signup-form").reset();
+      $("tab-login").click();
+    } finally {
+      setLoading(button, false, "Create wallet");
     }
-
-    showMessage(
-      $("auth-message"),
-      "Account successfully created! Your address: " + result.address,
-      "success"
-    );
-
-    $("signup-form").reset();
-
-    $("tab-login").click();
   });
 
-
   // VERIFY BALANCE
-
   async function refreshBalance() {
-    const button = $("refresh-balance");
+    if (!session.address) return;
 
+    const button = $("refresh-balance");
     button.disabled = true;
     button.textContent = "Updating...";
 
-    const result = await apiRequest({
-      action: "verify_balance",
-      address: session.address
-    });
+    try {
+      const result = await apiRequest({
+        action: "verify_balance",
+        address: session.address
+      });
 
-    button.disabled = false;
-    button.textContent = "↻ Refresh";
+      if (!result.success) {
+        showMessage($("wallet-message"), result.erro || "Unable to update balance.");
+        return;
+      }
 
-    if (!result.success) {
-      showMessage(
-        $("wallet-message"),
-        result.erro || "Unable to update balance."
-      );
-      return;
+      session.balance = result.balance;
+      $("balance").textContent = formatBalance(result.balance);
+      clearMessage($("wallet-message"));
+    } finally {
+      button.disabled = false;
+      button.textContent = "↻ Refresh";
     }
-
-    session.balance = result.balance;
-
-    $("balance").textContent = formatBalance(result.balance);
-
-    clearMessage($("wallet-message"));
   }
 
   $("refresh-balance").addEventListener("click", refreshBalance);
 
-
   // COPY ADDRESS
-
   $("copy-address").addEventListener("click", async () => {
     try {
-      await navigator.clipboard.writeText(session.address);
-
+      await navigator.clipboard.writeText(session.address || "");
       $("copy-address").textContent = "COPIED!";
-
-      setTimeout(() => {
-        $("copy-address").textContent = "COPY";
-      }, 1500);
-
-    } catch {
-      showMessage(
-        $("wallet-message"),
-        "Unable to copy address."
-      );
+      setTimeout(() => $("copy-address").textContent = "COPY", 1500);
+    } catch (error) {
+      console.error("Address copy error:", error);
+      showMessage($("wallet-message"), "Unable to copy address.");
     }
   });
 
-
   // OPEN PAU
-
   $("open-pau").addEventListener("click", () => {
     $("pau-form").reset();
+    $("pau-txhash").hidden = true;
+    $("pau-txhash-value").textContent = "";
     clearMessage($("pau-message"));
     showScreen("pau");
   });
 
-  $("back-wallet").addEventListener("click", () => {
-    showScreen("wallet");
-  });
-
+  $("back-wallet").addEventListener("click", () => showScreen("wallet"));
 
   // PAY A USER
-
   $("pau-form").addEventListener("submit", async event => {
     event.preventDefault();
 
@@ -1181,36 +783,24 @@
     const password = $("pau-password").value;
 
     if (!recipient || !amount || !password) {
-      showMessage(
-        $("pau-message"),
-        "Please fill in all fields."
-      );
+      showMessage($("pau-message"), "Please fill in all fields.");
       return;
     }
 
     const numericAmount = Number(amount);
 
     if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
-      showMessage(
-        $("pau-message"),
-        "Enter a valid transfer amount."
-      );
+      showMessage($("pau-message"), "Enter a valid transfer amount.");
       return;
     }
 
     if (recipient === session.address) {
-      showMessage(
-        $("pau-message"),
-        "You cannot transfer WYKO to your own address."
-      );
+      showMessage($("pau-message"), "You cannot transfer WYKO to your own address.");
       return;
     }
 
     if (password !== session.password) {
-      showMessage(
-        $("pau-message"),
-        "Incorrect wallet password."
-      );
+      showMessage($("pau-message"), "Incorrect wallet password.");
       return;
     }
 
@@ -1227,46 +817,86 @@
 
     setLoading(button, true, "Confirm transfer");
     clearMessage($("pau-message"));
+    $("pau-txhash").hidden = true;
+    $("pau-txhash-value").textContent = "";
 
-    const result = await apiRequest({
-      action: "pau",
+    try {
+      const result = await apiRequest({
+        action: "pau",
+        user1: {
+          address: session.address,
+          password: password
+        },
+        user2: {
+          address: recipient
+        },
+        value: numericAmount
+      });
 
-      user1: {
-        address: session.address,
-        password: password
-      },
+      console.log("PAU API RESPONSE:", result);
 
-      user2: {
-        address: recipient
-      },
+      if (!result.success) {
+        const errorMessage = typeof result.erro === "string"
+          ? result.erro
+          : result.erro?.message || "Transfer failed.";
 
-      value: numericAmount
-    });
+        showMessage($("pau-message"), errorMessage);
+        return;
+      }
 
-    setLoading(button, false, "Confirm transfer");
+      // HASH IS RETURNED DIRECTLY BY THE EDGE FUNCTION
+      const hash = result.hash;
 
-    if (!result.success) {
+      if (typeof hash !== "string" || !hash.trim()) {
+        console.error("PAU response did not contain result.hash:", result);
+        showMessage(
+          $("pau-message"),
+          "Transfer response did not contain a transaction hash.",
+          "error"
+        );
+        return;
+      }
+
+      $("pau-txhash-value").textContent = hash;
+      $("pau-txhash").hidden = false;
+
+      $("pau-form").reset();
+
       showMessage(
         $("pau-message"),
-        result.erro || "Transfer failed."
+        "Transfer submitted successfully!",
+        "success"
       );
-      return;
+
+      await refreshBalance();
+    } catch (error) {
+      console.error("PAU error:", error);
+      showMessage($("pau-message"), "Unexpected transfer error.");
+    } finally {
+      setLoading(button, false, "Confirm transfer");
     }
-
-    $("pau-form").reset();
-
-    showMessage(
-      $("pau-message"),
-      "Transfer submitted successfully!",
-      "success"
-    );
-
-    await refreshBalance();
   });
 
+  // COPY PAU HASH
+  $("copy-pau-hash").addEventListener("click", async () => {
+    const hash = $("pau-txhash-value").textContent;
+
+    if (!hash) return;
+
+    try {
+      await navigator.clipboard.writeText(hash);
+      $("copy-pau-hash").textContent = "COPIED!";
+
+      setTimeout(() => {
+        $("copy-pau-hash").textContent = "COPY HASH";
+      }, 1500);
+    } catch (error) {
+      console.error("Hash copy error:", error);
+      showMessage($("pau-message"), "Unable to copy transaction hash.");
+    }
+  });
 
   // LOGOUT
-
   $("logout").addEventListener("click", () => {
     session.username = null;
     session.address = null;
@@ -1278,15 +908,13 @@
 
     $("balance").textContent = "0";
     $("wallet-address").textContent = "";
+    $("pau-txhash").hidden = true;
+    $("pau-txhash-value").textContent = "";
 
     showScreen("auth");
   });
 
-
-  // =====================================
-  // WYKO TXHASH VERIFIER
-  // =====================================
-
+  // TXHASH VERIFIER
   const txv = {
     form: $("txv-form"),
     hash: $("txv-hash"),
@@ -1294,41 +922,30 @@
     result: $("txv-result"),
     status: $("txv-status"),
     details: $("txv-details"),
+    hashResult: $("txv-hash-result"),
     from: $("txv-from"),
     to: $("txv-to"),
     value: $("txv-value"),
     container: $("txVerifier"),
-    toggle: $("txv-toggle"),
-    content: $("txv-content")
+    toggle: $("txv-toggle")
   };
 
-
   // MINIMIZE / EXPAND
-
   txv.toggle.addEventListener("click", () => {
     const minimized = txv.container.classList.toggle("minimized");
-
     txv.toggle.textContent = minimized ? "+" : "−";
-
     txv.toggle.setAttribute(
       "aria-label",
       minimized ? "Expand transaction verifier" : "Minimize transaction verifier"
     );
   });
 
-
-  // RESET VERIFIER RESULT
-
   function clearTXResult() {
     txv.result.hidden = true;
     txv.details.hidden = true;
-
     txv.status.textContent = "";
     txv.status.className = "";
   }
-
-
-  // SHOW VERIFIER STATUS
 
   function showTXStatus(message, type) {
     txv.result.hidden = false;
@@ -1336,25 +953,18 @@
     txv.status.className = type;
   }
 
-
   // VERIFY TXHASH
-
   txv.form.addEventListener("submit", async event => {
     event.preventDefault();
 
     const hash = txv.hash.value.trim();
-
     if (!hash) return;
 
     txv.button.disabled = true;
     txv.button.textContent = "Verifying...";
-
     clearTXResult();
 
-    showTXStatus(
-      "SEARCHING WYKO NETWORK...",
-      "loading"
-    );
+    showTXStatus("SEARCHING WYKO NETWORK...", "loading");
 
     try {
       const result = await apiRequest({
@@ -1369,59 +979,31 @@
             : result.erro || "VERIFICATION_FAILED",
           "error"
         );
-
         return;
       }
 
-      if (!result.dados) {
-        showTXStatus(
-          "INVALID_SERVER_RESPONSE",
-          "error"
-        );
-
+      if (!result.dados || !result.dados.hash) {
+        showTXStatus("INVALID_SERVER_RESPONSE", "error");
         return;
       }
 
-      // TRANSACTION FOUND
+      const dados = result.dados;
 
-      txv.from.textContent = result.dados.from ?? "UNKNOWN";
-      txv.to.textContent = result.dados.to ?? "UNKNOWN";
-      txv.value.textContent =
-        formatBalance(result.dados.value) + " WYKO";
+      txv.hashResult.textContent = dados.hash;
+      txv.from.textContent = dados.from ?? "UNKNOWN";
+      txv.to.textContent = dados.to ?? "UNKNOWN";
+      txv.value.textContent = formatBalance(dados.value) + " WYKO";
 
       txv.details.hidden = false;
-	  const { hash, from, to, value } = result.dados;
-
-		showMessage(
-		  $("hash-message"),
-		  `TRANSACTION FOUND!
-
-		Hash: ${hash}
-		From: ${from}
-		To: ${to}
-		Amount: ${formatBalance(value)} WYKO`,
-		  "success"
-		);
-      showTXStatus(
-        "✓ TRANSACTION_FOUND",
-        "success"
-      );
-
+      showTXStatus("✓ TRANSACTION_FOUND", "success");
     } catch (error) {
       console.error("TXHASH verification error:", error);
-
-      showTXStatus(
-        "CONNECTION_ERROR",
-        "error"
-      );
-
+      showTXStatus("CONNECTION_ERROR", "error");
     } finally {
       txv.button.disabled = false;
       txv.button.textContent = "Verify Transaction";
     }
   });
-
 </script>
-
 </body>
 </html>

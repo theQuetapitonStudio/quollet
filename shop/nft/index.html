@@ -1,1 +1,503 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08080d">
+<title>Quewkyo NFT Shop</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #08080d;
+  color: #eeeef5;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
+
+header {
+  padding: 23px 8%;
+  border-bottom: 1px solid #242431;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.logo span {
+  color: #a77aff;
+}
+
+.status {
+  font-size: 11px;
+  color: #858597;
+  letter-spacing: 1px;
+}
+
+main {
+  max-width: 1050px;
+  margin: auto;
+  padding: 55px 20px;
+}
+
+.hero {
+  margin-bottom: 40px;
+}
+
+.hero h1 {
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+
+.hero h1 span {
+  color: #a77aff;
+}
+
+.hero p {
+  color: #858597;
+  line-height: 1.6;
+}
+
+.section-title {
+  font-size: 19px;
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+.nft {
+  background: #111119;
+  border: 1px solid #292936;
+  border-radius: 13px;
+  padding: 20px;
+  transition: .2s;
+}
+
+.nft:hover {
+  border-color: #9665ff;
+  transform: translateY(-3px);
+}
+
+.nft-art {
+  height: 160px;
+  background: linear-gradient(135deg, #21133c, #11111c, #34205b);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 55px;
+  margin-bottom: 20px;
+}
+
+.nft h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.nft .id {
+  color: #77778a;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.price {
+  color: #b18bff;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 17px;
+}
+
+button {
+  background: #9361ff;
+  color: white;
+  border: none;
+  padding: 12px 17px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: .2s;
+}
+
+button:hover {
+  background: #7743e8;
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.buy-button {
+  width: 100%;
+}
+
+.panel {
+  background: #111119;
+  border: 1px solid #292936;
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 35px;
+}
+
+.panel h2 {
+  font-size: 19px;
+  margin-bottom: 18px;
+}
+
+input {
+  width: 100%;
+  padding: 13px;
+  background: #090910;
+  border: 1px solid #30303e;
+  color: white;
+  border-radius: 7px;
+  outline: none;
+  margin-bottom: 12px;
+}
+
+input:focus {
+  border-color: #9361ff;
+}
+
+#message, #verify-result {
+  margin-top: 15px;
+  font-size: 13px;
+  color: #aaaabb;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+}
+
+.hash {
+  background: #090910;
+  padding: 13px;
+  border-radius: 7px;
+  margin-top: 12px;
+  color: #b18bff;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+
+.verify {
+  margin-top: 35px;
+}
+
+footer {
+  border-top: 1px solid #20202b;
+  padding: 25px;
+  text-align: center;
+  color: #696979;
+  font-size: 12px;
+}
+
+@media(max-width: 550px) {
+  header {
+    padding: 20px;
+  }
+
+  .hero h1 {
+    font-size: 31px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">QUEWKYO<span>.</span></div>
+  <div class="status">NFT MARKETPLACE / QNS</div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h1>NFT <span>Collection</span></h1>
+    <p>
+      Discover and collect unique digital assets from the
+      Quewkyo ecosystem.
+    </p>
+  </section>
+
+  <h2 class="section-title">Available NFTs</h2>
+
+  <div class="grid" id="nfts">
+    <p>Loading collection...</p>
+  </div>
+
+  <section class="panel" id="buy-panel">
+    <h2>Purchase NFT</h2>
+
+    <input
+      id="username"
+      placeholder="Quewkyo username"
+      autocomplete="username"
+    >
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Account password"
+      autocomplete="current-password"
+    >
+
+    <input
+      id="nft-id"
+      placeholder="Selected NFT ID"
+      readonly
+    >
+
+    <button class="buy-button" id="buy-button" onclick="buyNFT()">
+      Purchase NFT
+    </button>
+
+    <div id="message"></div>
+    <div id="hash-result"></div>
+  </section>
+
+  <section class="panel verify">
+    <h2>Verify NFT Hash</h2>
+
+    <input
+      id="verify-hash"
+      placeholder="Enter NFT Hash"
+    >
+
+    <button onclick="verifyHash()">Verify Hash</button>
+
+    <div id="verify-result"></div>
+  </section>
+
+</main>
+
+<footer>
+  QUEWKYO NFT SHOP · QNS ECOSYSTEM
+</footer>
+
+<script>
+const API = "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/nft-store";
+
+const nftContainer = document.getElementById("nfts");
+
+let selectedNFT = null;
+
+async function api(data) {
+  const response = await fetch(API, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      result.erro?.message || result.erro || "Request failed"
+    );
+  }
+
+  return result;
+}
+
+// LOAD NFT COLLECTION
+async function loadNFTs() {
+  try {
+    const response = await api({
+      action: "list"
+    });
+
+    if (!response.success) {
+      throw new Error(response.erro || "Unable to load NFTs");
+    }
+
+    nftContainer.innerHTML = "";
+
+    if (!response.lista?.length) {
+      nftContainer.textContent = "No NFTs available.";
+      return;
+    }
+
+    response.lista.forEach(nft => {
+      const card = document.createElement("div");
+      card.className = "nft";
+
+      const art = document.createElement("div");
+      art.className = "nft-art";
+      art.textContent = "◇";
+
+      const name = document.createElement("h3");
+      name.textContent = nft.nome;
+
+      const id = document.createElement("div");
+      id.className = "id";
+      id.textContent = nft.id;
+
+      const price = document.createElement("div");
+      price.className = "price";
+      price.textContent = nft.price + " QNK-BASE";
+
+      const button = document.createElement("button");
+      button.className = "buy-button";
+      button.textContent = "Purchase";
+
+      button.addEventListener("click", () => selectNFT(nft));
+
+      card.append(art, name, id, price, button);
+      nftContainer.appendChild(card);
+    });
+
+  } catch (error) {
+    nftContainer.textContent = "Error: " + error.message;
+  }
+}
+
+// SELECT NFT
+function selectNFT(nft) {
+  selectedNFT = nft;
+
+  document.getElementById("nft-id").value = nft.id;
+
+  document.getElementById("buy-panel").scrollIntoView({
+    behavior: "smooth"
+  });
+
+  document.getElementById("message").textContent =
+    "Selected: " + nft.nome;
+
+  document.getElementById("hash-result").innerHTML = "";
+}
+
+// BUY NFT
+async function buyNFT() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value;
+
+  const message = document.getElementById("message");
+  const button = document.getElementById("buy-button");
+  const hashResult = document.getElementById("hash-result");
+
+  if (!username || !password || !selectedNFT) {
+    message.textContent = "Fill in all fields and select an NFT.";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Processing...";
+  message.textContent = "Processing purchase...";
+  hashResult.innerHTML = "";
+
+  try {
+    const response = await api({
+      action: "buy",
+      username: username,
+      password: password,
+      nft_id: selectedNFT.id
+    });
+
+    if (!response.success) {
+      throw new Error(
+        response.erro?.message || response.erro || "Purchase failed"
+      );
+    }
+
+    message.textContent = "NFT successfully purchased!";
+
+    const title = document.createElement("p");
+    title.textContent = "Your NFT Hash:";
+
+    const hash = document.createElement("div");
+    hash.className = "hash";
+    hash.textContent = response.hash;
+
+    const copy = document.createElement("button");
+    copy.textContent = "Copy Hash";
+    copy.style.marginTop = "12px";
+
+    copy.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(response.hash);
+        copy.textContent = "Copied!";
+      } catch {
+        copy.textContent = "Copy unavailable";
+      }
+    };
+
+    hashResult.append(title, hash, copy);
+
+    document.getElementById("password").value = "";
+    document.getElementById("nft-id").value = "";
+
+    selectedNFT = null;
+
+  } catch (error) {
+    message.textContent = "Purchase error: " + error.message;
+
+  } finally {
+    button.disabled = false;
+    button.textContent = "Purchase NFT";
+  }
+}
+
+// VERIFY NFT HASH
+async function verifyHash() {
+  const hash = document.getElementById("verify-hash").value.trim();
+  const result = document.getElementById("verify-result");
+
+  if (!hash) {
+    result.textContent = "Enter an NFT Hash.";
+    return;
+  }
+
+  result.textContent = "Verifying...";
+
+  try {
+    const response = await api({
+      action: "verify-hash",
+      hash: hash
+    });
+
+    if (!response.success) {
+      throw new Error(response.erro || "Invalid hash");
+    }
+
+    result.innerHTML = "";
+
+    const status = document.createElement("p");
+    status.style.color = "#8bdbac";
+    status.textContent = "✓ Authentic NFT";
+
+    const owner = document.createElement("p");
+    owner.textContent = "Owner: " + response.dados.username;
+
+    const nft = document.createElement("p");
+    nft.textContent = "NFT ID: " + response.dados.nft;
+
+    result.append(status, owner, nft);
+
+  } catch (error) {
+    result.textContent = "Verification failed: " + error.message;
+  }
+}
+
+loadNFTs();
+</script>
+
+</body>
+</html>

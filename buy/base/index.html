@@ -1,9 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Buy QNK-BASE | QUEWKYO</title>
 
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
@@ -292,7 +292,7 @@ button:disabled {
 
     <div class="network">
         <div class="dot"></div>
-        Ethereum Sepolia
+        Polygon Mainnet
     </div>
 
     <h1>
@@ -301,16 +301,16 @@ button:disabled {
     </h1>
 
     <p class="subtitle">
-        Buy QNK-BASE directly with WETH on Ethereum Sepolia.
-        Your QNK-BASE balance will be credited after the
-        blockchain transaction is verified.
+        Buy QNK-BASE directly with POL on Polygon.
+        Your QNK-BASE balance will be credited after
+        the blockchain transaction is verified.
     </p>
 
     <div class="card">
 
         <div class="rate">
             <small>Current rate</small>
-            <strong>1 QNK-BASE = 0.05 WETH</strong>
+            <strong>15 POL = 1 QNK-BASE</strong>
         </div>
 
         <div class="field">
@@ -333,14 +333,14 @@ button:disabled {
                         type="number"
                         min="1"
                         step="1"
-                        value="100"
+                        value="1"
                     >
                     <span class="token">QNK</span>
                 </div>
 
                 <div class="receive">
                     <span>You pay</span>
-                    <strong id="wethAmount">0.001 WETH</strong>
+                    <strong id="polAmount">15 POL</strong>
                 </div>
             </div>
         </div>
@@ -360,8 +360,8 @@ button:disabled {
         <div id="status" class="status"></div>
 
         <div class="warning">
-            Testnet only. Payments use WETH on Ethereum Sepolia.
-            Sepolia assets do not represent real monetary value.
+            Payments use native POL on Polygon Mainnet.
+            Always verify the recipient and amount in MetaMask.
         </div>
 
     </div>
@@ -370,24 +370,45 @@ button:disabled {
 
 <script>
 
+// =====================================================
+// CONFIGURATION
+// =====================================================
+
 const EDGE_FUNCTION_URL =
     "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/buyqnk";
 
 const TREASURY =
-    "0xE587ca958F78467E173eEEF5559F4C253ED53a2b";
+    "0xe587ca958f78467e173eeef5559f4c253ed53a2b";
 
-const WETH =
-    "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14";
+const POLYGON_CHAIN_ID = 137;
 
-const SEPOLIA_CHAIN_ID = 11155111;
+const POLYGON_CHAIN_HEX = "0x89";
 
-const WETH_ABI = [
-    "function transfer(address to, uint256 value) returns (bool)"
-];
+const POLYGON_RPC =
+    "https://polygon-rpc.com";
+
+const WEI_PER_POL = 10n ** 18n;
+
+const POL_PER_QNK = 15n;
+
+const WEI_PER_QNK =
+    POL_PER_QNK * WEI_PER_POL;
+
+// =====================================================
+// STATE
+// =====================================================
 
 let provider = null;
 let signer = null;
 let walletAddress = null;
+
+// A pending hash is reused for verification retries.
+// This prevents accidentally paying twice after an API error.
+let pendingTxHash = null;
+
+// =====================================================
+// ELEMENTS
+// =====================================================
 
 const usernameInput =
     document.getElementById("username");
@@ -398,8 +419,8 @@ const passwordInput =
 const amountInput =
     document.getElementById("qnkAmount");
 
-const wethAmountText =
-    document.getElementById("wethAmount");
+const polAmountText =
+    document.getElementById("polAmount");
 
 const connectBtn =
     document.getElementById("connectBtn");
@@ -413,93 +434,82 @@ const walletInfo =
 const statusBox =
     document.getElementById("status");
 
-
 // =====================================================
 // STATUS
 // =====================================================
 
 function status(message, type = "loading") {
-
-    statusBox.className =
-        "status " + type;
-
-    statusBox.textContent =
-        message;
+    statusBox.className = "status " + type;
+    statusBox.textContent = message;
 }
-
 
 // =====================================================
 // AMOUNT
 // =====================================================
 
 function updateAmount() {
+    const qnk = Number(amountInput.value);
 
-    let qnk =
-        Number(amountInput.value);
-
-    if (!Number.isInteger(qnk) || qnk < 1) {
-        wethAmountText.textContent =
-            "Invalid amount";
+    if (!Number.isSafeInteger(qnk) || qnk < 1) {
+        polAmountText.textContent = "Invalid amount";
         return;
     }
 
-    const weth =
-        qnk * 0.05;
-
-    wethAmountText.textContent =
-        weth.toFixed(5) + " WETH";
+    polAmountText.textContent =
+        (qnk * 15).toLocaleString("en-US") + " POL";
 }
 
-amountInput.addEventListener(
-    "input",
-    updateAmount
-);
-
+amountInput.addEventListener("input", updateAmount);
 
 // =====================================================
-// SWITCH TO SEPOLIA
+// CONNECT PROVIDER
 // =====================================================
 
-async function switchToSepolia() {
+function initializeProvider() {
+    if (!window.ethereum) {
+        throw new Error("MetaMask was not detected.");
+    }
 
-    const network =
-        await provider.getNetwork();
+    provider = new ethers.BrowserProvider(window.ethereum);
+}
 
-    if (
-        Number(network.chainId) ===
-        SEPOLIA_CHAIN_ID
-    ) {
+// =====================================================
+// SWITCH TO POLYGON
+// =====================================================
+
+async function switchToPolygon() {
+    initializeProvider();
+
+    const network = await provider.getNetwork();
+
+    if (Number(network.chainId) === POLYGON_CHAIN_ID) {
         return;
     }
 
     try {
-
         await window.ethereum.request({
             method: "wallet_switchEthereumChain",
             params: [{
-                chainId: "0xaa36a7"
+                chainId: POLYGON_CHAIN_HEX
             }]
         });
 
     } catch (error) {
 
         if (error.code === 4902) {
-
             await window.ethereum.request({
                 method: "wallet_addEthereumChain",
                 params: [{
-                    chainId: "0xaa36a7",
-                    chainName: "Ethereum Sepolia",
+                    chainId: POLYGON_CHAIN_HEX,
+                    chainName: "Polygon Mainnet",
                     nativeCurrency: {
-                        name: "Sepolia ETH",
-                        symbol: "ETH",
+                        name: "POL",
+                        symbol: "POL",
                         decimals: 18
                     },
-                    rpcUrls: [
-                        "https://ethereum-sepolia-rpc.publicnode.com"
-                    ],
+                    rpcUrls: [POLYGON_RPC],
                     blockExplorerUrls: [
-                        "https://sepolia.etherscan.io"
+                        "https://polygonscan.com"
                     ]
                 }]
             });
@@ -509,294 +519,222 @@ async function switchToSepolia() {
         }
     }
 
-    provider =
-        new ethers.BrowserProvider(
-            window.ethereum
-        );
+    initializeProvider();
 
-    signer =
-        await provider.getSigner();
+    const updatedNetwork = await provider.getNetwork();
+
+    if (Number(updatedNetwork.chainId) !== POLYGON_CHAIN_ID) {
+        throw new Error("Please switch to Polygon Mainnet.");
+    }
 }
 
-
 // =====================================================
-// CONNECT
+// CONNECT WALLET
 // =====================================================
 
 async function connectWallet() {
-
     if (!window.ethereum) {
-
-        status(
-            "MetaMask was not detected.",
-            "error"
-        );
-
+        status("MetaMask was not detected.", "error");
         return;
     }
 
+    connectBtn.disabled = true;
+
     try {
+        initializeProvider();
 
-        provider =
-            new ethers.BrowserProvider(
-                window.ethereum
-            );
+        await provider.send("eth_requestAccounts", []);
 
-        await provider.send(
-            "eth_requestAccounts",
-            []
-        );
+        await switchToPolygon();
 
-        await switchToSepolia();
+        signer = await provider.getSigner();
 
-        signer =
-            await provider.getSigner();
-
-        walletAddress =
-            await signer.getAddress();
+        walletAddress = await signer.getAddress();
 
         walletInfo.textContent =
-            "Connected: " +
-            walletAddress;
+            "Connected: " + walletAddress;
 
-        connectBtn.textContent =
-            "Wallet Connected";
+        connectBtn.textContent = "Wallet Connected";
 
-        buyBtn.disabled =
-            false;
+        buyBtn.disabled = false;
 
-        status(
-            "Wallet connected successfully.",
-            "success"
-        );
+        status("Wallet connected successfully.", "success");
 
     } catch (error) {
-
         status(
-            error.message ||
-            "Could not connect wallet.",
+            error.message || "Could not connect wallet.",
             "error"
         );
+
+    } finally {
+        connectBtn.disabled = false;
     }
 }
 
-connectBtn.addEventListener(
-    "click",
-    connectWallet
-);
-
+connectBtn.addEventListener("click", connectWallet);
 
 // =====================================================
-// BUY
+// VERIFY PAYMENT WITH EDGE FUNCTION
+// =====================================================
+
+async function verifyPayment(txHash) {
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value;
+
+    if (!username || !password) {
+        throw new Error("Enter your username and password to verify payment.");
+    }
+
+    status(
+        "Payment sent. Verifying transaction with QUEWKYO...\n" +
+        txHash
+    );
+
+    const response = await fetch(EDGE_FUNCTION_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username: username,
+            senha: password,
+            wallet: walletAddress,
+            tx_hash: txHash
+        })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+        throw new Error(
+            result.error || "Payment verification failed."
+        );
+    }
+
+    pendingTxHash = null;
+
+    status(
+        "Purchase complete!\n\n" +
+        result.qnk_added +
+        " QNK-BASE added to your account.\n" +
+        "New balance: " +
+        result.new_balance +
+        " QNK-BASE",
+        "success"
+    );
+}
+
+// =====================================================
+// BUY QNK-BASE
 // =====================================================
 
 async function buyQNK() {
-
-    const username =
-        usernameInput.value.trim();
-
-    const password =
-        passwordInput.value;
-
-    const qnkAmount =
-        Number(amountInput.value);
-
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value;
+    const qnkAmount = Number(amountInput.value);
 
     if (!username) {
-
-        status(
-            "Enter your QUEWKYO username.",
-            "error"
-        );
-
+        status("Enter your QUEWKYO username.", "error");
         return;
     }
-
 
     if (!password) {
-
-        status(
-            "Enter your password.",
-            "error"
-        );
-
+        status("Enter your password.", "error");
         return;
     }
 
-
-    if (
-        !Number.isInteger(qnkAmount) ||
-        qnkAmount < 1
-    ) {
-
-        status(
-            "QNK amount must be a positive whole number.",
-            "error"
-        );
-
+    if (!Number.isSafeInteger(qnkAmount) || qnkAmount < 1) {
+        status("QNK amount must be a positive whole number.", "error");
         return;
     }
 
-
-    if (!signer || !walletAddress) {
-
-        status(
-            "Connect MetaMask first.",
-            "error"
-        );
-
+    if (!walletAddress || !signer) {
+        status("Connect MetaMask first.", "error");
         return;
     }
-
-
-    if (
-        EDGE_FUNCTION_URL.includes(
-            "PASTE_"
-        )
-    ) {
-
-        status(
-            "EDGE_FUNCTION_URL is not configured.",
-            "error"
-        );
-
-        return;
-    }
-
 
     buyBtn.disabled = true;
     connectBtn.disabled = true;
 
-
     try {
 
-        await switchToSepolia();
-
-        signer =
-            await provider.getSigner();
-
-        walletAddress =
-            await signer.getAddress();
-
-
         // =============================================
-        // EXACT INTEGER CALCULATION
-        //
-        // 1 QNK = 10^13 WETH wei
+        // RETRY VERIFICATION
+        // Do not send another payment if a hash is pending.
         // =============================================
 
-        const weiPerQNK =
-            10000000000000n;
-
-        const wethWei =
-            BigInt(qnkAmount) *
-            weiPerQNK;
-
+        if (pendingTxHash) {
+            await verifyPayment(pendingTxHash);
+            return;
+        }
 
         // =============================================
-        // WETH CONTRACT
+        // ENSURE POLYGON
         // =============================================
 
-        const wethContract =
-            new ethers.Contract(
-                WETH,
-                WETH_ABI,
-                signer
-            );
+        await switchToPolygon();
 
+        signer = await provider.getSigner();
+        walletAddress = await signer.getAddress();
+
+        // =============================================
+        // CALCULATE EXACT POL AMOUNT
+        // =============================================
+
+        const polWei =
+            BigInt(qnkAmount) * WEI_PER_QNK;
+
+        const polFormatted =
+            ethers.formatEther(polWei);
+
+        // =============================================
+        // CONFIRM NETWORK
+        // =============================================
+
+        const network = await provider.getNetwork();
+
+        if (Number(network.chainId) !== POLYGON_CHAIN_ID) {
+            throw new Error("Wrong network. Select Polygon Mainnet.");
+        }
+
+        // =============================================
+        // SEND NATIVE POL
+        // =============================================
 
         status(
-            "Confirm the WETH payment in MetaMask..."
+            "Confirm the payment in MetaMask...\n\n" +
+            polFormatted + " POL"
         );
 
+        const tx = await signer.sendTransaction({
+            to: TREASURY,
+            value: polWei
+        });
 
-        // =============================================
-        // SEND WETH
-        // =============================================
-
-        const tx =
-            await wethContract.transfer(
-                TREASURY,
-                wethWei
-            );
-
+        pendingTxHash = tx.hash;
 
         status(
-            "Transaction sent. Waiting for confirmation...\n" +
+            "Transaction sent. Waiting for 5 confirmations...\n\n" +
             tx.hash
         );
 
-
         // =============================================
-        // WAIT FOR BLOCK
-        // =============================================
-
-        await tx.wait();
-
-
-        status(
-            "Payment confirmed. Verifying with QUEWKYO..."
-        );
-
-
-        // =============================================
-        // VERIFY + CREDIT
+        // WAIT FOR 5 CONFIRMATIONS
         // =============================================
 
-        const response =
-            await fetch(
-                EDGE_FUNCTION_URL,
-                {
-                    method: "POST",
+        const receipt = await tx.wait(5);
 
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        username: username,
-                        senha: password,
-                        wallet: walletAddress,
-                        tx_hash: tx.hash
-                    })
-                }
-            );
-
-
-        const result =
-            await response.json();
-
-
-        if (
-            !response.ok ||
-            !result.success
-        ) {
-
-            throw new Error(
-                result.error ||
-                "Payment verification failed."
-            );
+        if (!receipt || receipt.status !== 1) {
+            throw new Error("The POL transaction failed.");
         }
 
-
         // =============================================
-        // SUCCESS
+        // VERIFY AND CREDIT
         // =============================================
 
-        status(
-            "Purchase complete!\n\n" +
-            result.qnk_added +
-            " QNK-BASE added to your account.\n" +
-            "New balance: " +
-            result.new_balance +
-            " QNK-BASE",
-            "success"
-        );
-
+        await verifyPayment(tx.hash);
 
     } catch (error) {
-
         console.error(error);
 
         let message =
@@ -806,68 +744,56 @@ async function buyQNK() {
             "Purchase failed.";
 
         if (
-            message.includes(
-                "user rejected"
-            )
+            message.toLowerCase().includes("user rejected")
         ) {
-            message =
-                "Transaction cancelled.";
+            message = "Transaction cancelled.";
         }
 
-        status(
-            message,
-            "error"
-        );
+        if (pendingTxHash) {
+            message +=
+                "\n\nYour payment hash is saved in this page session. " +
+                "Click Buy again to retry verification without paying again.\n" +
+                pendingTxHash;
+        }
+
+        status(message, "error");
 
     } finally {
-
-        buyBtn.disabled =
-            !walletAddress;
-
-        connectBtn.disabled =
-            false;
+        buyBtn.disabled = !walletAddress;
+        connectBtn.disabled = false;
     }
 }
 
+buyBtn.addEventListener("click", buyQNK);
 
 // =====================================================
-// EVENTS
+// WALLET EVENTS
 // =====================================================
-
-buyBtn.addEventListener(
-    "click",
-    buyQNK
-);
-
 
 if (window.ethereum) {
 
-    window.ethereum.on(
-        "accountsChanged",
-        () => {
-            walletAddress = null;
-            signer = null;
+    window.ethereum.on("accountsChanged", (accounts) => {
+        walletAddress = null;
+        signer = null;
 
-            walletInfo.textContent =
-                "Wallet changed. Reconnect MetaMask.";
+        walletInfo.textContent =
+            "Wallet changed. Reconnect MetaMask.";
 
-            buyBtn.disabled =
-                true;
+        buyBtn.disabled = true;
+        connectBtn.textContent = "Connect MetaMask";
 
-            connectBtn.textContent =
-                "Connect MetaMask";
-        }
-    );
+        // Do not discard pendingTxHash.
+        // The user may need it to complete verification.
+    });
 
-
-    window.ethereum.on(
-        "chainChanged",
-        () => {
-            window.location.reload();
-        }
-    );
+    window.ethereum.on("chainChanged", () => {
+        window.location.reload();
+    });
 }
 
+// =====================================================
+// INITIALIZE
+// =====================================================
 
 updateAmount();
 

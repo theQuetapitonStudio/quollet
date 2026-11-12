@@ -531,7 +531,7 @@
 
   <div id="txv-content">
     <p class="txv-description">Verify the existence of a WYKO transaction using its TXHASH.</p>
-
+    <h1>Donate for <strong>Wyko Nft Shop</strong><br>Balance: <div id="balance_goal_div">???</div><br>Goal: 10000</h1>
     <form id="txv-form">
       <input type="text" id="txv-hash" placeholder="WYKO.pau...." autocomplete="off" spellcheck="false" required>
       <button type="submit" id="txv-submit">Verify Transaction</button>
@@ -554,15 +554,69 @@
 
   const API_URL = "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/wyko";
 
-  const session = {
-    username: null,
-    address: null,
-    password: null,
-    balance: null
-  };
+  // RPC público comunitário do Banano. Você pode trocar pelo endpoint do seu próprio node.
+  const BANANO_RPC_URL = "https://public.node.jungletv.live/rpc";
+  const BANANO_ACCOUNT = "ban_1ksi6tczhbu5mdg6ni8q8h544m3coihp4cewf3z8cauaq1w3y8q3me357r15";
 
   const $ = id => document.getElementById(id);
 
+  function rawToBan(raw) {
+    const value = BigInt(raw);
+    const divisor = 10n ** 29n;
+    const whole = value / divisor;
+    const fraction = (value % divisor).toString().padStart(29, "0");
+    return `${whole}.${fraction}`.replace(/\.?0+$/, "");
+  }
+
+  async function getBanBalance(address) {
+    if (typeof address !== "string" || !/^ban_[13][13456789abcdefghijkmnopqrstuwxyz]{59}$/.test(address)) {
+      throw new Error("Invalid Banano address.");
+    }
+
+    const response = await fetch(BANANO_RPC_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "account_balance",
+        account: address,
+        include_only_confirmed: true
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Banano RPC HTTP error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    if (data.error) throw new Error(data.error);
+    if (typeof data.balance !== "string") {
+      throw new Error("Unexpected Banano RPC response.");
+    }
+
+    const pendingRaw = data.receivable ?? data.pending ?? "0";
+
+    return {
+      raw: data.balance,
+      ban: rawToBan(data.balance),
+      pendingRaw,
+      pending: rawToBan(pendingRaw)
+    };
+  }
+
+  const session = {
+    username: null,
+    address: null,
+    balance: null
+  };
+
+  getBanBalance(BANANO_ACCOUNT)
+    .then(saldo => {
+      $("balance_goal_div").textContent = saldo.ban;
+    })
+    .catch(error => {
+      console.error("Banano balance error:", error);
+      $("balance_goal_div").textContent = "Unavailable";
+    });
   const screens = {
     auth: $("auth-screen"),
     wallet: $("wallet-screen"),
@@ -670,7 +724,6 @@
       }
 
       session.username = username;
-      session.password = password;
       session.address = result.address;
       session.balance = result.balance;
 
@@ -799,11 +852,6 @@
       return;
     }
 
-    if (password !== session.password) {
-      showMessage($("pau-message"), "Incorrect wallet password.");
-      return;
-    }
-
     const confirmed = confirm(
       "CONFIRM WYKO TRANSFER\n\n" +
       "Recipient: " + recipient + "\n" +
@@ -900,7 +948,6 @@
   $("logout").addEventListener("click", () => {
     session.username = null;
     session.address = null;
-    session.password = null;
     session.balance = null;
 
     $("login-form").reset();

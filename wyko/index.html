@@ -554,53 +554,103 @@
 
   const API_URL = "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/wyko";
 
-  // RPC público comunitário do Banano. Você pode trocar pelo endpoint do seu próprio node.
-  const BANANO_RPC_URL = "https://public.node.jungletv.live/rpc";
+  // RPCs públicos do Banano. Se um estiver limitado, tenta o próximo.
+  const BANANO_RPC_URLS = [
+    "https://api.banano.trade/proxy",
+    "https://public.node.jungletv.live/rpc",
+    "https://booster.dev-ptera.com/banano-rpc"
+  ];
+
   const BANANO_ACCOUNT = "ban_1ksi6tczhbu5mdg6ni8q8h544m3coihp4cewf3z8cauaq1w3y8q3me357r15";
+  const BANANO_BALANCE_CACHE_MS = 30000;
+  const bananoBalanceCache = new Map();
 
   const $ = id => document.getElementById(id);
 
   function rawToBan(raw) {
+    if (!/^\d+$/.test(String(raw))) {
+      throw new Error("Invalid RAW balance returned by Banano RPC.");
+    }
+
     const value = BigInt(raw);
     const divisor = 10n ** 29n;
     const whole = value / divisor;
-    const fraction = (value % divisor).toString().padStart(29, "0");
-    return `${whole}.${fraction}`.replace(/\.?0+$/, "");
+    const fraction = (value % divisor).toString().padStart(29, "0").replace(/0+$/, "");
+
+    return fraction ? `${whole}.${fraction}` : whole.toString();
   }
 
-  async function getBanBalance(address) {
+  async function requestBananoBalance(endpoint, address) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          action: "account_balance",
+          account: address,
+          include_only_confirmed: true
+        }),
+        signal: controller.signal,
+        cache: "no-store"
+      });
+
+      if (response.status === 429) {
+        const retryAfter = response.headers.get("Retry-After");
+        throw new Error(`Rate limited (HTTP 429)${retryAfter ? `; retry after ${retryAfter}` : ""}`);
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data.error) throw new Error(data.error);
+      if (typeof data.balance !== "string") {
+        throw new Error("Invalid response: balance field is missing.");
+      }
+
+      const pendingRaw = data.receivable ?? data.pending ?? "0";
+      return {
+        raw: data.balance,
+        ban: rawToBan(data.balance),
+        pendingRaw,
+        pending: rawToBan(pendingRaw)
+      };
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  async function getBanBalance(address, forceRefresh = false) {
     if (typeof address !== "string" || !/^ban_[13][13456789abcdefghijkmnopqrstuwxyz]{59}$/.test(address)) {
       throw new Error("Invalid Banano address.");
     }
 
-    const response = await fetch(BANANO_RPC_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        action: "account_balance",
-        account: address,
-        include_only_confirmed: true
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`Banano RPC HTTP error: ${response.status}`);
+    const cached = bananoBalanceCache.get(address);
+    if (!forceRefresh && cached && Date.now() - cached.time < BANANO_BALANCE_CACHE_MS) {
+      return cached.data;
     }
 
-    const data = await response.json();
-    if (data.error) throw new Error(data.error);
-    if (typeof data.balance !== "string") {
-      throw new Error("Unexpected Banano RPC response.");
+    const errors = [];
+
+    for (const endpoint of BANANO_RPC_URLS) {
+      try {
+        const result = await requestBananoBalance(endpoint, address);
+        bananoBalanceCache.set(address, { time: Date.now(), data: result });
+        return result;
+      } catch (error) {
+        errors.push(`${endpoint}: ${error.message}`);
+        console.warn("Banano RPC failed:", endpoint, error.message);
+      }
     }
 
-    const pendingRaw = data.receivable ?? data.pending ?? "0";
-
-    return {
-      raw: data.balance,
-      ban: rawToBan(data.balance),
-      pendingRaw,
-      pending: rawToBan(pendingRaw)
-    };
+    throw new Error(`All Banano RPC endpoints failed. ${errors.join(" | ")}`);
   }
 
   const session = {
@@ -609,14 +659,22 @@
     balance: null
   };
 
-  getBanBalance(BANANO_ACCOUNT)
-    .then(saldo => {
-      $("balance_goal_div").textContent = saldo.ban;
-    })
-    .catch(error => {
+  async function refreshDonationBalance() {
+    const balanceElement = $("balance_goal_div");
+    if (!balanceElement) return;
+
+    balanceElement.textContent = "Loading...";
+
+    try {
+      const saldo = await getBanBalance(BANANO_ACCOUNT, true);
+      balanceElement.textContent = `${saldo.ban} BAN`;
+    } catch (error) {
       console.error("Banano balance error:", error);
-      $("balance_goal_div").textContent = "Unavailable";
-    });
+      balanceElement.textContent = "Unavailable";
+    }
+  }
+
+  refreshDonationBalance();
   const screens = {
     auth: $("auth-screen"),
     wallet: $("wallet-screen"),

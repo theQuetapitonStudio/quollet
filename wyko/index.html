@@ -39,7 +39,7 @@
       padding: 24px;
     }
 
-    button, input { font: inherit; }
+    button, input, select { font: inherit; }
     button { cursor: pointer; }
 
     .container {
@@ -121,7 +121,7 @@
       font-weight: 600;
     }
 
-    input {
+    input, select {
       width: 100%;
       padding: 13px 14px;
       background: #0b0b10;
@@ -133,7 +133,7 @@
       font-size: 14px;
     }
 
-    input:focus {
+    input:focus, select:focus {
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(118,101,255,.1);
     }
@@ -209,14 +209,13 @@
     .balance-label { font-size: 12px; color: rgba(255,255,255,.75); }
 
     .balance-value {
-      font-size: clamp(23px, 7vw, 32px);
+      font-size: clamp(19px, 5.5vw, 27px);
       font-weight: 800;
       margin-top: 12px;
       overflow-wrap: anywhere;
       letter-spacing: -1px;
+      line-height: 1.4;
     }
-
-    .balance-unit { font-size: 12px; margin-top: 5px; color: rgba(255,255,255,.7); }
 
     .address-box {
       background: #0b0b10;
@@ -456,8 +455,8 @@
 
       <div class="balance-card">
         <div class="balance-label">AVAILABLE BALANCE</div>
-        <div class="balance-value" id="balance">0</div>
-        <div class="balance-unit">WYKO</div>
+        <div class="balance-value">Wyko: <span id="balance">0</span></div>
+        <div class="balance-value">WYKK: <span id="balance-kykaw">0</span></div>
       </div>
 
       <div class="address-box">
@@ -496,17 +495,28 @@
 
       <form class="form" id="pau-form">
         <div class="field">
+          <label for="pau-coin">CURRENCY</label>
+          <select id="pau-coin" required>
+            <option value="WYKO_NORMAL">WYKO</option>
+            <option value="WYKO_KYKAW">WYKK</option>
+          </select>
+        </div>
+
+        <div class="field">
           <label for="recipient">RECIPIENT ADDRESS</label>
           <input id="recipient" type="text" placeholder="WYKO.xxxxxxxxx..." required>
         </div>
+
         <div class="field">
           <label for="amount">TRANSFER AMOUNT</label>
           <input id="amount" type="number" placeholder="0.000000" min="0" step="any" required>
         </div>
+
         <div class="field">
           <label for="pau-password">WALLET PASSWORD</label>
           <input id="pau-password" type="password" placeholder="Confirm your password" autocomplete="current-password" required>
         </div>
+
         <button class="btn" id="pau-submit" type="submit">Confirm transfer</button>
       </form>
 
@@ -531,7 +541,7 @@
 
   <div id="txv-content">
     <p class="txv-description">Verify the existence of a WYKO transaction using its TXHASH.</p>
-    <h1>Donate for <strong>Wyko Nft Shop</strong><br>Balance: <div id="balance_goal_div">???</div><br>Goal: 10000</h1>
+
     <form id="txv-form">
       <input type="text" id="txv-hash" placeholder="WYKO.pau...." autocomplete="off" spellcheck="false" required>
       <button type="submit" id="txv-submit">Verify Transaction</button>
@@ -550,565 +560,490 @@
 </aside>
 
 <script>
-  "use strict";
+"use strict";
 
-  const API_URL = "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/wyko";
+const API_URL = "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/wyko";
 
-  // RPCs públicos do Banano. Se um estiver limitado, tenta o próximo.
-  const BANANO_RPC_URLS = [
-    "https://api.banano.trade/proxy",
-    "https://public.node.jungletv.live/rpc",
-    "https://booster.dev-ptera.com/banano-rpc"
+const session = {
+  username: null,
+  address: null,
+  password: null,
+  balance: null,
+  balance_kykaw: null
+};
+
+const $ = id => document.getElementById(id);
+
+const screens = {
+  auth: $("auth-screen"),
+  wallet: $("wallet-screen"),
+  pau: $("pau-screen")
+};
+
+async function apiRequest(payload) {
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await response.json().catch(() => null);
+
+    if (!data) {
+      return { success: false, erro: "Invalid server response." };
+    }
+
+    return response.ok ? data : { ...data, success: false };
+  } catch (error) {
+    console.error("API error:", error);
+    return {
+      success: false,
+      erro: "Connection error. Check your internet connection."
+    };
+  }
+}
+
+function showScreen(screen) {
+  Object.values(screens).forEach(element => element.classList.add("hidden"));
+  screens[screen].classList.remove("hidden");
+}
+
+function showMessage(element, message, type = "error") {
+  element.textContent = message;
+  element.className = "message " + type;
+}
+
+function clearMessage(element) {
+  element.className = "message";
+  element.textContent = "";
+}
+
+function setLoading(button, loading, originalText) {
+  button.disabled = loading;
+  button.textContent = loading ? "Processing..." : originalText;
+}
+
+// BALANCE FORMATTER
+
+function formatBalance(value) {
+  const num = Number(value) || 0;
+
+  const suffixes = [
+    "", "k", "m", "b", "t",
+    "qd", "qn", "sx", "sp", "oc",
+    "no", "dc", "udc", "ddc", "tdc",
+    "qdc", "qndc", "sxdc", "spdc", "ocdc",
+    "nodc", "vg", "uvg", "dvg", "tvg",
+    "qdvg", "qnvg", "sxvg", "spvg", "ocvg",
+    "novg", "tg"
   ];
 
-  const BANANO_ACCOUNT = "ban_1ksi6tczhbu5mdg6ni8q8h544m3coihp4cewf3z8cauaq1w3y8q3me357r15";
-  const BANANO_BALANCE_CACHE_MS = 30000;
-  const bananoBalanceCache = new Map();
-
-  const $ = id => document.getElementById(id);
-
-  function rawToBan(raw) {
-    if (!/^\d+$/.test(String(raw))) {
-      throw new Error("Invalid RAW balance returned by Banano RPC.");
-    }
-
-    const value = BigInt(raw);
-    const divisor = 10n ** 29n;
-    const whole = value / divisor;
-    const fraction = (value % divisor).toString().padStart(29, "0").replace(/0+$/, "");
-
-    return fraction ? `${whole}.${fraction}` : whole.toString();
+  if (Math.abs(num) < 1000) {
+    return Number.isInteger(num)
+      ? String(num)
+      : num.toFixed(2).replace(/\.?0+$/, "");
   }
 
-  async function requestBananoBalance(endpoint, address) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 10000);
+  const tier = Math.floor(Math.log10(Math.abs(num)) / 3);
+  const index = Math.min(tier, suffixes.length - 1);
+  const scaled = num / Math.pow(1000, index);
 
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          action: "account_balance",
-          account: address,
-          include_only_confirmed: true
-        }),
-        signal: controller.signal,
-        cache: "no-store"
-      });
-
-      if (response.status === 429) {
-        const retryAfter = response.headers.get("Retry-After");
-        throw new Error(`Rate limited (HTTP 429)${retryAfter ? `; retry after ${retryAfter}` : ""}`);
-      }
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      const data = await response.json();
-      if (data.error) throw new Error(data.error);
-      if (typeof data.balance !== "string") {
-        throw new Error("Invalid response: balance field is missing.");
-      }
-
-      const pendingRaw = data.receivable ?? data.pending ?? "0";
-      return {
-        raw: data.balance,
-        ban: rawToBan(data.balance),
-        pendingRaw,
-        pending: rawToBan(pendingRaw)
-      };
-    } finally {
-      clearTimeout(timeout);
-    }
+  if (tier >= suffixes.length) {
+    return num.toExponential(2);
   }
 
-  async function getBanBalance(address, forceRefresh = false) {
-    if (typeof address !== "string" || !/^ban_[13][13456789abcdefghijkmnopqrstuwxyz]{59}$/.test(address)) {
-      throw new Error("Invalid Banano address.");
+  return scaled.toFixed(2).replace(/\.?0+$/, "") + suffixes[index];
+}
+
+
+// AUTH TABS
+$("tab-login").addEventListener("click", () => {
+  $("tab-login").classList.add("active");
+  $("tab-signup").classList.remove("active");
+  $("login-screen").classList.remove("hidden");
+  $("signup-screen").classList.add("hidden");
+  clearMessage($("auth-message"));
+});
+
+$("tab-signup").addEventListener("click", () => {
+  $("tab-signup").classList.add("active");
+  $("tab-login").classList.remove("active");
+  $("signup-screen").classList.remove("hidden");
+  $("login-screen").classList.add("hidden");
+  clearMessage($("auth-message"));
+});
+
+// LOGIN
+$("login-form").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const username = $("login-username").value.trim();
+  const password = $("login-password").value;
+
+  if (!username || !password) return;
+
+  const button = $("login-btn");
+  setLoading(button, true, "Access wallet");
+  clearMessage($("auth-message"));
+
+  try {
+    const result = await apiRequest({
+      action: "login",
+      user: { username, password }
+    });
+
+    if (!result.success || result.erro || !result.address) {
+      showMessage($("auth-message"), result.erro || "Login failed.");
+      return;
     }
 
-    const cached = bananoBalanceCache.get(address);
-    if (!forceRefresh && cached && Date.now() - cached.time < BANANO_BALANCE_CACHE_MS) {
-      return cached.data;
+    session.username = username;
+    session.password = password;
+    session.address = result.address;
+    session.balance = result.balance;
+
+    $("wallet-address").textContent = result.address;
+    $("balance").textContent = formatBalance(result.balance);
+    $("balance-kykaw").textContent = "0";
+    $("login-password").value = "";
+
+    showScreen("wallet");
+    await refreshBalance();
+  } finally {
+    setLoading(button, false, "Access wallet");
+  }
+});
+
+// SIGNUP
+$("signup-form").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const username = $("signup-username").value.trim();
+  const password = $("signup-password").value;
+
+  if (!username || !password) return;
+
+  const button = $("signup-btn");
+  setLoading(button, true, "Create wallet");
+  clearMessage($("auth-message"));
+
+  try {
+    const result = await apiRequest({
+      action: "signup",
+      user: { username, password }
+    });
+
+    if (!result.success || !result.address) {
+      showMessage($("auth-message"), result.erro || "Account creation failed.");
+      return;
     }
 
-    const errors = [];
+    showMessage(
+      $("auth-message"),
+      "Account successfully created! Your address: " + result.address,
+      "success"
+    );
 
-    for (const endpoint of BANANO_RPC_URLS) {
-      try {
-        const result = await requestBananoBalance(endpoint, address);
-        bananoBalanceCache.set(address, { time: Date.now(), data: result });
-        return result;
-      } catch (error) {
-        errors.push(`${endpoint}: ${error.message}`);
-        console.warn("Banano RPC failed:", endpoint, error.message);
-      }
+    $("signup-form").reset();
+    $("tab-login").click();
+  } finally {
+    setLoading(button, false, "Create wallet");
+  }
+});
+
+// VERIFY BOTH BALANCES
+async function refreshBalance() {
+  if (!session.address) return;
+
+  const button = $("refresh-balance");
+  button.disabled = true;
+  button.textContent = "Updating...";
+
+  try {
+    const result = await apiRequest({
+      action: "verify_balance",
+      address: session.address
+    });
+
+    if (!result.success) {
+      showMessage($("wallet-message"), result.erro || "Unable to update balance.");
+      return;
     }
 
-    throw new Error(`All Banano RPC endpoints failed. ${errors.join(" | ")}`);
+    session.balance = result.balance;
+    session.balance_kykaw = result.balance_kykaw;
+
+    $("balance").textContent = formatBalance(result.balance);
+    $("balance-kykaw").textContent = formatBalance(result.balance_kykaw);
+
+    clearMessage($("wallet-message"));
+  } finally {
+    button.disabled = false;
+    button.textContent = "↻ Refresh";
+  }
+}
+
+$("refresh-balance").addEventListener("click", refreshBalance);
+
+// COPY ADDRESS
+$("copy-address").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(session.address || "");
+    $("copy-address").textContent = "COPIED!";
+    setTimeout(() => $("copy-address").textContent = "COPY", 1500);
+  } catch (error) {
+    console.error("Copy error:", error);
+    showMessage($("wallet-message"), "Unable to copy address.");
+  }
+});
+
+// OPEN PAU
+$("open-pau").addEventListener("click", () => {
+  $("pau-form").reset();
+  $("pau-txhash").hidden = true;
+  $("pau-txhash-value").textContent = "";
+  clearMessage($("pau-message"));
+  showScreen("pau");
+});
+
+$("back-wallet").addEventListener("click", () => showScreen("wallet"));
+
+// PAY A USER
+$("pau-form").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const recipient = $("recipient").value.trim();
+  const amount = Number($("amount").value);
+  const password = $("pau-password").value;
+  const coin = $("pau-coin").value;
+
+  const isKykaw = coin === "WYKO_KYKAW";
+  const currency = isKykaw ? "WYKK" : "WYKO";
+  const action = isKykaw ? "pau-kykaw" : "pau";
+
+  if (!recipient || !password || !$("amount").value) {
+    showMessage($("pau-message"), "Please fill in all fields.");
+    return;
   }
 
-  const session = {
+  if (!Number.isFinite(amount) || amount <= 0) {
+    showMessage($("pau-message"), "Enter a valid transfer amount.");
+    return;
+  }
+
+  if (recipient === session.address) {
+    showMessage($("pau-message"), "You cannot transfer to your own address.");
+    return;
+  }
+
+  if (password !== session.password) {
+    showMessage($("pau-message"), "Incorrect wallet password.");
+    return;
+  }
+
+  const confirmed = confirm(
+    "CONFIRM " + currency + " TRANSFER\n\n" +
+    "Recipient: " + recipient + "\n" +
+    "Amount: " + $("amount").value + " " + currency + "\n\n" +
+    "Continue?"
+  );
+
+  if (!confirmed) return;
+
+  const button = $("pau-submit");
+
+  setLoading(button, true, "Confirm transfer");
+  clearMessage($("pau-message"));
+  $("pau-txhash").hidden = true;
+  $("pau-txhash-value").textContent = "";
+
+  try {
+    const result = await apiRequest({
+      action,
+      user1: {
+        address: session.address,
+        password
+      },
+      user2: {
+        address: recipient
+      },
+      value: amount
+    });
+
+    console.log("PAU API RESPONSE:", result);
+
+    if (!result.success) {
+      const errorMessage = typeof result.erro === "string"
+        ? result.erro
+        : result.erro?.message || "Transfer failed.";
+
+      showMessage($("pau-message"), errorMessage);
+      return;
+    }
+
+    if (typeof result.hash !== "string" || !result.hash.trim()) {
+      console.error("Missing transaction hash:", result);
+      showMessage($("pau-message"), "Transfer response did not contain a transaction hash.");
+      return;
+    }
+
+    $("pau-txhash-value").textContent = result.hash;
+    $("pau-txhash").hidden = false;
+
+    $("pau-form").reset();
+
+    showMessage(
+      $("pau-message"),
+      currency + " transfer submitted successfully!",
+      "success"
+    );
+
+    await refreshBalance();
+  } catch (error) {
+    console.error("Transfer error:", error);
+    showMessage($("pau-message"), "Unexpected transfer error.");
+  } finally {
+    setLoading(button, false, "Confirm transfer");
+  }
+});
+
+// COPY TXHASH
+$("copy-pau-hash").addEventListener("click", async () => {
+  const hash = $("pau-txhash-value").textContent;
+  if (!hash) return;
+
+  try {
+    await navigator.clipboard.writeText(hash);
+    $("copy-pau-hash").textContent = "COPIED!";
+    setTimeout(() => $("copy-pau-hash").textContent = "COPY HASH", 1500);
+  } catch (error) {
+    console.error("Hash copy error:", error);
+    showMessage($("pau-message"), "Unable to copy transaction hash.");
+  }
+});
+
+// LOGOUT
+$("logout").addEventListener("click", () => {
+  Object.assign(session, {
     username: null,
     address: null,
-    balance: null
-  };
+    password: null,
+    balance: null,
+    balance_kykaw: null
+  });
 
-  async function refreshDonationBalance() {
-    const balanceElement = $("balance_goal_div");
-    if (!balanceElement) return;
+  $("login-form").reset();
+  $("pau-form").reset();
 
-    balanceElement.textContent = "Loading...";
+  $("balance").textContent = "0";
+  $("balance-kykaw").textContent = "0";
+  $("wallet-address").textContent = "";
+  $("pau-txhash").hidden = true;
+  $("pau-txhash-value").textContent = "";
 
-    try {
-      const saldo = await getBanBalance(BANANO_ACCOUNT, true);
-      balanceElement.textContent = `${saldo.ban} BAN`;
-    } catch (error) {
-      console.error("Banano balance error:", error);
-      balanceElement.textContent = "Unavailable";
-    }
-  }
+  clearMessage($("wallet-message"));
+  clearMessage($("pau-message"));
 
-  refreshDonationBalance();
-  const screens = {
-    auth: $("auth-screen"),
-    wallet: $("wallet-screen"),
-    pau: $("pau-screen")
-  };
+  showScreen("auth");
+});
 
-  async function apiRequest(payload) {
-    try {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
+// TXHASH VERIFIER
+const txv = {
+  form: $("txv-form"),
+  hash: $("txv-hash"),
+  button: $("txv-submit"),
+  result: $("txv-result"),
+  status: $("txv-status"),
+  details: $("txv-details"),
+  hashResult: $("txv-hash-result"),
+  from: $("txv-from"),
+  to: $("txv-to"),
+  value: $("txv-value"),
+  container: $("txVerifier"),
+  toggle: $("txv-toggle")
+};
 
-      let data;
+// MINIMIZE / EXPAND
+txv.toggle.addEventListener("click", () => {
+  const minimized = txv.container.classList.toggle("minimized");
 
-      try {
-        data = await response.json();
-      } catch {
-        return { success: false, erro: "Invalid server response." };
-      }
+  txv.toggle.textContent = minimized ? "+" : "−";
+  txv.toggle.setAttribute(
+    "aria-label",
+    minimized ? "Expand transaction verifier" : "Minimize transaction verifier"
+  );
+});
 
-      if (!response.ok) {
-        return { ...data, success: false };
-      }
+function clearTXResult() {
+  txv.result.hidden = true;
+  txv.details.hidden = true;
+  txv.status.textContent = "";
+  txv.status.className = "";
+}
 
-      return data;
-    } catch (error) {
-      console.error("API request error:", error);
-      return { success: false, erro: "Connection error. Check your internet connection." };
-    }
-  }
+function showTXStatus(message, type) {
+  txv.result.hidden = false;
+  txv.status.textContent = message;
+  txv.status.className = type;
+}
 
-  function showScreen(screen) {
-    Object.values(screens).forEach(element => element.classList.add("hidden"));
-    screens[screen].classList.remove("hidden");
-  }
+// VERIFY TXHASH
+txv.form.addEventListener("submit", async event => {
+  event.preventDefault();
 
-  function showMessage(element, message, type = "error") {
-    element.textContent = message;
-    element.className = "message " + type;
-  }
+  const hash = txv.hash.value.trim();
+  if (!hash) return;
 
-  function clearMessage(element) {
-    element.className = "message";
-    element.textContent = "";
-  }
+  txv.button.disabled = true;
+  txv.button.textContent = "Verifying...";
+  clearTXResult();
 
-  function setLoading(button, loading, originalText) {
-    button.disabled = loading;
-    button.textContent = loading ? "Processing..." : originalText;
-  }
+  showTXStatus("SEARCHING WYKO NETWORK...", "loading");
 
-  function formatBalance(value) {
-    const number = Number(value);
-
-    if (!Number.isFinite(number)) {
-      return String(value ?? "0");
-    }
-
-    return number.toLocaleString("en-US", {
-      maximumSignificantDigits: 15
+  try {
+    const result = await apiRequest({
+      action: "verify-hash",
+      hash
     });
-  }
 
-  // AUTH TABS
-  $("tab-login").addEventListener("click", () => {
-    $("tab-login").classList.add("active");
-    $("tab-signup").classList.remove("active");
-    $("login-screen").classList.remove("hidden");
-    $("signup-screen").classList.add("hidden");
-    clearMessage($("auth-message"));
-  });
-
-  $("tab-signup").addEventListener("click", () => {
-    $("tab-signup").classList.add("active");
-    $("tab-login").classList.remove("active");
-    $("signup-screen").classList.remove("hidden");
-    $("login-screen").classList.add("hidden");
-    clearMessage($("auth-message"));
-  });
-
-  // LOGIN
-  $("login-form").addEventListener("submit", async event => {
-    event.preventDefault();
-
-    const username = $("login-username").value.trim();
-    const password = $("login-password").value;
-
-    if (!username || !password) return;
-
-    const button = $("login-btn");
-    setLoading(button, true, "Access wallet");
-    clearMessage($("auth-message"));
-
-    try {
-      const result = await apiRequest({
-        action: "login",
-        user: { username, password }
-      });
-
-      if (!result.success || result.erro || !result.address) {
-        showMessage($("auth-message"), result.erro || "Login failed.");
-        return;
-      }
-
-      session.username = username;
-      session.address = result.address;
-      session.balance = result.balance;
-
-      $("balance").textContent = formatBalance(result.balance);
-      $("wallet-address").textContent = result.address;
-      $("login-password").value = "";
-
-      showScreen("wallet");
-    } finally {
-      setLoading(button, false, "Access wallet");
-    }
-  });
-
-  // SIGNUP
-  $("signup-form").addEventListener("submit", async event => {
-    event.preventDefault();
-
-    const username = $("signup-username").value.trim();
-    const password = $("signup-password").value;
-
-    if (!username || !password) return;
-
-    const button = $("signup-btn");
-    setLoading(button, true, "Create wallet");
-    clearMessage($("auth-message"));
-
-    try {
-      const result = await apiRequest({
-        action: "signup",
-        user: { username, password }
-      });
-
-      if (!result.success || !result.address) {
-        showMessage($("auth-message"), result.erro || "Account creation failed.");
-        return;
-      }
-
-      showMessage(
-        $("auth-message"),
-        "Account successfully created! Your address: " + result.address,
-        "success"
+    if (!result.success) {
+      showTXStatus(
+        result.erro === "TRANSACTION_NOT_FOUND"
+          ? "TRANSACTION_NOT_FOUND"
+          : result.erro || "VERIFICATION_FAILED",
+        "error"
       );
-
-      $("signup-form").reset();
-      $("tab-login").click();
-    } finally {
-      setLoading(button, false, "Create wallet");
-    }
-  });
-
-  // VERIFY BALANCE
-  async function refreshBalance() {
-    if (!session.address) return;
-
-    const button = $("refresh-balance");
-    button.disabled = true;
-    button.textContent = "Updating...";
-
-    try {
-      const result = await apiRequest({
-        action: "verify_balance",
-        address: session.address
-      });
-
-      if (!result.success) {
-        showMessage($("wallet-message"), result.erro || "Unable to update balance.");
-        return;
-      }
-
-      session.balance = result.balance;
-      $("balance").textContent = formatBalance(result.balance);
-      clearMessage($("wallet-message"));
-    } finally {
-      button.disabled = false;
-      button.textContent = "↻ Refresh";
-    }
-  }
-
-  $("refresh-balance").addEventListener("click", refreshBalance);
-
-  // COPY ADDRESS
-  $("copy-address").addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(session.address || "");
-      $("copy-address").textContent = "COPIED!";
-      setTimeout(() => $("copy-address").textContent = "COPY", 1500);
-    } catch (error) {
-      console.error("Address copy error:", error);
-      showMessage($("wallet-message"), "Unable to copy address.");
-    }
-  });
-
-  // OPEN PAU
-  $("open-pau").addEventListener("click", () => {
-    $("pau-form").reset();
-    $("pau-txhash").hidden = true;
-    $("pau-txhash-value").textContent = "";
-    clearMessage($("pau-message"));
-    showScreen("pau");
-  });
-
-  $("back-wallet").addEventListener("click", () => showScreen("wallet"));
-
-  // PAY A USER
-  $("pau-form").addEventListener("submit", async event => {
-    event.preventDefault();
-
-    const recipient = $("recipient").value.trim();
-    const amount = $("amount").value;
-    const password = $("pau-password").value;
-
-    if (!recipient || !amount || !password) {
-      showMessage($("pau-message"), "Please fill in all fields.");
       return;
     }
 
-    const numericAmount = Number(amount);
-
-    if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
-      showMessage($("pau-message"), "Enter a valid transfer amount.");
+    if (!result.dados || !result.dados.hash) {
+      showTXStatus("INVALID_SERVER_RESPONSE", "error");
       return;
     }
 
-    if (recipient === session.address) {
-      showMessage($("pau-message"), "You cannot transfer WYKO to your own address.");
-      return;
-    }
+    const dados = result.dados;
+    const hashText = String(dados.hash);
 
-    const confirmed = confirm(
-      "CONFIRM WYKO TRANSFER\n\n" +
-      "Recipient: " + recipient + "\n" +
-      "Amount: " + amount + " WYKO\n\n" +
-      "Continue?"
-    );
+    const isKykaw =
+      hashText.includes("WYKO_KYKAW") ||
+      hashText.includes("WYKK");
 
-    if (!confirmed) return;
+    txv.hashResult.textContent = hashText;
+    txv.from.textContent = dados.from ?? "UNKNOWN";
+    txv.to.textContent = dados.to ?? "UNKNOWN";
+    txv.value.textContent = formatBalance(dados.value) + (isKykaw ? " WYKK" : " WYKO");
 
-    const button = $("pau-submit");
-
-    setLoading(button, true, "Confirm transfer");
-    clearMessage($("pau-message"));
-    $("pau-txhash").hidden = true;
-    $("pau-txhash-value").textContent = "";
-
-    try {
-      const result = await apiRequest({
-        action: "pau",
-        user1: {
-          address: session.address,
-          password: password
-        },
-        user2: {
-          address: recipient
-        },
-        value: numericAmount
-      });
-
-      console.log("PAU API RESPONSE:", result);
-
-      if (!result.success) {
-        const errorMessage = typeof result.erro === "string"
-          ? result.erro
-          : result.erro?.message || "Transfer failed.";
-
-        showMessage($("pau-message"), errorMessage);
-        return;
-      }
-
-      // HASH IS RETURNED DIRECTLY BY THE EDGE FUNCTION
-      const hash = result.hash;
-
-      if (typeof hash !== "string" || !hash.trim()) {
-        console.error("PAU response did not contain result.hash:", result);
-        showMessage(
-          $("pau-message"),
-          "Transfer response did not contain a transaction hash.",
-          "error"
-        );
-        return;
-      }
-
-      $("pau-txhash-value").textContent = hash;
-      $("pau-txhash").hidden = false;
-
-      $("pau-form").reset();
-
-      showMessage(
-        $("pau-message"),
-        "Transfer submitted successfully!",
-        "success"
-      );
-
-      await refreshBalance();
-    } catch (error) {
-      console.error("PAU error:", error);
-      showMessage($("pau-message"), "Unexpected transfer error.");
-    } finally {
-      setLoading(button, false, "Confirm transfer");
-    }
-  });
-
-  // COPY PAU HASH
-  $("copy-pau-hash").addEventListener("click", async () => {
-    const hash = $("pau-txhash-value").textContent;
-
-    if (!hash) return;
-
-    try {
-      await navigator.clipboard.writeText(hash);
-      $("copy-pau-hash").textContent = "COPIED!";
-
-      setTimeout(() => {
-        $("copy-pau-hash").textContent = "COPY HASH";
-      }, 1500);
-    } catch (error) {
-      console.error("Hash copy error:", error);
-      showMessage($("pau-message"), "Unable to copy transaction hash.");
-    }
-  });
-
-  // LOGOUT
-  $("logout").addEventListener("click", () => {
-    session.username = null;
-    session.address = null;
-    session.balance = null;
-
-    $("login-form").reset();
-    $("pau-form").reset();
-
-    $("balance").textContent = "0";
-    $("wallet-address").textContent = "";
-    $("pau-txhash").hidden = true;
-    $("pau-txhash-value").textContent = "";
-
-    showScreen("auth");
-  });
-
-  // TXHASH VERIFIER
-  const txv = {
-    form: $("txv-form"),
-    hash: $("txv-hash"),
-    button: $("txv-submit"),
-    result: $("txv-result"),
-    status: $("txv-status"),
-    details: $("txv-details"),
-    hashResult: $("txv-hash-result"),
-    from: $("txv-from"),
-    to: $("txv-to"),
-    value: $("txv-value"),
-    container: $("txVerifier"),
-    toggle: $("txv-toggle")
-  };
-
-  // MINIMIZE / EXPAND
-  txv.toggle.addEventListener("click", () => {
-    const minimized = txv.container.classList.toggle("minimized");
-    txv.toggle.textContent = minimized ? "+" : "−";
-    txv.toggle.setAttribute(
-      "aria-label",
-      minimized ? "Expand transaction verifier" : "Minimize transaction verifier"
-    );
-  });
-
-  function clearTXResult() {
-    txv.result.hidden = true;
-    txv.details.hidden = true;
-    txv.status.textContent = "";
-    txv.status.className = "";
+    txv.details.hidden = false;
+    showTXStatus("✓ TRANSACTION_FOUND", "success");
+  } catch (error) {
+    console.error("TXHASH verification error:", error);
+    showTXStatus("CONNECTION_ERROR", "error");
+  } finally {
+    txv.button.disabled = false;
+    txv.button.textContent = "Verify Transaction";
   }
-
-  function showTXStatus(message, type) {
-    txv.result.hidden = false;
-    txv.status.textContent = message;
-    txv.status.className = type;
-  }
-
-  // VERIFY TXHASH
-  txv.form.addEventListener("submit", async event => {
-    event.preventDefault();
-
-    const hash = txv.hash.value.trim();
-    if (!hash) return;
-
-    txv.button.disabled = true;
-    txv.button.textContent = "Verifying...";
-    clearTXResult();
-
-    showTXStatus("SEARCHING WYKO NETWORK...", "loading");
-
-    try {
-      const result = await apiRequest({
-        action: "verify-hash",
-        hash: hash
-      });
-
-      if (!result.success) {
-        showTXStatus(
-          result.erro === "TRANSACTION_NOT_FOUND"
-            ? "TRANSACTION_NOT_FOUND"
-            : result.erro || "VERIFICATION_FAILED",
-          "error"
-        );
-        return;
-      }
-
-      if (!result.dados || !result.dados.hash) {
-        showTXStatus("INVALID_SERVER_RESPONSE", "error");
-        return;
-      }
-
-      const dados = result.dados;
-
-      txv.hashResult.textContent = dados.hash;
-      txv.from.textContent = dados.from ?? "UNKNOWN";
-      txv.to.textContent = dados.to ?? "UNKNOWN";
-      txv.value.textContent = formatBalance(dados.value) + " WYKO";
-
-      txv.details.hidden = false;
-      showTXStatus("✓ TRANSACTION_FOUND", "success");
-    } catch (error) {
-      console.error("TXHASH verification error:", error);
-      showTXStatus("CONNECTION_ERROR", "error");
-    } finally {
-      txv.button.disabled = false;
-      txv.button.textContent = "Verify Transaction";
-    }
-  });
+});
 </script>
 </body>
 </html>

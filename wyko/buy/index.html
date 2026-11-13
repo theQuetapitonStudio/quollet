@@ -6,150 +6,48 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Buy WYKO</title>
 <style>
-:root {
-  --bg:#08090e;
-  --panel:#11131c;
-  --border:#252938;
-  --text:#f2f3fa;
-  --muted:#85899b;
-  --blue:#6575ff;
-  --green:#43d69b;
-  --red:#ff6477;
+:root{
+  --bg:#08090e;--panel:#11131c;--border:#252938;
+  --text:#f2f3fa;--muted:#85899b;--blue:#6575ff;
+  --green:#43d69b;--red:#ff6477
 }
 *{box-sizing:border-box}
 body{
-  margin:0;
-  min-height:100vh;
+  margin:0;min-height:100vh;
   background:radial-gradient(ellipse at 50% -20%,#202858 0%,transparent 55%),var(--bg);
-  color:var(--text);
-  font-family:Inter,Arial,sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:25px;
+  color:var(--text);font-family:Inter,Arial,sans-serif;
+  display:flex;justify-content:center;align-items:center;padding:25px
 }
 .container{width:100%;max-width:470px}
-.logo{
-  text-align:center;
-  font-size:30px;
-  font-weight:900;
-  letter-spacing:-2px;
-  margin-bottom:8px;
-}
+.logo{text-align:center;font-size:30px;font-weight:900;letter-spacing:-2px;margin-bottom:8px}
 .logo span{color:var(--blue)}
-.subtitle{
-  text-align:center;
-  color:var(--muted);
-  margin-bottom:28px;
-  font-size:13px;
-}
-.card{
-  background:rgba(17,19,28,.96);
-  border:1px solid var(--border);
-  border-radius:19px;
-  padding:24px;
-  box-shadow:0 20px 80px #0007;
-}
+.subtitle{text-align:center;color:var(--muted);margin-bottom:28px;font-size:13px}
+.card{background:rgba(17,19,28,.96);border:1px solid var(--border);border-radius:19px;padding:24px;box-shadow:0 20px 80px #0007}
 h2{font-size:19px;margin:0 0 20px}
-label{
-  display:block;
-  font-size:12px;
-  color:#a8acc0;
-  margin:16px 0 8px;
-}
-input{
-  width:100%;
-  background:#090b12;
-  border:1px solid var(--border);
-  color:white;
-  padding:14px;
-  border-radius:10px;
-  outline:none;
-  font-size:14px;
-}
+label{display:block;font-size:12px;color:#a8acc0;margin:16px 0 8px}
+input{width:100%;background:#090b12;border:1px solid var(--border);color:white;padding:14px;border-radius:10px;outline:none;font-size:14px}
 input:focus{border-color:var(--blue)}
-button{
-  width:100%;
-  border:0;
-  border-radius:10px;
-  padding:14px;
-  margin-top:12px;
-  font-size:14px;
-  font-weight:750;
-  cursor:pointer;
-  transition:.2s;
-}
+button{width:100%;border:0;border-radius:10px;padding:14px;margin-top:12px;font-size:14px;font-weight:750;cursor:pointer;transition:.2s}
 button:hover{filter:brightness(1.15)}
 button:disabled{opacity:.45;cursor:not-allowed}
 .primary{background:var(--blue);color:white}
 .secondary{background:#202435;color:white;border:1px solid #30364d}
-.wallet{
-  background:#171c31;
-  border:1px solid #303c72;
-  color:#aebaff;
-}
-.info{
-  margin-top:18px;
-  padding:15px;
-  border-radius:11px;
-  background:#0b0e17;
-  border:1px solid var(--border);
-}
-.info div{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  margin:9px 0;
-  font-size:13px;
-}
+.wallet{background:#171c31;border:1px solid #303c72;color:#aebaff}
+.info{margin-top:18px;padding:15px;border-radius:11px;background:#0b0e17;border:1px solid var(--border)}
+.info div{display:flex;justify-content:space-between;gap:10px;margin:9px 0;font-size:13px}
 .info span{color:var(--muted)}
 .info strong{overflow-wrap:anywhere;text-align:right}
-.divider{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  color:#666d80;
-  font-size:11px;
-  margin:22px 0;
-}
-.divider:before,.divider:after{
-  content:"";height:1px;background:var(--border);flex:1
-}
-.status{
-  display:none;
-  padding:13px;
-  border-radius:10px;
-  margin-top:16px;
-  font-size:12px;
-  line-height:1.6;
-  overflow-wrap:anywhere;
-}
+.divider{display:flex;align-items:center;gap:12px;color:#666d80;font-size:11px;margin:22px 0}
+.divider:before,.divider:after{content:"";height:1px;background:var(--border);flex:1}
+.status{display:none;padding:13px;border-radius:10px;margin-top:16px;font-size:12px;line-height:1.6;overflow-wrap:anywhere;white-space:pre-wrap}
 .status.ok{display:block;background:#10251e;color:var(--green)}
 .status.error{display:block;background:#29151b;color:var(--red)}
 .status.loading{display:block;background:#171c31;color:#aebaff}
-.wallet-info{
-  display:none;
-  background:#111b18;
-  border:1px solid #244b3b;
-  color:var(--green);
-  border-radius:10px;
-  padding:12px;
-  font-size:11px;
-  overflow-wrap:anywhere;
-  margin-top:12px;
-}
-.small{
-  font-size:11px;
-  color:var(--muted);
-  text-align:center;
-  margin-top:18px;
-  line-height:1.7;
-}
-a{color:#8e9cff}
+.wallet-info{display:none;background:#111b18;border:1px solid #244b3b;color:var(--green);border-radius:10px;padding:12px;font-size:11px;overflow-wrap:anywhere;margin-top:12px}
+.small{font-size:11px;color:var(--muted);text-align:center;margin-top:18px;line-height:1.7}
 </style>
 </head>
 <body>
-
 <main class="container">
   <div class="logo">WYKO<span>.</span></div>
   <div class="subtitle">Purchase WYKO securely</div>
@@ -161,7 +59,7 @@ a{color:#8e9cff}
     <input id="username" placeholder="Your WYKO username" autocomplete="username">
 
     <label>Amount of WYKO</label>
-    <input id="amount" type="number" min="1" step="any" placeholder="1000" oninput="calculate()">
+    <input id="amount" type="number" min="1" step="1" placeholder="1000">
 
     <div class="info">
       <div><span>Payment network</span><strong>Polygon</strong></div>
@@ -170,24 +68,16 @@ a{color:#8e9cff}
       <div><span>Total payment</span><strong id="total">0 POL</strong></div>
     </div>
 
-    <button class="primary wallet" id="connect" onclick="connectWallet()">
-      Connect Wallet
-    </button>
-
+    <button class="primary wallet" id="connect">Connect Wallet</button>
     <div class="wallet-info" id="walletInfo"></div>
-
-    <button class="primary" id="buy" onclick="buy()" disabled>
-      Buy with Wallet
-    </button>
+    <button class="primary" id="buy" disabled>Buy with Wallet</button>
 
     <div class="divider">OR USE TRANSACTION HASH</div>
 
     <label>Transaction Hash</label>
     <input id="txhash" placeholder="0x..." autocomplete="off">
 
-    <button class="secondary" id="manual" onclick="manualBuy()">
-      Verify Transaction
-    </button>
+    <button class="secondary" id="manual">Verify Transaction</button>
 
     <div id="status" class="status"></div>
 
@@ -199,52 +89,64 @@ a{color:#8e9cff}
 </main>
 
 <script>
-const API = "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/wyko";
+"use strict";
 
-const RECEIVER = "0x1325C10e1411eDCF3ef733481502E8D96954a5B8";
-const CHAIN_ID = "0x89";
-const PRICE = 0.0';
+const API="https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/wyko";
+const RECEIVER="0x1325C10e1411eDCF3ef733481502E8D96954a5B8";
+const CHAIN_ID="0x89";
+const PRICE=0.0035;
+const PRICE_WEI=3500000000000000n;
 
-let provider = null;
-let account = null;
+let provider=null;
+let account=null;
+let busy=false;
 
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
 
 function calculate(){
-  const amount = Number($("amount").value);
-  $("total").textContent =
-    amount > 0 && Number.isFinite(amount)
-      ? (amount * PRICE).toLocaleString("en-US",{maximumFractionDigits:12})+" POL"
+  const amount=Number($("amount").value);
+  $("total").textContent=
+    Number.isSafeInteger(amount)&&amount>0
+      ? (amount*PRICE).toLocaleString("en-US",{maximumFractionDigits:12})+" POL"
       : "0 POL";
 }
+
+$("amount").addEventListener("input",calculate);
 
 function status(message,type="loading"){
   $("status").className="status "+type;
   $("status").textContent=message;
 }
 
-function setBusy(busy){
-  $("buy").disabled=busy||!account;
-  $("manual").disabled=busy;
-  $("connect").disabled=busy;
+function setBusy(value){
+  busy=value;
+  $("buy").disabled=value||!account;
+  $("manual").disabled=value;
+  $("connect").disabled=value;
 }
 
 function validate(){
   const username=$("username").value.trim();
   const amount=Number($("amount").value);
 
-  if(!username) throw Error("Enter your WYKO username.");
-  if(!Number.isFinite(amount)||amount<=0) throw Error("Invalid WYKO amount.");
-  if(!Number.isSafeInteger(amount)) throw Error("Enter a whole number of WYKO.");
+  if(!username)throw Error("Enter your WYKO username.");
+  if(!Number.isSafeInteger(amount)||amount<=0)
+    throw Error("Enter a valid whole number of WYKO.");
 
   return {username,amount};
 }
 
+function updateWallet(){
+  $("buy").disabled=busy||!account;
+  $("connect").textContent=account?"Wallet Connected":"Connect Wallet";
+  $("walletInfo").style.display=account?"block":"none";
+  $("walletInfo").textContent=account?"Connected: "+account:"";
+}
+
 async function connectWallet(){
   try{
-    if(!window.ethereum){
+    if(!window.ethereum)
       throw Error("No compatible wallet found. Install MetaMask or another EVM wallet.");
-    }
 
     provider=window.ethereum;
 
@@ -252,9 +154,7 @@ async function connectWallet(){
       method:"eth_requestAccounts"
     });
 
-    if(!accounts.length) throw Error("No account selected.");
-
-    account=accounts[0];
+    if(!accounts.length)throw Error("No account selected.");
 
     let chain=await provider.request({method:"eth_chainId"});
 
@@ -265,47 +165,48 @@ async function connectWallet(){
           params:[{chainId:CHAIN_ID}]
         });
       }catch(e){
-        if(e.code===4902){
-          await provider.request({
-            method:"wallet_addEthereumChain",
-            params:[{
-              chainId:CHAIN_ID,
-              chainName:"Polygon",
-              nativeCurrency:{
-                name:"POL",
-                symbol:"POL",
-                decimals:18
-              },
-              rpcUrls:["https://polygon.drpc.org"],
-              blockExplorerUrls:["https://polygonscan.com"]
-            }]
-          });
-        }else throw e;
+        if(e.code!==4902)throw e;
+
+        await provider.request({
+          method:"wallet_addEthereumChain",
+          params:[{
+            chainId:CHAIN_ID,
+            chainName:"Polygon",
+            nativeCurrency:{name:"POL",symbol:"POL",decimals:18},
+            rpcUrls:["https://polygon.drpc.org"],
+            blockExplorerUrls:["https://polygonscan.com"]
+          }]
+        });
       }
     }
 
-    $("connect").textContent="Wallet Connected";
-    $("walletInfo").style.display="block";
-    $("walletInfo").textContent="Connected: "+account;
-    $("buy").disabled=false;
+    chain=await provider.request({method:"eth_chainId"});
 
-    provider.on("accountsChanged",accounts=>{
-      account=accounts[0]||null;
-      $("walletInfo").textContent=account?"Connected: "+account:"Wallet disconnected";
-      $("buy").disabled=!account;
-    });
+    if(chain.toLowerCase()!==CHAIN_ID)
+      throw Error("Please switch to Polygon.");
 
-    provider.on("chainChanged",()=>{
-      account=null;
-      $("buy").disabled=true;
-      $("walletInfo").textContent="Network changed. Reconnect your wallet.";
-      $("connect").textContent="Reconnect Wallet";
-    });
+    account=accounts[0];
+    updateWallet();
+
+    if(!provider.__wykoListeners){
+      provider.on("accountsChanged",accounts=>{
+        account=accounts[0]||null;
+        updateWallet();
+      });
+
+      provider.on("chainChanged",()=>{
+        account=null;
+        updateWallet();
+        status("Network changed. Reconnect your wallet.","error");
+      });
+
+      provider.__wykoListeners=true;
+    }
 
     status("Wallet connected successfully.","ok");
 
   }catch(e){
-    status(e.message,"error");
+    status(e.message||"Wallet connection failed.","error");
   }
 }
 
@@ -321,30 +222,67 @@ async function apiBuy(txhash,username,amount){
     })
   });
 
-  const data=await response.json();
+  let data;
+
+  try{
+    data=await response.json();
+  }catch{
+    throw Error("Invalid response from purchase server.");
+  }
 
   if(!response.ok||!data.success){
-    throw Error(typeof data.erro==="string"?data.erro:"Purchase verification failed.");
+    throw Error(
+      typeof data.erro==="string"
+        ? data.erro
+        : "Purchase verification failed."
+    );
   }
 
   return data;
 }
 
+async function waitForReceipt(hash){
+  for(let i=0;i<90;i++){
+    const receipt=await provider.request({
+      method:"eth_getTransactionReceipt",
+      params:[hash]
+    });
+
+    if(receipt)return receipt;
+
+    await new Promise(resolve=>setTimeout(resolve,2000));
+  }
+
+  throw Error("Transaction is still pending. Use the manual TX Hash option later.");
+}
+
 async function buy(){
+  if(busy)return;
+
   try{
     const {username,amount}=validate();
 
-    if(!provider||!account) throw Error("Connect your wallet first.");
+    if(!provider||!account)
+      throw Error("Connect your wallet first.");
 
     setBusy(true);
     status("Preparing payment...");
 
     const chain=await provider.request({method:"eth_chainId"});
-    if(chain.toLowerCase()!==CHAIN_ID){
-      throw Error("Please switch to Polygon.");
-    }
 
-    const wei=BigInt(Math.round(amount*PRICE*1e9))*1000000000n;
+    if(chain.toLowerCase()!==CHAIN_ID)
+      throw Error("Please switch to Polygon.");
+
+    const currentAccounts=await provider.request({
+      method:"eth_accounts"
+    });
+
+    if(!currentAccounts.includes(account))
+      throw Error("Wallet account changed. Reconnect.");
+
+    const wei=BigInt(amount)*PRICE_WEI;
+
+    status("Confirm the payment in your wallet...");
 
     const txHash=await provider.request({
       method:"eth_sendTransaction",
@@ -355,13 +293,12 @@ async function buy(){
       }]
     });
 
-    status("Payment sent! Waiting for transaction confirmation...");
+    status("Payment sent! Waiting for confirmation...");
 
     const tx=await waitForReceipt(txHash);
 
-    if(tx.status!=="0x1"){
+    if(tx.status!=="0x1")
       throw Error("The payment transaction failed.");
-    }
 
     status("Payment confirmed. Verifying WYKO purchase...");
 
@@ -376,35 +313,21 @@ async function buy(){
     );
 
   }catch(e){
-    status(e.message,"error");
+    status(e.message||"Purchase failed.","error");
   }finally{
     setBusy(false);
   }
 }
 
-async function waitForReceipt(hash){
-  for(let i=0;i<90;i++){
-    const receipt=await provider.request({
-      method:"eth_getTransactionReceipt",
-      params:[hash]
-    });
-
-    if(receipt) return receipt;
-
-    await new Promise(resolve=>setTimeout(resolve,2000));
-  }
-
-  throw Error("Transaction is still pending. Use the manual TX Hash option to verify it later.");
-}
-
 async function manualBuy(){
+  if(busy)return;
+
   try{
     const {username,amount}=validate();
     const hash=$("txhash").value.trim();
 
-    if(!/^0x[a-fA-F0-9]{64}$/.test(hash)){
+    if(!/^0x[a-fA-F0-9]{64}$/.test(hash))
       throw Error("Invalid transaction hash.");
-    }
 
     setBusy(true);
     status("Verifying transaction...");
@@ -419,11 +342,15 @@ async function manualBuy(){
     );
 
   }catch(e){
-    status(e.message,"error");
+    status(e.message||"Verification failed.","error");
   }finally{
     setBusy(false);
   }
 }
+
+$("connect").addEventListener("click",connectWallet);
+$("buy").addEventListener("click",buy);
+$("manual").addEventListener("click",manualBuy);
 </script>
 </body>
 </html>

@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Buy WYKO</title>
+<style>
+:root {
+  --bg:#08090e;
+  --panel:#11131c;
+  --border:#252938;
+  --text:#f2f3fa;
+  --muted:#85899b;
+  --blue:#6575ff;
+  --green:#43d69b;
+  --red:#ff6477;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  background:radial-gradient(ellipse at 50% -20%,#202858 0%,transparent 55%),var(--bg);
+  color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:25px;
+}
+.container{width:100%;max-width:470px}
+.logo{
+  text-align:center;
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:-2px;
+  margin-bottom:8px;
+}
+.logo span{color:var(--blue)}
+.subtitle{
+  text-align:center;
+  color:var(--muted);
+  margin-bottom:28px;
+  font-size:13px;
+}
+.card{
+  background:rgba(17,19,28,.96);
+  border:1px solid var(--border);
+  border-radius:19px;
+  padding:24px;
+  box-shadow:0 20px 80px #0007;
+}
+h2{font-size:19px;margin:0 0 20px}
+label{
+  display:block;
+  font-size:12px;
+  color:#a8acc0;
+  margin:16px 0 8px;
+}
+input{
+  width:100%;
+  background:#090b12;
+  border:1px solid var(--border);
+  color:white;
+  padding:14px;
+  border-radius:10px;
+  outline:none;
+  font-size:14px;
+}
+input:focus{border-color:var(--blue)}
+button{
+  width:100%;
+  border:0;
+  border-radius:10px;
+  padding:14px;
+  margin-top:12px;
+  font-size:14px;
+  font-weight:750;
+  cursor:pointer;
+  transition:.2s;
+}
+button:hover{filter:brightness(1.15)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{background:var(--blue);color:white}
+.secondary{background:#202435;color:white;border:1px solid #30364d}
+.wallet{
+  background:#171c31;
+  border:1px solid #303c72;
+  color:#aebaff;
+}
+.info{
+  margin-top:18px;
+  padding:15px;
+  border-radius:11px;
+  background:#0b0e17;
+  border:1px solid var(--border);
+}
+.info div{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin:9px 0;
+  font-size:13px;
+}
+.info span{color:var(--muted)}
+.info strong{overflow-wrap:anywhere;text-align:right}
+.divider{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:#666d80;
+  font-size:11px;
+  margin:22px 0;
+}
+.divider:before,.divider:after{
+  content:"";height:1px;background:var(--border);flex:1
+}
+.status{
+  display:none;
+  padding:13px;
+  border-radius:10px;
+  margin-top:16px;
+  font-size:12px;
+  line-height:1.6;
+  overflow-wrap:anywhere;
+}
+.status.ok{display:block;background:#10251e;color:var(--green)}
+.status.error{display:block;background:#29151b;color:var(--red)}
+.status.loading{display:block;background:#171c31;color:#aebaff}
+.wallet-info{
+  display:none;
+  background:#111b18;
+  border:1px solid #244b3b;
+  color:var(--green);
+  border-radius:10px;
+  padding:12px;
+  font-size:11px;
+  overflow-wrap:anywhere;
+  margin-top:12px;
+}
+.small{
+  font-size:11px;
+  color:var(--muted);
+  text-align:center;
+  margin-top:18px;
+  line-height:1.7;
+}
+a{color:#8e9cff}
+</style>
+</head>
+<body>
+
+<main class="container">
+  <div class="logo">WYKO<span>.</span></div>
+  <div class="subtitle">Purchase WYKO securely</div>
+
+  <section class="card">
+    <h2>Buy WYKO</h2>
+
+    <label>Username</label>
+    <input id="username" placeholder="Your WYKO username" autocomplete="username">
+
+    <label>Amount of WYKO</label>
+    <input id="amount" type="number" min="1" step="any" placeholder="1000" oninput="calculate()">
+
+    <div class="info">
+      <div><span>Payment network</span><strong>Polygon</strong></div>
+      <div><span>Payment currency</span><strong>POL</strong></div>
+      <div><span>Price per WYKO</span><strong>0.0035 POL</strong></div>
+      <div><span>Total payment</span><strong id="total">0 POL</strong></div>
+    </div>
+
+    <button class="primary wallet" id="connect" onclick="connectWallet()">
+      Connect Wallet
+    </button>
+
+    <div class="wallet-info" id="walletInfo"></div>
+
+    <button class="primary" id="buy" onclick="buy()" disabled>
+      Buy with Wallet
+    </button>
+
+    <div class="divider">OR USE TRANSACTION HASH</div>
+
+    <label>Transaction Hash</label>
+    <input id="txhash" placeholder="0x..." autocomplete="off">
+
+    <button class="secondary" id="manual" onclick="manualBuy()">
+      Verify Transaction
+    </button>
+
+    <div id="status" class="status"></div>
+
+    <div class="small">
+      Payments are verified on-chain before WYKO is credited.<br>
+      Never share your wallet recovery phrase or private key.
+    </div>
+  </section>
+</main>
+
+<script>
+const API = "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/wyko";
+
+const RECEIVER = "0x1325C10e1411eDCF3ef733481502E8D96954a5B8";
+const CHAIN_ID = "0x89";
+const PRICE = 0.0';
+
+let provider = null;
+let account = null;
+
+const $ = id => document.getElementById(id);
+
+function calculate(){
+  const amount = Number($("amount").value);
+  $("total").textContent =
+    amount > 0 && Number.isFinite(amount)
+      ? (amount * PRICE).toLocaleString("en-US",{maximumFractionDigits:12})+" POL"
+      : "0 POL";
+}
+
+function status(message,type="loading"){
+  $("status").className="status "+type;
+  $("status").textContent=message;
+}
+
+function setBusy(busy){
+  $("buy").disabled=busy||!account;
+  $("manual").disabled=busy;
+  $("connect").disabled=busy;
+}
+
+function validate(){
+  const username=$("username").value.trim();
+  const amount=Number($("amount").value);
+
+  if(!username) throw Error("Enter your WYKO username.");
+  if(!Number.isFinite(amount)||amount<=0) throw Error("Invalid WYKO amount.");
+  if(!Number.isSafeInteger(amount)) throw Error("Enter a whole number of WYKO.");
+
+  return {username,amount};
+}
+
+async function connectWallet(){
+  try{
+    if(!window.ethereum){
+      throw Error("No compatible wallet found. Install MetaMask or another EVM wallet.");
+    }
+
+    provider=window.ethereum;
+
+    const accounts=await provider.request({
+      method:"eth_requestAccounts"
+    });
+
+    if(!accounts.length) throw Error("No account selected.");
+
+    account=accounts[0];
+
+    let chain=await provider.request({method:"eth_chainId"});
+
+    if(chain.toLowerCase()!==CHAIN_ID){
+      try{
+        await provider.request({
+          method:"wallet_switchEthereumChain",
+          params:[{chainId:CHAIN_ID}]
+        });
+      }catch(e){
+        if(e.code===4902){
+          await provider.request({
+            method:"wallet_addEthereumChain",
+            params:[{
+              chainId:CHAIN_ID,
+              chainName:"Polygon",
+              nativeCurrency:{
+                name:"POL",
+                symbol:"POL",
+                decimals:18
+              },
+              rpcUrls:["https://polygon.drpc.org"],
+              blockExplorerUrls:["https://polygonscan.com"]
+            }]
+          });
+        }else throw e;
+      }
+    }
+
+    $("connect").textContent="Wallet Connected";
+    $("walletInfo").style.display="block";
+    $("walletInfo").textContent="Connected: "+account;
+    $("buy").disabled=false;
+
+    provider.on("accountsChanged",accounts=>{
+      account=accounts[0]||null;
+      $("walletInfo").textContent=account?"Connected: "+account:"Wallet disconnected";
+      $("buy").disabled=!account;
+    });
+
+    provider.on("chainChanged",()=>{
+      account=null;
+      $("buy").disabled=true;
+      $("walletInfo").textContent="Network changed. Reconnect your wallet.";
+      $("connect").textContent="Reconnect Wallet";
+    });
+
+    status("Wallet connected successfully.","ok");
+
+  }catch(e){
+    status(e.message,"error");
+  }
+}
+
+async function apiBuy(txhash,username,amount){
+  const response=await fetch(API,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      action:"buy-wyko",
+      username,
+      txhash,
+      qdw:String(amount)
+    })
+  });
+
+  const data=await response.json();
+
+  if(!response.ok||!data.success){
+    throw Error(typeof data.erro==="string"?data.erro:"Purchase verification failed.");
+  }
+
+  return data;
+}
+
+async function buy(){
+  try{
+    const {username,amount}=validate();
+
+    if(!provider||!account) throw Error("Connect your wallet first.");
+
+    setBusy(true);
+    status("Preparing payment...");
+
+    const chain=await provider.request({method:"eth_chainId"});
+    if(chain.toLowerCase()!==CHAIN_ID){
+      throw Error("Please switch to Polygon.");
+    }
+
+    const wei=BigInt(Math.round(amount*PRICE*1e9))*1000000000n;
+
+    const txHash=await provider.request({
+      method:"eth_sendTransaction",
+      params:[{
+        from:account,
+        to:RECEIVER,
+        value:"0x"+wei.toString(16)
+      }]
+    });
+
+    status("Payment sent! Waiting for transaction confirmation...");
+
+    const tx=await waitForReceipt(txHash);
+
+    if(tx.status!=="0x1"){
+      throw Error("The payment transaction failed.");
+    }
+
+    status("Payment confirmed. Verifying WYKO purchase...");
+
+    const result=await apiBuy(txHash,username,amount);
+
+    status(
+      "Purchase successful!\n"+
+      "WYKO purchased: "+amount+"\n"+
+      "Transaction: "+txHash+"\n"+
+      "New balance: "+(result.new_balance??"Check your account"),
+      "ok"
+    );
+
+  }catch(e){
+    status(e.message,"error");
+  }finally{
+    setBusy(false);
+  }
+}
+
+async function waitForReceipt(hash){
+  for(let i=0;i<90;i++){
+    const receipt=await provider.request({
+      method:"eth_getTransactionReceipt",
+      params:[hash]
+    });
+
+    if(receipt) return receipt;
+
+    await new Promise(resolve=>setTimeout(resolve,2000));
+  }
+
+  throw Error("Transaction is still pending. Use the manual TX Hash option to verify it later.");
+}
+
+async function manualBuy(){
+  try{
+    const {username,amount}=validate();
+    const hash=$("txhash").value.trim();
+
+    if(!/^0x[a-fA-F0-9]{64}$/.test(hash)){
+      throw Error("Invalid transaction hash.");
+    }
+
+    setBusy(true);
+    status("Verifying transaction...");
+
+    const result=await apiBuy(hash,username,amount);
+
+    status(
+      "Purchase successful!\n"+
+      "WYKO purchased: "+amount+"\n"+
+      "New balance: "+(result.new_balance??"Check your account"),
+      "ok"
+    );
+
+  }catch(e){
+    status(e.message,"error");
+  }finally{
+    setBusy(false);
+  }
+}
+</script>
+</body>
+</html>

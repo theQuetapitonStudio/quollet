@@ -1,12 +1,47 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080808">
-<meta name="description" content="WYKO Network — Digital Wallet">
-<title>WYKO Network</title>
+
+<!-- PRIMARY SEO -->
+<title>WYKO Network — Digital Currency & Wallet | Quewkyo</title>
+
+<meta name="description" content="Discover WYKO Network, a digital currency within the Quewkyo ecosystem. Explore WYKO, learn how its economy works, access the digital wallet and discover how to buy WYKO.">
+
+<meta name="keywords" content="WYKO, WYKO Network, WYKO cryptocurrency, WYKO digital currency, buy WYKO, WYKO wallet, Quewkyo, digital currency, crypto wallet">
+
+<meta name="author" content="Quewkyo">
+<meta name="application-name" content="WYKO Network">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="googlebot" content="index, follow">
+
+<link rel="canonical" href="https://quollet.vercel.app/wyko">
+
+<!-- LANGUAGE -->
+<meta http-equiv="content-language" content="en">
+
+<!-- OPEN GRAPH / FACEBOOK / DISCORD -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="WYKO Network">
+<meta property="og:title" content="WYKO Network — Digital Currency">
+<meta property="og:description" content="Explore WYKO, a digital currency within the Quewkyo ecosystem. Discover its wallet, economy and purchase system.">
+<meta property="og:url" content="https://quollet.vercel.app/wyko">
+<meta property="og:locale" content="en_US">
+
+<!-- TWITTER / X -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WYKO Network — Digital Currency">
+<meta name="twitter:description" content="Discover WYKO Network, its digital wallet, economy and purchase system within the Quewkyo ecosystem.">
+
+<!-- THEME -->
+<meta name="color-scheme" content="dark">
+
+<!-- PERFORMANCE -->
+<meta name="referrer" content="strict-origin-when-cross-origin">
 
 <style>
 :root{
@@ -19,143 +54,6 @@
 body{
 min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#28204c 0%,transparent 55%),var(--bg);
 color:var(--text);display:flex;justify-content:center;align-items:center;padding:24px
-}
-button,input,select{font:inherit}button{cursor:pointer}
-.container{width:100%;max-width:440px;animation:appear .45s ease}
-@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.brand{text-align:center;margin-bottom:22px}
-.brand h1{
-font-size:29px;font-weight:800;letter-spacing:-1px;
-background:linear-gradient(100deg,#a99fff,#6655ff);
-background-clip:text;-webkit-background-clip:text;color:transparent
-}
-.brand p{color:var(--muted);font-size:12px;margin-top:6px;letter-spacing:2px;text-transform:uppercase}
-
-/* DONATION ANNOUNCEMENT */
-.donation-banner{
-padding:17px;background:rgba(17,17,22,.92);
-border:1px solid rgba(118,101,255,.35);
-border-radius:13px;margin-bottom:17px;
-box-shadow:0 10px 35px rgba(0,0,0,.2)
-}
-.donation-heading{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.donation-heading strong{font-size:12px;color:#b4aaff;letter-spacing:1px}
-.donation-heading span{font-size:9px;color:var(--success);white-space:nowrap}
-.donation-message{font-size:11px;color:var(--muted);line-height:1.6;margin:10px 0 14px}
-.donation-numbers{display:flex;justify-content:space-between;align-items:end;gap:8px}
-.donation-current{font-size:21px;font-weight:800;overflow-wrap:anywhere}
-.donation-target{font-size:11px;color:var(--muted);text-align:right}
-.donation-progress{height:7px;background:#08080d;border-radius:20px;overflow:hidden;margin-top:12px}
-.donation-progress-fill{
-height:100%;width:0%;border-radius:20px;
-background:linear-gradient(90deg,#5141d9,#a99fff);
-transition:width .5s ease
-}
-.donation-footer{display:flex;justify-content:space-between;margin-top:8px;gap:8px}
-.donation-footer span{font-size:10px;color:var(--muted)}
-.donation-address{font-size:9px;color:#a99fff;overflow-wrap:anywhere;margin-top:11px;line-height:1.5}
-.donation-copy{
-background:var(--surface2);border:1px solid var(--border);
-color:white;padding:6px 9px;border-radius:6px;font-size:10px;margin-top:8px
-}
-
-.card{
-background:rgba(17,17,22,.88);border:1px solid var(--border);
-border-radius:19px;padding:28px;box-shadow:0 20px 80px rgba(0,0,0,.4);
-backdrop-filter:blur(20px)
-}
-.tabs{display:flex;background:#09090d;padding:5px;border-radius:11px;margin-bottom:25px;gap:5px}
-.tab{flex:1;border:none;background:transparent;color:var(--muted);padding:11px;border-radius:8px;font-weight:600}
-.tab.active{background:var(--surface2);color:white}
-.section-title{font-size:19px;font-weight:700;margin-bottom:6px}
-.section-description{color:var(--muted);font-size:13px;margin-bottom:23px;line-height:1.5}
-.form{display:flex;flex-direction:column;gap:17px}
-.field{display:flex;flex-direction:column;gap:8px}
-.field label{color:#b8b8c5;font-size:12px;font-weight:600}
-input,select{
-width:100%;padding:13px 14px;background:#0b0b10;
-border:1px solid var(--border);border-radius:9px;color:white;
-outline:none;transition:.2s;font-size:14px
-}
-input:focus,select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(118,101,255,.1)}
-input::placeholder{color:#555561}
-.btn{
-width:100%;padding:13px;border:none;border-radius:9px;
-background:linear-gradient(110deg,var(--primary),var(--primary2));
-color:white;font-weight:700;font-size:14px;transition:.2s
-}
-.btn:hover{filter:brightness(1.13);transform:translateY(-1px)}
-.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.btn-secondary{background:var(--surface2);border:1px solid var(--border);color:white}
-.message{
-display:none;padding:12px;border-radius:9px;font-size:12px;
-line-height:1.5;margin-bottom:17px;overflow-wrap:anywhere
-}
-.message.error{display:block;color:#ff8991;background:rgba(255,80,95,.08);border:1px solid rgba(255,80,95,.15)}
-.message.success{display:block;color:var(--success);background:rgba(66,214,155,.08);border:1px solid rgba(66,214,155,.15)}
-.hidden{display:none!important}
-.wallet-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:23px}
-.wallet-header h2{font-size:19px}
-.status{color:var(--success);font-size:11px;background:rgba(66,214,155,.09);padding:6px 10px;border-radius:20px}
-.balance-card{
-padding:24px;
-background:radial-gradient(circle at top right,rgba(255,255,255,.16),transparent 55%),linear-gradient(135deg,#6855e9,#34257f);
-border-radius:14px;margin-bottom:20px
-}
-.balance-label{font-size:12px;color:rgba(255,255,255,.75)}
-.balance-value{font-size:clamp(19px,5.5vw,27px);font-weight:800;margin-top:12px;overflow-wrap:anywhere;letter-spacing:-1px;line-height:1.4}
-.address-box{background:#0b0b10;border:1px solid var(--border);padding:14px;border-radius:10px;margin-bottom:20px}
-.address-box small{display:block;color:var(--muted);font-size:11px;margin-bottom:9px}
-.address-row{display:flex;align-items:center;gap:8px}
-.address{font-size:11px;color:#c9c5ff;overflow-wrap:anywhere;flex:1;line-height:1.5}
-.copy-btn{border:1px solid var(--border);background:var(--surface2);color:white;border-radius:7px;padding:8px;font-size:11px;white-space:nowrap}
-.wallet-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.wallet-actions button{padding:13px 8px;font-size:12px}
-.logout{margin-top:12px;color:var(--muted);background:transparent;border:1px solid var(--border);border-radius:9px;width:100%;padding:11px;font-size:12px}
-.pau-header{display:flex;align-items:center;gap:12px;margin-bottom:22px}
-.back-btn{background:var(--surface2);border:1px solid var(--border);color:white;width:36px;height:36px;border-radius:9px;font-size:18px}
-.pau-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:11px;background:rgba(118,101,255,.14);color:#a99fff;font-size:18px;font-weight:800}
-.info{color:var(--muted);font-size:11px;line-height:1.6;margin-top:15px}
-.footer{text-align:center;color:#555561;font-size:11px;margin-top:22px}
-.pau-txhash{margin-bottom:17px;padding:14px;background:#0b0b10;border:1px solid rgba(118,101,255,.3);border-radius:9px}
-.pau-txhash-label{display:block;color:#a99fff;font-size:10px;font-weight:800;letter-spacing:1.5px;margin-bottom:8px}
-#pau-txhash-value{display:block;color:#dedbea;font-size:11px;line-height:1.6;overflow-wrap:anywhere;word-break:break-word}
-#copy-pau-hash{margin-top:10px}
-
-#txVerifier{
-position:fixed;right:24px;bottom:24px;width:340px;
-max-width:calc(100vw - 30px);z-index:99999;
-background:rgba(17,17,22,.97);border:1px solid rgba(118,101,255,.3);
-border-radius:16px;padding:17px;box-shadow:0 15px 55px rgba(0,0,0,.65);
-backdrop-filter:blur(20px);animation:appear .35s ease
-}
-.txv-header{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.txv-brand{display:flex;flex-direction:column;gap:5px}
-.txv-label{color:#a99fff;font-size:9px;font-weight:800;letter-spacing:2px}
-.txv-title{color:white;font-size:16px;font-weight:750}
-#txv-toggle{width:30px;height:30px;flex-shrink:0;border:1px solid var(--border);background:var(--surface2);color:white;border-radius:8px;font-size:18px}
-.txv-description{color:var(--muted);font-size:11px;margin:15px 0 12px;line-height:1.5}
-#txv-form{display:flex;flex-direction:column;gap:9px}
-#txv-hash{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;background:#09090d;color:white;font-size:11px;min-width:0}
-#txv-submit{width:100%;padding:12px;border:none;border-radius:8px;background:linear-gradient(110deg,var(--primary),var(--primary2));color:white;font-size:12px;font-weight:750}
-#txv-submit:disabled{opacity:.5;cursor:wait}
-#txv-result{margin-top:13px;padding:12px;border-radius:9px;background:#09090d;border:1px solid var(--border)}
-#txv-result[hidden],#txv-details[hidden],#pau-txhash[hidden]{display:none!important}
-#txv-status{font-size:11px;font-weight:800;overflow-wrap:anywhere}
-#txv-status.success{color:var(--success)}
-#txv-status.error{color:var(--danger)}
-#txv-status.loading{color:#e5c66b}
-#txv-details{display:flex;flex-direction:column;gap:13px;margin-top:15px}
-.txv-detail{display:flex;flex-direction:column;gap:5px;min-width:0}
-.txv-detail span{font-size:9px;letter-spacing:1.5px;color:#777}
-.txv-detail strong{font-size:11px;color:#dedbea;overflow-wrap:anywhere;word-break:break-word;line-height:1.5}
-#txVerifier.minimized{width:225px;padding:13px}
-#txVerifier.minimized #txv-content{display:none}
-
-@media(max-width:480px){
-body{padding:25px 15px 15px;align-items:flex-start}
-.card{padding:21px}
-#txVerifier{right:12px;bottom:12px;max-width:calc(100vw - 24px)}
 }
 </style>
 </head>

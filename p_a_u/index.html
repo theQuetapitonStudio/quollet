@@ -3,187 +3,378 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#080810">
-<meta name="description" content="Quewkyo Transfer Center - Transfer digital assets between accounts.">
-<title>Quewkyo | Transfer Center</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101014">
+<meta name="description" content="Quewkyo account transfers">
+<title>Quewkyo — Send</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{color-scheme:dark;--a:#438aff;--b:#c34fff;--c:#090910;--d:#13131e;--e:#262638;--f:#f5f5ff;--g:#85859a}
-body{min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#18244a 0%,transparent 52%),var(--c);font-family:Inter,Arial,sans-serif;color:var(--f);display:grid;place-items:center;padding:22px}
-#_q0{width:100%;max-width:460px}
-#_q1{text-align:center;margin-bottom:25px}
-#_q2{font-size:34px;font-weight:950;letter-spacing:-2px;background:linear-gradient(100deg,var(--a),var(--b));background-clip:text;-webkit-background-clip:text;color:transparent}
-#_q3{font-size:10px;color:var(--g);letter-spacing:3px;margin-top:5px}
-#_q4{background:linear-gradient(145deg,#151521,#0e0e16);border:1px solid var(--e);border-radius:19px;padding:25px;box-shadow:0 20px 65px #0009}
-#_q5{font-size:20px;font-weight:800;margin-bottom:6px}
-#_q6{font-size:12px;color:var(--g);margin-bottom:24px}
-._q7{margin-bottom:17px}
-._q8{display:block;font-size:10px;font-weight:800;color:#aaaabd;letter-spacing:1px;margin-bottom:8px}
-._q9{width:100%;height:47px;background:#090910;border:1px solid var(--e);border-radius:10px;padding:0 13px;color:white;font-size:14px;outline:none;transition:.2s}
-._q9:focus{border-color:var(--a);box-shadow:0 0 0 3px #438aff19}
-._q9::placeholder{color:#55556a}
-select._q9{cursor:pointer}
-#_qa{width:100%;height:49px;border:0;border-radius:11px;background:linear-gradient(100deg,#347dff,#a54cff);color:white;font-weight:900;font-size:13px;letter-spacing:1px;cursor:pointer;transition:.2s}
-#_qa:hover{filter:brightness(1.13)}
-#_qa:disabled{opacity:.5;cursor:wait}
-#_qb{display:none;white-space:pre-wrap;overflow-wrap:anywhere;margin-top:16px;padding:13px;border-radius:10px;font-size:12px;line-height:1.7}
-#_qb[data-t="1"]{display:block;color:#54dfa5;background:#42d99a0b;border:1px solid #42d99a55}
-#_qb[data-t="2"]{display:block;color:#ff8495;background:#ff526d0b;border:1px solid #ff526d55}
-#_qb[data-t="3"]{display:block;color:#8bbaff;background:#438aff0b;border:1px solid #438aff55}
-#_qc{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:18px;font-size:10px;color:var(--g)}
-#_qd{width:6px;height:6px;border-radius:50%;background:#42d99a;box-shadow:0 0 9px #42d99a}
-#_qe{text-align:center;color:#66667a;font-size:10px;line-height:1.9;margin-top:20px}
-@media(max-width:360px){#_q4{padding:19px}}
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #101014;
+    color: #ededf0;
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
+
+main {
+    width: 100%;
+    max-width: 420px;
+}
+
+header {
+    margin-bottom: 25px;
+}
+
+.brand {
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -1.2px;
+}
+
+.brand span {
+    color: #7199ff;
+}
+
+header p {
+    color: #777780;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.panel {
+    background: #19191f;
+    border: 1px solid #303038;
+    padding: 23px;
+    border-radius: 12px;
+}
+
+h1 {
+    font-size: 19px;
+    margin: 0 0 7px;
+}
+
+.description {
+    color: #85858f;
+    font-size: 12px;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.field {
+    margin-bottom: 17px;
+}
+
+label {
+    display: block;
+    color: #aaaab4;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    letter-spacing: .5px;
+}
+
+input, select {
+    width: 100%;
+    height: 44px;
+    background: #111115;
+    border: 1px solid #363640;
+    border-radius: 7px;
+    padding: 0 12px;
+    color: #eee;
+    outline: none;
+    font-size: 13px;
+}
+
+input:focus, select:focus {
+    border-color: #7199ff;
+}
+
+input::placeholder {
+    color: #62626d;
+}
+
+button {
+    width: 100%;
+    height: 45px;
+    background: #6388ed;
+    border: none;
+    border-radius: 7px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 4px;
+}
+
+button:hover {
+    background: #7799f5;
+}
+
+button:disabled {
+    opacity: .55;
+    cursor: wait;
+}
+
+#result {
+    display: none;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-size: 12px;
+    line-height: 1.6;
+    padding: 12px;
+    margin-top: 17px;
+    border-radius: 7px;
+}
+
+#result.success {
+    display: block;
+    background: #14251e;
+    border: 1px solid #285d43;
+    color: #83d8a9;
+}
+
+#result.error {
+    display: block;
+    background: #29191b;
+    border: 1px solid #633237;
+    color: #ff969d;
+}
+
+#result.info {
+    display: block;
+    background: #172033;
+    border: 1px solid #344c7a;
+    color: #a6c2ff;
+}
+
+footer {
+    text-align: center;
+    color: #686873;
+    font-size: 10px;
+    margin-top: 20px;
+}
+
+@media(max-width:400px) {
+    .panel {
+        padding: 18px;
+    }
+}
 </style>
 </head>
+
 <body>
-<main id="_q0">
-<header id="_q1">
-<div id="_q2">QUEWKYO</div>
-<div id="_q3">TRANSFER CENTER</div>
-</header>
 
-<section id="_q4">
-<div id="_q5">Send assets</div>
-<div id="_q6">Transfer your digital assets between Quewkyo accounts.</div>
+<main>
+    <header>
+        <div class="brand">QUEWKYO<span>.</span></div>
+        <p>ACCOUNT TRANSFER SYSTEM</p>
+    </header>
 
-<form id="_qf">
-<div class="_q7">
-<label class="_q8" for="_qg">ASSET</label>
-<select class="_q9" id="_qg" required>
-<option value="pay-base">QNK-BASE</option>
-<option value="pay-unayky">QNK-UNAYKY</option>
-<option value="pay-bowk">QNK-BOWK</option>
-</select>
-</div>
+    <section class="panel">
+        <h1>Send assets</h1>
+        <p class="description">
+            Transfer QNK assets to another Quewkyo account.
+        </p>
 
-<div class="_q7">
-<label class="_q8" for="_qh">SENDER</label>
-<input class="_q9" id="_qh" type="text" placeholder="Username" autocomplete="username" maxlength="100" required>
-</div>
+        <form id="transferForm">
 
-<div class="_q7">
-<label class="_q8" for="_qi">PASSWORD</label>
-<input class="_q9" id="_qi" type="password" placeholder="Account password" autocomplete="current-password" required>
-</div>
+            <div class="field">
+                <label for="asset">ASSET</label>
+                <select id="asset" required>
+                    <option value="pay-base">QNK-BASE</option>
+                    <option value="pay-unayky">QNK-UNAYKY</option>
+                    <option value="pay-bowk">QNK-BOWK</option>
+                </select>
+            </div>
 
-<div class="_q7">
-<label class="_q8" for="_qj">RECIPIENT</label>
-<input class="_q9" id="_qj" type="text" placeholder="Recipient username" maxlength="100" required>
-</div>
+            <div class="field">
+                <label for="sender">YOUR USERNAME</label>
+                <input
+                    id="sender"
+                    type="text"
+                    placeholder="Username"
+                    autocomplete="username"
+                    maxlength="100"
+                    required
+                >
+            </div>
 
-<div class="_q7">
-<label class="_q8" for="_qk">AMOUNT</label>
-<input class="_q9" id="_qk" type="number" min="0.000000000000000001" step="any" placeholder="0.00" required>
-</div>
+            <div class="field">
+                <label for="password">PASSWORD</label>
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="Account password"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
 
-<button id="_qa" type="submit">SEND ASSETS</button>
-</form>
+            <div class="field">
+                <label for="recipient">RECIPIENT</label>
+                <input
+                    id="recipient"
+                    type="text"
+                    placeholder="Recipient username"
+                    maxlength="100"
+                    required
+                >
+            </div>
 
-<div id="_qb" role="status" aria-live="polite"></div>
+            <div class="field">
+                <label for="amount">AMOUNT</label>
+                <input
+                    id="amount"
+                    type="number"
+                    placeholder="0.00"
+                    min="0.000000000000000001"
+                    step="any"
+                    required
+                >
+            </div>
 
-<div id="_qc"><span id="_qd"></span> QUEWKYO API CONNECTION</div>
-</section>
+            <button id="sendButton" type="submit">
+                SEND ASSETS
+            </button>
 
-<footer id="_qe">
-<strong>QUEWKYO</strong> · Transfer Center<br>
-Always verify the recipient before sending.
-</footer>
+        </form>
+
+        <div id="result" role="status" aria-live="polite"></div>
+    </section>
+
+    <footer>
+        QUEWKYO · Digital Asset Transfers
+    </footer>
 </main>
 
 <script>
-(()=>{
 "use strict";
 
-const _0x1=["aHR0cHM6Ly9jamNjbWVhb3N4bmF1aHplbGV1ai5zdXBhYmFzZS5jby9mdW5jdGlvbnMvdjEvcGF5dG91c2VyX2Jhc2U="];
-const _0x2=atob(_0x1[0]);
-const _0x3=_0x4=>document.getElementById(_0x4);
-const _0x5=_0x3("_qf");
-const _0x6=_0x3("_qa");
-const _0x7=_0x3("_qb");
+const API_URL =
+    "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/paytouser_base";
 
-function _0x8(_0x9,_0xa){
-_0x7.textContent=_0x9;
-_0x7.dataset.t=_0xa;
+const form = document.getElementById("transferForm");
+const button = document.getElementById("sendButton");
+const result = document.getElementById("result");
+
+function showResult(message, type) {
+    result.className = type;
+    result.textContent = message;
 }
 
-function _0xb(_0xc){
-return /^(?:0|[1-9]\d*)(?:\.\d{1,18})?$/.test(_0xc);
-}
+form.addEventListener("submit", async function(event) {
+    event.preventDefault();
 
-_0x5.addEventListener("submit",async _0xd=>{
-_d.preventDefault();
+    console.log("[Quewkyo] Submit event triggered.");
 
-const _0xe=_0x3("_qg").value;
-const _0xf=_0x3("_qh").value.trim();
-const _0x10=_0x3("_qi").value;
-const _0x11=_0x3("_qj").value.trim();
-const _0x12=_0x3("_qk").value.trim();
+    const payload = {
+        action: document.getElementById("asset").value,
+        remetente: document.getElementById("sender").value.trim(),
+        remetente_password: document.getElementById("password").value,
+        destinatario: document.getElementById("recipient").value.trim(),
+        value: document.getElementById("amount").value
+    };
 
-if(!_0xf||!_0x10||!_0x11||!_0x12){
-return _0x8("Please complete all fields.",2);
-}
+    if (!payload.remetente ||
+        !payload.remetente_password ||
+        !payload.destinatario ||
+        !payload.value) {
+        showResult("Please complete all fields.", "error");
+        return;
+    }
 
-if(!_0xb(_0x12)||Number(_0x12)<=0){
-return _0x8("Invalid amount.",2);
-}
+    if (payload.remetente === payload.destinatario) {
+        showResult("You cannot send assets to yourself.", "error");
+        return;
+    }
 
-if(_0xf===_0x11){
-return _0x8("You cannot send assets to yourself.",2);
-}
+    if (!Number.isFinite(Number(payload.value)) ||
+        Number(payload.value) <= 0) {
+        showResult("Invalid amount.", "error");
+        return;
+    }
 
-_0x6.disabled=true;
-_0x6.textContent="PROCESSING...";
-_0x8("Connecting to Quewkyo API...",3);
+    button.disabled = true;
+    button.textContent = "SENDING...";
 
-try{
-const _0x13=await fetch(_0x2,{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-action:_0xe,
-remetente:_0xf,
-remetente_password:_0x10,
-destinatario:_0x11,
-value:_0x12
-})
+    showResult("Connecting to Quewkyo API...", "info");
+
+    console.log("[Quewkyo] Sending fetch:", {
+        ...payload,
+        remetente_password: "[HIDDEN]"
+    });
+
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        console.log("[Quewkyo] HTTP status:", response.status);
+
+        const responseText = await response.text();
+
+        console.log("[Quewkyo] Raw response:", responseText);
+
+        let data;
+
+        try {
+            data = JSON.parse(responseText);
+        } catch {
+            throw new Error(
+                "The API did not return valid JSON. HTTP " +
+                response.status
+            );
+        }
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.erro || "HTTP " + response.status
+            );
+        }
+
+        showResult(
+            "TRANSFER COMPLETED\n\n" +
+            "Asset: " + payload.action + "\n" +
+            "Sender: " + payload.remetente + "\n" +
+            "Recipient: " + payload.destinatario + "\n" +
+            "Amount: " + payload.value,
+            "success"
+        );
+
+        form.reset();
+
+    } catch (error) {
+        console.error("[Quewkyo] Fetch error:", error);
+
+        showResult(
+            "TRANSFER FAILED\n\n" +
+            (error.message || "Unknown error") +
+            "\n\nCheck the browser console (F12).",
+            "error"
+        );
+
+    } finally {
+        document.getElementById("password").value = "";
+        button.disabled = false;
+        button.textContent = "SEND ASSETS";
+    }
 });
 
-let _0x14;
-try{
-_0x14=await _0x13.json();
-}catch{
-throw new Error("Invalid API response.");
-}
-
-if(!_0x13.ok||!_0x14.success){
-throw new Error(_0x14.erro||"Transfer failed.");
-}
-
-_0x8(
-"TRANSFER COMPLETED\n"+
-"Asset: "+_0xe.replace("pay-","QNK-").toUpperCase()+"\n"+
-"Sender: "+_0xf+"\n"+
-"Recipient: "+_0x11+"\n"+
-"Amount: "+_0x12,
-1
-);
-
-_0x5.reset();
-
-}catch(_0x15){
-_0x8(_0x15.message||"Connection error.",2);
-}finally{
-_0x3("_qi").value="";
-_0x6.disabled=false;
-_0x6.textContent="SEND ASSETS";
-}
-});
-
-})();
+console.log("[Quewkyo] Transfer system initialized.");
 </script>
+
 </body>
 </html>

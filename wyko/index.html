@@ -7,9 +7,9 @@
 <meta name="theme-color" content="#080808">
 <meta name="color-scheme" content="dark">
 
-<title>WYKO Network — Digital Wallet & Digital Currency</title>
+<title>WYKO Network — Buy WYKO with EURC</title>
 
-<meta name="description" content="Explore WYKO Network, a digital currency and wallet ecosystem by Quewkyo. Create a wallet, manage WYKO and WYKK balances, transfer funds and verify transactions.">
+<meta name="description" content="Buy WYKO with EURC through the WYKO Network ecosystem. Follow the campaign's 0.001 ETH goal on Ethereum Mainnet, manage WYKO and WYKK balances, transfer funds and verify transactions.">
 
 <meta name="author" content="Quewkyo">
 <meta name="application-name" content="WYKO Network">
@@ -20,14 +20,14 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="WYKO Network">
-<meta property="og:title" content="WYKO Network — Digital Wallet">
-<meta property="og:description" content="A digital currency and wallet ecosystem by Quewkyo. Explore WYKO, WYKK, wallet services and transaction verification.">
+<meta property="og:title" content="WYKO Network — Buy WYKO with EURC">
+<meta property="og:description" content="Buy WYKO with EURC and follow the campaign's 0.001 ETH goal on Ethereum Mainnet.">
 <meta property="og:url" content="https://quollet.vercel.app/wyko">
 <meta property="og:locale" content="en_US">
 
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WYKO Network — Digital Wallet">
-<meta name="twitter:description" content="Explore WYKO Network, its digital wallet, currencies and transaction services.">
+<meta name="twitter:title" content="WYKO Network — Buy WYKO with EURC">
+<meta name="twitter:description" content="Buy WYKO with EURC and follow the 0.001 ETH campaign goal on Ethereum Mainnet.">
 
 <script type="application/ld+json">
 {
@@ -35,7 +35,7 @@
   "@type": "WebPage",
   "name": "WYKO Network",
   "url": "https://quollet.vercel.app/wyko",
-  "description": "WYKO Network is a digital currency and wallet ecosystem developed by Quewkyo.",
+  "description": "WYKO Network is a digital currency and wallet ecosystem developed by Quewkyo. WYKO can be purchased with EURC, while the campaign goal is measured in ETH.",
   "inLanguage": "en",
   "publisher": {
     "@type": "Organization",
@@ -806,26 +806,26 @@ input::placeholder{
   <p>Digital wallet infrastructure</p>
 </header>
 
-<section class="donation-banner" aria-label="WYKO NFT system donations">
+<section class="donation-banner" aria-label="Buy WYKO with EURC campaign">
   <div class="donation-heading">
-    <strong>WYKO NFT SYSTEM FUND</strong>
-    <span>● DONATIONS OPEN</span>
+    <strong>BUY WYKO WITH EURC</strong>
+    <span>● CAMPAIGN ACTIVE</span>
   </div>
 
   <p class="donation-message">
-    Help us develop and expand the WYKO NFT system.
-    Your donations support infrastructure, development and future NFT features.
-    Every BAN makes a difference.
+    Get WYKO using EURC. The campaign's fundraising target is measured separately
+    in native ETH on Ethereum Mainnet. EURC is the payment currency for WYKO;
+    ETH is used only to track progress toward the campaign goal.
   </p>
 
   <div class="donation-numbers">
     <div>
       <div class="donation-current" id="donation-balance">Loading...</div>
-      <div class="donation-target">Current donations</div>
+      <div class="donation-target">Current ETH balance</div>
     </div>
     <div class="donation-target">
       GOAL<br>
-      <strong style="color:white;font-size:17px">100,000 BAN</strong>
+      <strong style="color:white;font-size:17px">0.001 ETH</strong>
     </div>
   </div>
 
@@ -835,18 +835,23 @@ input::placeholder{
 
   <div class="donation-footer">
     <span id="donation-percentage">0% completed</span>
-    <span id="donation-remaining">100,000 BAN remaining</span>
+    <span id="donation-remaining">0.00100000 ETH remaining</span>
   </div>
 
   <div class="donation-address" id="donation-address">
-    ban_1ksi6tczhbu5mdg6ni8q8h544m3coihp4cewf3z8cauaq1w3y8q3me357r15
+    0x8a617A50Dc91DBA6F3b117b6C8E9F9Df3e77C76C
   </div>
 
   <button class="donation-copy" id="donation-copy" type="button">
-    COPY DONATION ADDRESS
+    COPY ETH ADDRESS
   </button>
+  <p class="donation-message" style="margin:10px 0 0">
+    Network: Ethereum Mainnet. The displayed balance is the total ETH held by this
+    address and may include ETH received outside this campaign. WYKO purchases are
+    made with EURC; this ETH tracker does not process EURC payments.
+  </p>
   <div id="donation-status" role="status" aria-live="polite">
-    Connecting to Banano network...
+    Connecting to Ethereum Mainnet...
   </div>
 </section>
 
@@ -1082,10 +1087,9 @@ input::placeholder{
 
 const API_URL="https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/wyko";
 
-const BANANO_RPC="https://kaliumapi.appditto.com/api";
-const DONATION_WALLET="ban_1ksi6tczhbu5mdg6ni8q8h544m3coihp4cewf3z8cauaq1w3y8q3me357r15";
-const DONATION_GOAL=100000;
-const RAW_PER_BAN=1e29;
+const ETH_RPC="https://ethereum-rpc.publicnode.com";
+const DONATION_WALLET="0x8a617A50Dc91DBA6F3b117b6C8E9F9Df3e77C76C";
+const ETH_GOAL_WEI=1000000000000000n; // 0.001 ETH
 
 const session={
   username:null,
@@ -1126,58 +1130,53 @@ async function apiRequest(payload){
   }
 }
 
-/* DONATION BALANCE */
+/* ETH CAMPAIGN BALANCE */
 
-function formatBAN(value){
-  return Number(value).toLocaleString("en-US",{
-    minimumFractionDigits:2,
-    maximumFractionDigits:2
-  });
+function formatETH(wei){
+  const base=1000000000000000000n;
+  const whole=wei/base;
+  const fraction=(wei%base).toString().padStart(18,"0").slice(0,8);
+  return whole.toString()+"."+fraction;
 }
 
 async function refreshDonations(){
   const status=$("donation-status");
 
   try{
-    const response=await fetch(BANANO_RPC,{
+    const response=await fetch(ETH_RPC,{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({
-        action:"account_balance",
-        account:DONATION_WALLET,
-        include_only_confirmed:true
+        jsonrpc:"2.0",
+        method:"eth_getBalance",
+        params:[DONATION_WALLET,"latest"],
+        id:1
       })
     });
 
-    if(!response.ok)throw new Error("Banano RPC unavailable");
+    if(!response.ok)throw new Error("Ethereum RPC unavailable");
 
     const data=await response.json();
 
-    if(data.error||data.balance===undefined){
-      throw new Error(data.error||"Unable to retrieve balance");
+    if(data.error||typeof data.result!=="string"){
+      throw new Error(data.error?.message||"Unable to retrieve ETH balance");
     }
 
-    const raw=BigInt(data.balance);
-    const divisor=BigInt("100000000000000000000000000000");
+    const raw=BigInt(data.result);
+    const percentage=Math.min(100,Number(raw)*100/Number(ETH_GOAL_WEI));
+    const remaining=raw>=ETH_GOAL_WEI?0n:ETH_GOAL_WEI-raw;
 
-    const whole=raw/divisor;
-    const fraction=raw%divisor;
-
-    const balance=Number(whole)+Number(fraction)/RAW_PER_BAN;
-    const percentage=Math.min(100,(balance/DONATION_GOAL)*100);
-    const remaining=Math.max(0,DONATION_GOAL-balance);
-
-    $("donation-balance").textContent=formatBAN(balance)+" BAN";
+    $("donation-balance").textContent=formatETH(raw)+" ETH";
     $("donation-progress").style.width=percentage+"%";
     $("donation-percentage").textContent=percentage.toFixed(2)+"% completed";
-    $("donation-remaining").textContent=formatBAN(remaining)+" BAN remaining";
+    $("donation-remaining").textContent=formatETH(remaining)+" ETH remaining";
 
-    status.textContent="● Live balance · Banano Network";
+    status.textContent="● Live balance · Ethereum Mainnet";
     status.style.color="var(--success)";
 
   }catch(error){
-    console.error("Donation balance error:",error);
-    status.textContent="Unable to retrieve live BAN balance. Try again later.";
+    console.error("ETH campaign balance error:",error);
+    status.textContent="Unable to retrieve live ETH balance. Try again later.";
     status.style.color="var(--danger)";
   }
 }
@@ -1185,13 +1184,13 @@ async function refreshDonations(){
 refreshDonations();
 setInterval(refreshDonations,60000);
 
-/* COPY DONATION ADDRESS */
+/* COPY ETH ADDRESS */
 
 $("donation-copy").addEventListener("click",async()=>{
   try{
     await navigator.clipboard.writeText(DONATION_WALLET);
     $("donation-copy").textContent="COPIED!";
-    setTimeout(()=>$("donation-copy").textContent="COPY DONATION ADDRESS",1500);
+    setTimeout(() => $("donation-copy").textContent="COPY ETH ADDRESS",1500);
   }catch(error){
     $("donation-status").textContent="Unable to copy address.";
   }

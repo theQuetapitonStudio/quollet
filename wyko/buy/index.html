@@ -59,12 +59,12 @@ button:disabled{opacity:.45;cursor:not-allowed}
     <input id="username" placeholder="Your WYKO username" autocomplete="username">
 
     <label>Amount of WYKO</label>
-    <input id="amount" type="number" min="1" step="1" placeholder="1000">
+    <input id="amount" type="number" min="1000" step="1000" value="1000" placeholder="1000">
 
     <div class="info">
       <div><span>Payment network</span><strong>Polygon</strong></div>
       <div><span>Payment currency</span><strong>POL</strong></div>
-      <div><span>Price per WYKO</span><strong>0.05 POL</strong></div>
+      <div><span>Price per 1,000 WYKO</span><strong>0.05 POL</strong></div>
       <div><span>Total payment</span><strong id="total">0 POL</strong></div>
     </div>
 
@@ -94,8 +94,9 @@ button:disabled{opacity:.45;cursor:not-allowed}
 const API="https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/wyko";
 const RECEIVER="0x1325C10e1411eDCF3ef733481502E8D96954a5B8";
 const CHAIN_ID="0x89";
-const PRICE=0.05;
-const PRICE_WEI=3500000000000000n;
+const BATCH_SIZE=1000;
+const PRICE_PER_BATCH=0.05;
+const PRICE_WEI=50000000000000000n;
 
 let provider=null;
 let account=null;
@@ -106,9 +107,9 @@ const $=id=>document.getElementById(id);
 function calculate(){
   const amount=Number($("amount").value);
   $("total").textContent=
-    Number.isSafeInteger(amount)&&amount>0
-      ? (amount*PRICE).toLocaleString("en-US",{maximumFractionDigits:12})+" POL"
-      : "0 POL";
+    Number.isSafeInteger(amount)&&amount>=BATCH_SIZE&&amount%BATCH_SIZE===0
+      ? ((amount/BATCH_SIZE)*PRICE_PER_BATCH).toLocaleString("en-US",{maximumFractionDigits:12})+" POL"
+      : "Invalid quantity";
 }
 
 $("amount").addEventListener("input",calculate);
@@ -130,8 +131,8 @@ function validate(){
   const amount=Number($("amount").value);
 
   if(!username)throw Error("Enter your WYKO username.");
-  if(!Number.isSafeInteger(amount)||amount<=0)
-    throw Error("Enter a valid whole number of WYKO.");
+  if(!Number.isSafeInteger(amount)||amount<BATCH_SIZE||amount%BATCH_SIZE!==0)
+    throw Error("The minimum purchase is 1,000 WYKO. Amounts must be multiples of 1,000.");
 
   return {username,amount};
 }
@@ -280,7 +281,7 @@ async function buy(){
     if(!currentAccounts.includes(account))
       throw Error("Wallet account changed. Reconnect.");
 
-    const wei=BigInt(amount)*PRICE_WEI;
+    const wei=BigInt(amount/BATCH_SIZE)*PRICE_WEI;
 
     status("Confirm the payment in your wallet...");
 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quewkyo - Redeem</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: sans-serif;
+            background-color: black;
+            color: white;
+        }
+        input {
+            padding: 2.5%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quewkyo - Redeem codes</h1>
+    <p>Redeem codes during our livestreams! Youtube: @Quetadys.audios</p>
+    <input type="text" id="codeinput" placeholder="Redeem code"><br><br>
+    <input type="text" id="usernameinput" placeholder="Your username"><br><br>
+    <button id="confirmbtn">Confirm</button>
+
+    <script type="module">
+        async function api_req(param) {
+            const respuihiuionse = await fetch("https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/quewkyo", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    param
+                })
+            });
+
+            const mamgingd = await respuihiuionse.json();
+            return mamgingd
+        }
+
+        document.getElementById("confirmbtn").addEventListener("click",async ()=>{
+            let data = await api_req({
+                action: "redeem",
+                code: document.getElementById("codeinput").value.trim(),
+                username: document.getElementById("usernameinput").value.trim()
+            })
+
+            if (data.success === false) {
+                alert("ERRO: "+data.erro)
+            }
+
+            alert("CODIGO RESGATADO COM SUCESSO!")
+        })
+    </script>
+</body>
+</html>

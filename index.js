@@ -1,3 +1,132 @@
 
-(()=>
-  const _0xMAN = Math.floor(Math.random() * 2);const _0xAWK = "";if (_0xMAN > 0) {_0xAWK = "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/quewkyo-weker2";} else {_0xAWK = "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/quewkyo";}const _0xA=["signupS","loginS","change-sessionlogupbtn","home","signup-confirmbtn","usernameINP2","passwordINP2","updatesaldobtn","saldo_base","saldo_unayky","saldo_bowk","login-confirmbtn","usernameINP","passwordINP","helcome_message","signup","login","verify-balance",urkl"application/json","Please fill in all fields.","Erro! ","Sucesso! Faça login","Preencha todos os cammpos!","Error ","QNK-BASE: ","QNK-UNAYKY: ","QNK-BOWK: ","Welcome "],_0xB=(n)=>document.getElementById(_0xA[n]);let _0xC="",_0xD="",_0xE=!1;const _0xF=async p=>(await(await fetch(_0xA[18],{method:"POST",headers:{"Content-Type":_0xA[19]},body:JSON.stringify(p)})).json()),_0x10=async()=>{const {user:u}=await _0xF({action:_0xA[17],username:_0xC});[_0xB(8).textContent,_0xB(9).textContent,_0xB(10).textContent]=[_0xA[25]+Number(u.qnk_base),_0xA[26]+Number(u.qnk_unayky),_0xA[27]+Number(u.qnk_bowk)]},_0x11=()=>{if(_0xE){[_0xB(0).style.display,_0xB(1).style.display,_0xB(2).style.display,_0xB(3).style.display]=["none","none","none","block"]}setTimeout(_0x11,100)};_0xB(2).onclick=()=>{const s=_0xB(1).style.display==="none";_0xB(1).style.display=s?"block":"none";_0xB(0).style.display=s?"none":"block"};_0xB(4).onclick=async()=>{const [u,p]=[5,6].map(i=>_0xB(i).value);if(!u||!p)return alert(_0xA[20]);const r=await _0xF({action:_0xA[15],username:u,password:p});if(r.success===false)return alert(_0xA[21]+r.erro);alert(_0xA[22])};_0xB(7).onclick=async()=>_0xE&&await _0x10();_0xB(11).onclick=async()=>{const [u,p]=[12,13].map(i=>_0xB(i).value);if(!u||!p)return alert(_0xA[23]);const r=await _0xF({action:_0xA[16],username:u,password:p});if(r.success===false)return alert(_0xA[24]+r.erro);_0xC=r.user.username;_0xD=p;_0xE=!0;_0xB(14).textContent=_0xA[28]+_0xC;await _0x10()};_0x11()})();
+(()=>{
+  const _0xMAN = Math.floor(Math.random() * 2);
+  const _0xAWK = _0xMAN > 0
+    ? "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/quewkyo-weker2"
+    : "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/quewkyo";
+
+  const _0xA = [
+    "signupS","loginS","change-sessionlogupbtn","home",
+    "signup-confirmbtn","usernameINP2","passwordINP2",
+    "updatesaldobtn","saldo_base","saldo_unayky","saldo_bowk",
+    "login-confirmbtn","usernameINP","passwordINP",
+    "helcome_message","signup","login","verify-balance",
+    _0xAWK,"application/json",
+    "Please fill in all fields.","Erro! ",
+    "Sucesso! Faça login","Preencha todos os cammpos!",
+    "Error ","QNK-BASE: ","QNK-UNAYKY: ","QNK-BOWK: ",
+    "Welcome "
+  ];
+
+  const _0xB = n => document.getElementById(_0xA[n]);
+
+  let _0xC = "";
+  let _0xE = false;
+
+  const _0xF = async p => {
+    const r = await fetch(_0xA[18], {
+      method: "POST",
+      headers: {"Content-Type": _0xA[19]},
+      body: JSON.stringify(p)
+    });
+    return await r.json();
+  };
+
+  const _0x10 = async () => {
+    const r = await _0xF({
+      action: _0xA[17],
+      username: _0xC
+    });
+
+    if (!r.user) throw new Error("User data unavailable");
+
+    const u = r.user;
+
+    [
+      _0xB(8).textContent,
+      _0xB(9).textContent,
+      _0xB(10).textContent
+    ] = [
+      _0xA[25] + Number(u.qnk_base),
+      _0xA[26] + Number(u.qnk_unayky),
+      _0xA[27] + Number(u.qnk_bowk)
+    ];
+  };
+
+  const _0x11 = () => {
+    if (_0xE) {
+      [
+        _0xB(0).style.display,
+        _0xB(1).style.display,
+        _0xB(2).style.display,
+        _0xB(3).style.display
+      ] = ["none","none","none","block"];
+    }
+
+    setTimeout(_0x11, 100);
+  };
+
+  _0xB(2).onclick = () => {
+    const s = _0xB(1).style.display === "none";
+    _0xB(1).style.display = s ? "block" : "none";
+    _0xB(0).style.display = s ? "none" : "block";
+  };
+
+  _0xB(4).onclick = async () => {
+    const [u,p] = [5,6].map(i => _0xB(i).value);
+
+    if (!u || !p) return alert(_0xA[20]);
+
+    try {
+      const r = await _0xF({
+        action: _0xA[15],
+        username: u,
+        password: p
+      });
+
+      if (r.success === false) return alert(_0xA[21] + r.erro);
+
+      alert(_0xA[22]);
+    } catch(e) {
+      alert(_0xA[21] + e.message);
+    }
+  };
+
+  _0xB(7).onclick = async () => {
+    if (_0xE) {
+      try {
+        await _0x10();
+      } catch(e) {
+        console.error(e);
+      }
+    }
+  };
+
+  _0xB(11).onclick = async () => {
+    const [u,p] = [12,13].map(i => _0xB(i).value);
+
+    if (!u || !p) return alert(_0xA[23]);
+
+    try {
+      const r = await _0xF({
+        action: _0xA[16],
+        username: u,
+        password: p
+      });
+
+      if (r.success === false || !r.user)
+        return alert(_0xA[24] + (r.erro || "Login failed"));
+
+      _0xC = r.user.username;
+      _0xE = true;
+
+      _0xB(14).textContent = _0xA[28] + _0xC;
+
+      await _0x10();
+    } catch(e) {
+      alert(_0xA[24] + e.message);
+    }
+  };
+
+  _0x11();
+})();

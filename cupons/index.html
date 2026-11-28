@@ -24,34 +24,59 @@
     <button id="confirmbtn">Confirm</button>
 
     <script type="module">
-        async function api_req(param) {
-            const respuihiuionse = await fetch("https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/quewkyo", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    param
-                })
-            });
+        
+const API = Math.floor(Math.random() * 2) > 0
+    ? "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/quewkyo-weker2"
+    : "https://cjccmeaosxnauhzeleuj.supabase.co/functions/v1/quewkyo";
 
-            const mamgingd = await respuihiuionse.json();
-            return mamgingd
+async function api_req(param) {
+    try {
+        const response = await fetch(API, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(param)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
         }
 
-        document.getElementById("confirmbtn").addEventListener("click",async ()=>{
-            let data = await api_req({
-                action: "redeem",
-                code: document.getElementById("codeinput").value.trim(),
-                username: document.getElementById("usernameinput").value.trim()
-            })
+        return await response.json();
 
-            if (data.success === false) {
-                alert("ERRO: "+data.erro)
-            }
+    } catch (error) {
+        console.error("WEKER ERROR:", error);
+        return {
+            success: false,
+            erro: "Falha na comunicação com os servidores."
+        };
+    }
+}
 
-            alert("CODIGO RESGATADO COM SUCESSO!")
-        })
+document.getElementById("confirmbtn").addEventListener("click", async () => {
+    const btn = document.getElementById("confirmbtn");
+    btn.disabled = true;
+
+    try {
+        const data = await api_req({
+            action: "redeem",
+            code: document.getElementById("codeinput").value.trim(),
+            username: document.getElementById("usernameinput").value.trim()
+        });
+
+        if (!data || data.success !== true) {
+            alert("ERRO: " + (data?.erro || "Falha desconhecida."));
+            return;
+        }
+
+        alert("CÓDIGO RESGATADO COM SUCESSO!");
+
+    } finally {
+        btn.disabled = false;
+    }
+});
+
     </script>
 </body>
 </html>
